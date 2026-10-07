@@ -1,0 +1,72 @@
+@import './design-system/tokens.css';
+
+/* ==========================================================================
+   AgentHub Global Reset & Foundation
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  width: 100%;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--ah-bg-app);
+  color: var(--ah-text-primary);
+  font-family: var(--ah-font-family);
+  font-size: var(--ah-font-md);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+[dir="rtl"] body {
+  font-family: var(--ah-font-family-arabic);
+}
+
+a {
+  color: var(--ah-primary-500);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  font-family: inherit;
+}
+
+input, textarea, select {
+  font-family: inherit;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ah-border-strong);
+  border-radius: var(--ah-radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ah-text-tertiary);
+}

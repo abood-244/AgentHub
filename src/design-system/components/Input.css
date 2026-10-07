@@ -1,0 +1,128 @@
+.ah-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.ah-input-label {
+  font-size: var(--ah-font-xs);
+  font-weight: var(--ah-weight-semibold);
+  color: var(--ah-text-primary);
+}
+
+.ah-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.ah-input {
+  width: 100%;
+  height: var(--ah-input-h);
+  padding: 0 var(--ah-space-4);
+  font-family: inherit;
+  font-size: var(--ah-font-sm);
+  color: var(--ah-text-primary);
+  background-color: var(--ah-bg-surface);
+  border: 1px solid var(--ah-border-base);
+  border-radius: var(--ah-radius-md);
+  outline: none;
+  transition: all var(--ah-transition-fast);
+}
+
+.ah-input:focus {
+  border-color: var(--ah-primary-500);
+  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.12);
+}
+
+.ah-input::placeholder {
+  color: var(--ah-text-tertiary);
+}
+
+.ah-input-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  color: var(--ah-text-tertiary);
+  pointer-events: none;
+}
+
+.ah-input-icon--start {
+  inset-inline-start: var(--ah-space-3);
+}
+
+.ah-input-icon--end {
+  inset-inline-end: var(--ah-space-3);
+}
+
+.ah-input--has-start {
+  padding-inline-start: calc(var(--ah-space-3) + 24px);
+}
+
+.ah-input--has-end {
+  padding-inline-end: calc(var(--ah-space-3) + 24px);
+}
+
+.ah-input-feedback {
+  margin: 0;
+  font-size: var(--ah-font-xs);
+  color: var(--ah-text-secondary);
+}
+
+.ah-input-feedback--error {
+  color: var(--ah-danger-600);
+}
+
+.ah-input-group--error .ah-input {
+  border-color: var(--ah-danger-500);
+}
+
+/* --- SearchInput matching screenshot --- */
+.ah-search-input-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: var(--ah-bg-subtle);
+  border: 1px solid var(--ah-border-subtle);
+  border-radius: var(--ah-radius-md);
+  transition: all var(--ah-transition-fast);
+}
+
+.ah-search-input-box:focus-within {
+  background-color: var(--ah-bg-surface);
+  border-color: var(--ah-primary-400);
+  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+}
+
+.ah-search-icon {
+  position: absolute;
+  inset-inline-end: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ah-text-tertiary);
+  pointer-events: none;
+}
+
+.ah-search-input {
+  width: 100%;
+  height: 44px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: var(--ah-font-sm);
+  color: var(--ah-text-primary);
+  padding: 0 16px;
+  padding-inline-end: 42px;
+}
+
+.ah-search-input::placeholder {
+  color: var(--ah-text-tertiary);
+  font-weight: var(--ah-weight-regular);
+}

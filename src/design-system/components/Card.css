@@ -1,0 +1,211 @@
+.ah-card {
+  background-color: var(--ah-bg-surface);
+  border-radius: var(--ah-radius-lg);
+  border: 1px solid var(--ah-border-subtle);
+  box-shadow: var(--ah-shadow-card);
+  transition: all var(--ah-transition-base);
+  overflow: hidden;
+  position: relative;
+}
+
+.ah-card--interactive {
+  cursor: pointer;
+}
+
+.ah-card--interactive:hover {
+  border-color: var(--ah-border-strong);
+  box-shadow: var(--ah-shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+.ah-card--flat {
+  box-shadow: none;
+  background-color: var(--ah-bg-subtle);
+}
+
+.ah-card--bordered {
+  border: 1px solid var(--ah-border-base);
+  box-shadow: none;
+}
+
+/* Paddings */
+.ah-card--pad-none {
+  padding: 0;
+}
+
+.ah-card--pad-sm {
+  padding: var(--ah-space-3);
+}
+
+.ah-card--pad-md {
+  padding: var(--ah-space-4);
+}
+
+.ah-card--pad-lg {
+  padding: var(--ah-space-6);
+}
+
+.ah-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--ah-space-3);
+  gap: var(--ah-space-3);
+}
+
+.ah-card__title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ah-card__title {
+  margin: 0;
+  font-size: var(--ah-font-base);
+  font-weight: var(--ah-weight-bold);
+  color: var(--ah-text-primary);
+}
+
+.ah-card__subtitle {
+  margin: 0;
+  font-size: var(--ah-font-xs);
+  color: var(--ah-text-secondary);
+}
+
+.ah-card__content {
+  color: var(--ah-text-primary);
+}
+
+.ah-card__footer {
+  margin-top: var(--ah-space-4);
+  padding-top: var(--ah-space-3);
+  border-top: 1px solid var(--ah-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* --- StatWidget (KPI Metric Cards) --- */
+.ah-stat-widget {
+  background-color: var(--ah-bg-surface);
+  border-radius: var(--ah-radius-lg);
+  border: 1px solid var(--ah-border-subtle);
+  box-shadow: var(--ah-shadow-card);
+  padding: 18px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ah-space-3);
+  transition: all var(--ah-transition-base);
+}
+
+.ah-stat-widget--clickable {
+  cursor: pointer;
+}
+
+.ah-stat-widget--clickable:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--ah-shadow-card-hover);
+  border-color: var(--ah-primary-300);
+}
+
+.ah-stat-widget__main {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.ah-stat-widget__label {
+  font-size: var(--ah-font-xs);
+  font-weight: var(--ah-weight-medium);
+  color: var(--ah-text-secondary);
+}
+
+.ah-stat-widget__val-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.ah-stat-widget__value {
+  font-size: 1.55rem;
+  font-weight: var(--ah-weight-extrabold);
+  color: var(--ah-text-primary);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.ah-stat-widget__trend {
+  font-size: 11px;
+  font-weight: var(--ah-weight-bold);
+  padding: 2px 6px;
+  border-radius: var(--ah-radius-xs);
+}
+
+.ah-stat-widget__trend--up {
+  color: var(--ah-success-600);
+  background-color: var(--ah-success-50);
+}
+
+.ah-stat-widget__trend--down {
+  color: var(--ah-danger-600);
+  background-color: var(--ah-danger-50);
+}
+
+.ah-stat-widget__icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--ah-radius-md);
+  background-color: #EBF3FE;
+  color: var(--ah-primary-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* --- ServiceTile (Quick Services 6 grid) --- */
+.ah-service-tile {
+  background-color: var(--ah-bg-surface);
+  border: 1px solid var(--ah-border-subtle);
+  border-radius: var(--ah-radius-lg);
+  padding: 16px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all var(--ah-transition-base);
+  box-shadow: var(--ah-shadow-card);
+  text-align: center;
+  width: 100%;
+}
+
+.ah-service-tile:hover {
+  transform: translateY(-2px);
+  border-color: var(--ah-primary-400);
+  box-shadow: var(--ah-shadow-card-hover);
+}
+
+.ah-service-tile__icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--ah-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--ah-transition-fast);
+}
+
+.ah-service-tile:hover .ah-service-tile__icon-box {
+  transform: scale(1.08);
+}
+
+.ah-service-tile__label {
+  font-size: var(--ah-font-xs);
+  font-weight: var(--ah-weight-bold);
+  color: var(--ah-text-primary);
+  line-height: 1.2;
+}

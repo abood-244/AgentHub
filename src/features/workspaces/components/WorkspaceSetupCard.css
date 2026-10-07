@@ -1,0 +1,187 @@
+.ah-setup-card {
+  background-color: var(--ah-bg-surface);
+  border-radius: var(--ah-radius-xl);
+  border: 1px solid var(--ah-border-subtle);
+  box-shadow: var(--ah-shadow-card);
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: var(--ah-space-4);
+}
+
+.ah-setup-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.ah-setup-card__title-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 260px;
+}
+
+.ah-setup-card__title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ah-setup-card__title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: var(--ah-weight-extrabold);
+  color: var(--ah-text-primary);
+}
+
+.ah-setup-percent-badge {
+  font-size: 11px;
+  font-weight: var(--ah-weight-bold);
+  padding: 2px 8px;
+  border-radius: var(--ah-radius-full);
+  background-color: var(--ah-primary-50);
+  color: var(--ah-primary-600);
+}
+
+.ah-setup-card__subtitle {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--ah-text-secondary);
+  line-height: 1.45;
+}
+
+.ah-setup-card__action-col {
+  display: flex;
+  align-items: center;
+}
+
+/* Progress Bar */
+.ah-setup-progress-track {
+  width: 100%;
+  height: 6px;
+  background-color: var(--ah-bg-subtle);
+  border-radius: var(--ah-radius-full);
+  overflow: hidden;
+}
+
+.ah-setup-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #0066FF 0%, #12B76A 100%);
+  border-radius: var(--ah-radius-full);
+  transition: width 0.4s ease;
+}
+
+/* Steps Grid: Responsive grid, wraps cleanly without horizontal scrollbars */
+.ah-setup-steps-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .ah-setup-steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.ah-setup-step-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background-color: var(--ah-bg-subtle);
+  border: 1px solid var(--ah-border-subtle);
+  border-radius: var(--ah-radius-lg);
+  cursor: pointer;
+  transition: all var(--ah-transition-fast);
+}
+
+.ah-setup-step-item:hover {
+  background-color: var(--ah-bg-hover);
+  border-color: var(--ah-primary-300);
+  transform: translateY(-1px);
+}
+
+.ah-step-item__icon-box {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--ah-radius-md);
+  background-color: var(--ah-bg-surface);
+  color: var(--ah-primary-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: var(--ah-shadow-xs);
+}
+
+.ah-step-item__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.ah-step-item__top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ah-step-item__title {
+  font-size: 12.5px;
+  font-weight: var(--ah-weight-bold);
+  color: var(--ah-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ah-step-item__desc {
+  font-size: 11px;
+  color: var(--ah-text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ah-step-item__arrow {
+  color: var(--ah-text-tertiary);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Step status badges */
+.ah-step-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  font-weight: var(--ah-weight-bold);
+  padding: 2px 7px;
+  border-radius: var(--ah-radius-full);
+}
+
+.ah-step-status--ready {
+  background-color: var(--ah-success-50);
+  color: var(--ah-success-600);
+}
+
+.ah-step-status--progress {
+  background-color: var(--ah-warning-50);
+  color: var(--ah-warning-600);
+}
+
+.ah-step-status--pending {
+  background-color: var(--ah-bg-surface);
+  color: var(--ah-text-tertiary);
+  border: 1px solid var(--ah-border-subtle);
+}

@@ -1,0 +1,138 @@
+.ah-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ah-space-1);
+  padding: 2px var(--ah-space-2);
+  border-radius: var(--ah-radius-full);
+  font-size: var(--ah-font-xs);
+  font-weight: var(--ah-weight-semibold);
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.ah-badge--sm {
+  padding: 1px var(--ah-space-2);
+  font-size: 11px;
+}
+
+.ah-badge--md {
+  padding: 3px var(--ah-space-3);
+  font-size: var(--ah-font-xs);
+}
+
+.ah-badge__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+/* Badge variants */
+.ah-badge--primary {
+  background-color: var(--ah-primary-50);
+  color: var(--ah-primary-600);
+}
+
+.ah-badge--success {
+  background-color: var(--ah-success-50);
+  color: var(--ah-success-600);
+}
+
+.ah-badge--warning {
+  background-color: var(--ah-warning-50);
+  color: var(--ah-warning-600);
+}
+
+.ah-badge--danger {
+  background-color: var(--ah-danger-50);
+  color: var(--ah-danger-600);
+}
+
+.ah-badge--purple {
+  background-color: var(--ah-purple-50);
+  color: var(--ah-purple-600);
+}
+
+.ah-badge--info {
+  background-color: var(--ah-info-50);
+  color: var(--ah-info-600);
+}
+
+.ah-badge--neutral {
+  background-color: var(--ah-bg-subtle);
+  color: var(--ah-text-secondary);
+  border: 1px solid var(--ah-border-subtle);
+}
+
+/* --- Workspace Status Pill matching the screenshot --- */
+.ah-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: var(--ah-radius-full);
+  font-size: var(--ah-font-xs);
+  font-weight: var(--ah-weight-bold);
+  direction: ltr; /* Keeps text & dot harmonious in both RTL/LTR */
+}
+
+.ah-status-pill__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.ah-status-pill--active {
+  background-color: var(--ah-badge-active-bg);
+  color: var(--ah-badge-active-text);
+}
+
+.ah-status-pill--active .ah-status-pill__dot {
+  background-color: var(--ah-success-500);
+}
+
+.ah-status-pill--paused {
+  background-color: var(--ah-badge-paused-bg);
+  color: var(--ah-badge-paused-text);
+}
+
+.ah-status-pill--paused .ah-status-pill__dot {
+  background-color: var(--ah-danger-500);
+}
+
+.ah-status-pill--archived {
+  background-color: var(--ah-bg-subtle);
+  color: var(--ah-text-tertiary);
+}
+
+/* --- Support Case Status Badges matching screenshot --- */
+.ah-case-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border-radius: var(--ah-radius-full);
+  font-size: var(--ah-font-xs);
+  font-weight: var(--ah-weight-semibold);
+  letter-spacing: -0.01em;
+}
+
+.ah-case-badge--open {
+  background-color: var(--ah-badge-paused-bg);
+  color: var(--ah-badge-paused-text);
+}
+
+.ah-case-badge--review {
+  background-color: var(--ah-badge-review-bg);
+  color: var(--ah-badge-review-text);
+}
+
+.ah-case-badge--resolved {
+  background-color: var(--ah-badge-active-bg);
+  color: var(--ah-badge-active-text);
+}
+
+.ah-case-badge--transferred {
+  background-color: var(--ah-badge-paused-bg);
+  color: var(--ah-badge-paused-text);
+}

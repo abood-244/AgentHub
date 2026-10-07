@@ -1,0 +1,95 @@
+.ah-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ah-space-5);
+  width: 100%;
+}
+
+.ah-dashboard__greeting {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ah-dashboard__greeting-title {
+  margin: 0;
+  font-size: 1.45rem;
+  font-weight: var(--ah-weight-extrabold);
+  color: var(--ah-text-primary);
+}
+
+.ah-dashboard__greeting-sub {
+  margin: 0;
+  font-size: var(--ah-font-xs);
+  color: var(--ah-text-secondary);
+}
+
+/* 4 KPIs grid (2x2 on mobile, 4-col on desktop) */
+.ah-dashboard__kpis {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (min-width: 1024px) {
+  .ah-dashboard__kpis {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--ah-space-5);
+  }
+}
+
+.ah-dashboard__section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ah-dashboard__section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ah-dashboard__section-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: var(--ah-weight-extrabold);
+  color: var(--ah-text-primary);
+}
+
+.ah-dashboard__view-all {
+  background: transparent;
+  border: none;
+  color: var(--ah-primary-500);
+  font-family: inherit;
+  font-size: var(--ah-font-xs);
+  font-weight: var(--ah-weight-bold);
+  cursor: pointer;
+  transition: opacity var(--ah-transition-fast);
+}
+
+.ah-dashboard__view-all:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+/* 6 Services grid (3 cols matching screenshot) */
+.ah-dashboard__services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+@media (min-width: 1024px) {
+  .ah-dashboard__services-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: var(--ah-space-4);
+  }
+}
+
+/* Cases list */
+.ah-dashboard__cases-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

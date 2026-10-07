@@ -1,0 +1,50 @@
+.ah-app-root {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--ah-bg-app);
+}
+
+/* Mobile Screen Full Bleed (No artificial border/notch/mockup) */
+.ah-mobile-screen-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--ah-bg-app);
+}
+
+.ah-mobile-main-content {
+  flex: 1;
+  padding: 16px 14px calc(var(--ah-bottom-nav-h) + 24px) 14px;
+  overflow-y: auto;
+  overflow-x: hidden; /* Eliminates horizontal scrollbar */
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Desktop Enterprise Shell */
+.ah-desktop-shell {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.ah-desktop-main-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background-color: var(--ah-bg-app);
+}
+
+.ah-desktop-main-content {
+  flex: 1;
+  padding: var(--ah-space-6) var(--ah-space-8);
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+}

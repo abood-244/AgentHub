@@ -1,0 +1,212 @@
+/* ==========================================================================
+   AgentHub Design System — Design Tokens
+   Supports: Light/Dark Theme, LTR/RTL, Fluid Responsive Typography & Spacing
+   ========================================================================== */
+
+:root {
+  /* --- Brand Primary (AgentHub Blue) --- */
+  --ah-primary-50: #EBF3FF;
+  --ah-primary-100: #D6E7FF;
+  --ah-primary-200: #ADCFFF;
+  --ah-primary-300: #85B7FF;
+  --ah-primary-400: #3D8BFF;
+  --ah-primary-500: #0066FF; /* Primary Brand Blue */
+  --ah-primary-600: #0052CC;
+  --ah-primary-700: #003D99;
+  --ah-primary-800: #002966;
+  --ah-primary-900: #001433;
+
+  /* --- Deep Navy Chrome (AgentHub Top Bar & Sidebar) --- */
+  --ah-navy-950: #050E1A;
+  --ah-navy-900: #07192C; /* Primary Mobile/Desktop Chrome */
+  --ah-navy-850: #0A213A;
+  --ah-navy-800: #0E2A49;
+  --ah-navy-750: #14355B;
+  --ah-navy-700: #1A4373;
+  --ah-navy-card: #0D233C;
+  --ah-navy-border: #16365C;
+
+  /* --- Semantic Status Colors --- */
+  /* Active / Resolved / Success */
+  --ah-success-50: #ECFDF3;
+  --ah-success-100: #D1FADF;
+  --ah-success-500: #12B76A;
+  --ah-success-600: #027A48;
+  --ah-success-700: #05603A;
+
+  /* Open / Danger / Paused */
+  --ah-danger-50: #FEF3F2;
+  --ah-danger-100: #FEE4E2;
+  --ah-danger-500: #F04438;
+  --ah-danger-600: #D92D20;
+  --ah-danger-700: #B42318;
+
+  /* Under Review / Warning */
+  --ah-warning-50: #FFFAEB;
+  --ah-warning-100: #FEF0C7;
+  --ah-warning-500: #F79009;
+  --ah-warning-600: #DC6803;
+  --ah-warning-700: #B54708;
+
+  /* Transferred / AI / Info */
+  --ah-info-50: #F5F8FF;
+  --ah-info-100: #E0EAFF;
+  --ah-info-500: #2E90FA;
+  --ah-info-600: #1570EF;
+
+  /* Agent / AI Special */
+  --ah-purple-50: #F9F5FF;
+  --ah-purple-100: #F4EBFF;
+  --ah-purple-500: #7A5AF8;
+  --ah-purple-600: #6938EF;
+
+  /* --- Spacing Scale --- */
+  --ah-space-1: 4px;
+  --ah-space-2: 8px;
+  --ah-space-3: 12px;
+  --ah-space-4: 16px;
+  --ah-space-5: 20px;
+  --ah-space-6: 24px;
+  --ah-space-8: 32px;
+  --ah-space-10: 40px;
+  --ah-space-12: 48px;
+  --ah-space-16: 64px;
+
+  /* --- Border Radius Scale --- */
+  --ah-radius-xs: 4px;
+  --ah-radius-sm: 8px;
+  --ah-radius-md: 12px;
+  --ah-radius-lg: 16px;
+  --ah-radius-xl: 20px;
+  --ah-radius-2xl: 24px;
+  --ah-radius-full: 9999px;
+
+  /* --- Typography Scale --- */
+  --ah-font-family: 'Plus Jakarta Sans', 'Cairo', system-ui, -apple-system, sans-serif;
+  --ah-font-family-arabic: 'Cairo', 'Plus Jakarta Sans', system-ui, sans-serif;
+
+  --ah-font-xs: 0.72rem;     /* ~11.5px */
+  --ah-font-sm: 0.8125rem;   /* 13px */
+  --ah-font-md: 0.875rem;    /* 14px */
+  --ah-font-base: 0.9375rem; /* 15px */
+  --ah-font-lg: 1.0625rem;   /* 17px */
+  --ah-font-xl: 1.25rem;     /* 20px */
+  --ah-font-2xl: 1.5rem;     /* 24px */
+  --ah-font-3xl: 1.875rem;   /* 30px */
+
+  --ah-weight-regular: 400;
+  --ah-weight-medium: 500;
+  --ah-weight-semibold: 600;
+  --ah-weight-bold: 700;
+  --ah-weight-extrabold: 800;
+
+  /* --- Component Dimensions --- */
+  --ah-btn-h-sm: 34px;
+  --ah-btn-h-md: 42px;
+  --ah-btn-h-lg: 48px;
+
+  --ah-input-h: 44px;
+  --ah-header-h-desktop: 70px;
+  --ah-header-h-mobile: 62px;
+  --ah-bottom-nav-h: 68px;
+  --ah-sidebar-w-desktop: 280px;
+
+  /* --- Shadows --- */
+  --ah-shadow-xs: 0 1px 2px rgba(12, 26, 44, 0.04);
+  --ah-shadow-sm: 0 1px 3px rgba(12, 26, 44, 0.06), 0 1px 2px rgba(12, 26, 44, 0.04);
+  --ah-shadow-md: 0 4px 14px rgba(12, 26, 44, 0.07), 0 2px 4px rgba(12, 26, 44, 0.04);
+  --ah-shadow-lg: 0 10px 24px -3px rgba(12, 26, 44, 0.1), 0 4px 8px -2px rgba(12, 26, 44, 0.05);
+  --ah-shadow-card: 0 2px 8px rgba(9, 30, 66, 0.04), 0 0 1px rgba(9, 30, 66, 0.15);
+  --ah-shadow-card-hover: 0 8px 24px rgba(0, 102, 255, 0.09), 0 2px 6px rgba(9, 30, 66, 0.06);
+
+  /* --- Transitions --- */
+  --ah-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --ah-transition-base: 220ms cubic-bezier(0.4, 0, 0.2, 1);
+  --ah-transition-smooth: 350ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   Light Theme (Default)
+   Matches the screenshots: Crisp white surfaces on soft blue-tinted canvas
+   ========================================================================== */
+:root[data-theme="light"], :root {
+  --ah-bg-app: #F0F4FA;           /* Soft light blue tint */
+  --ah-bg-surface: #FFFFFF;       /* Pure white card surface */
+  --ah-bg-subtle: #F6F9FD;        /* Soft card inner header / input */
+  --ah-bg-hover: #F1F5FB;
+  --ah-bg-active: #E6EFFD;
+
+  --ah-border-subtle: #EDF2F9;
+  --ah-border-base: #E2E8F2;
+  --ah-border-strong: #CAD5E2;
+
+  --ah-text-primary: #0A1C33;     /* Deep navy black */
+  --ah-text-secondary: #53677F;   /* Slate navy text */
+  --ah-text-tertiary: #8495A8;    /* Muted label */
+  --ah-text-inverse: #FFFFFF;
+
+  --ah-chrome-bg: #07192C;        /* Deep Navy Chrome for header & sidebar */
+  --ah-chrome-card: #0D243E;      /* Top bar selector pill */
+  --ah-chrome-border: #16365C;
+  --ah-chrome-text: #FFFFFF;
+  --ah-chrome-text-muted: #8AA2BE;
+
+  --ah-badge-active-bg: #E6F9F0;
+  --ah-badge-active-text: #027A48;
+  --ah-badge-paused-bg: #FEE4E2;
+  --ah-badge-paused-text: #B42318;
+  --ah-badge-review-bg: #FEF0C7;
+  --ah-badge-review-text: #B54708;
+  --ah-badge-transferred-bg: #FEE4E2;
+  --ah-badge-transferred-text: #B42318;
+}
+
+/* ==========================================================================
+   Dark Theme
+   Deep aesthetic navy dark mode preserving brand identity
+   ========================================================================== */
+:root[data-theme="dark"] {
+  --ah-bg-app: #07111D;           /* Deep obsidian navy */
+  --ah-bg-surface: #0E1B2C;       /* Card navy surface */
+  --ah-bg-subtle: #13243A;        /* Inner card / input */
+  --ah-bg-hover: #172B45;
+  --ah-bg-active: #1D3656;
+
+  --ah-border-subtle: #16263B;
+  --ah-border-base: #1E3450;
+  --ah-border-strong: #2B4A70;
+
+  --ah-text-primary: #F0F4FA;     /* High contrast white-blue */
+  --ah-text-secondary: #9DB1C8;   /* Muted slate text */
+  --ah-text-tertiary: #677E99;    /* Muted label */
+  --ah-text-inverse: #07111D;
+
+  --ah-chrome-bg: #050D17;        /* Ultra dark navy header */
+  --ah-chrome-card: #0A1B2E;
+  --ah-chrome-border: #162C46;
+  --ah-chrome-text: #FFFFFF;
+  --ah-chrome-text-muted: #7E97B5;
+
+  --ah-badge-active-bg: rgba(18, 183, 106, 0.16);
+  --ah-badge-active-text: #34D399;
+  --ah-badge-paused-bg: rgba(240, 68, 56, 0.16);
+  --ah-badge-paused-text: #F87171;
+  --ah-badge-review-bg: rgba(247, 144, 9, 0.16);
+  --ah-badge-review-text: #FBBF24;
+  --ah-badge-transferred-bg: rgba(240, 68, 56, 0.16);
+  --ah-badge-transferred-text: #F87171;
+
+  --ah-shadow-card: 0 4px 12px rgba(0, 0, 0, 0.28), 0 0 1px rgba(255, 255, 255, 0.08);
+  --ah-shadow-card-hover: 0 8px 24px rgba(0, 102, 255, 0.2), 0 0 1px rgba(0, 102, 255, 0.3);
+}
+
+/* ==========================================================================
+   RTL / LTR Behavior Foundation
+   ========================================================================== */
+[dir="rtl"] {
+  font-family: var(--ah-font-family-arabic);
+}
+
+[dir="ltr"] {
+  font-family: var(--ah-font-family);
+}

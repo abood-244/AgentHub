@@ -1,0 +1,110 @@
+.ah-case-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background-color: var(--ah-bg-surface);
+  border-radius: var(--ah-radius-lg);
+  border: 1px solid var(--ah-border-subtle);
+  box-shadow: var(--ah-shadow-card);
+  transition: all var(--ah-transition-base);
+  cursor: pointer;
+}
+
+.ah-case-item:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--ah-shadow-card-hover);
+  border-color: var(--ah-primary-300);
+}
+
+.ah-case-item__actor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  width: 44px;
+}
+
+.ah-case-item__avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--ah-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ah-case-item__avatar--student {
+  background-color: #EBF3FE;
+  color: #0066FF;
+}
+
+.ah-case-item__avatar--ai {
+  background-color: #EFF6FF;
+  color: #0284C7;
+}
+
+.ah-case-item__avatar--staff {
+  background-color: #F1F5F9;
+  color: #334155;
+}
+
+.ah-case-item__actor-label {
+  font-size: 10px;
+  font-weight: var(--ah-weight-bold);
+  color: var(--ah-text-secondary);
+}
+
+.ah-case-item__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.ah-case-item__title {
+  margin: 0;
+  font-size: var(--ah-font-xs);
+  font-weight: var(--ah-weight-bold);
+  color: var(--ah-text-primary);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ah-case-item__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ah-case-item__channel {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--ah-text-secondary);
+}
+
+.ah-case-item__channel-icon {
+  display: flex;
+  align-items: center;
+}
+
+.ah-case-item__trailing {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.ah-case-item__time {
+  font-size: 11px;
+  color: var(--ah-text-tertiary);
+  white-space: nowrap;
+}

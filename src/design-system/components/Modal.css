@@ -1,0 +1,102 @@
+.ah-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: rgba(7, 25, 44, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ah-space-4);
+  animation: ah-fade-in 0.2s ease-out;
+}
+
+.ah-modal-dialog {
+  background-color: var(--ah-bg-surface);
+  border-radius: var(--ah-radius-xl);
+  border: 1px solid var(--ah-border-subtle);
+  box-shadow: var(--ah-shadow-lg);
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: ah-slide-up 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ah-modal-dialog--sm { max-width: 420px; }
+.ah-modal-dialog--md { max-width: 560px; }
+.ah-modal-dialog--lg { max-width: 760px; }
+.ah-modal-dialog--xl { max-width: 960px; }
+
+.ah-modal-header {
+  padding: var(--ah-space-5) var(--ah-space-6);
+  border-bottom: 1px solid var(--ah-border-subtle);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ah-space-4);
+}
+
+.ah-modal-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ah-modal-title {
+  margin: 0;
+  font-size: var(--ah-font-lg);
+  font-weight: var(--ah-weight-bold);
+  color: var(--ah-text-primary);
+}
+
+.ah-modal-subtitle {
+  margin: 0;
+  font-size: var(--ah-font-xs);
+  color: var(--ah-text-secondary);
+}
+
+.ah-modal-close-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--ah-text-tertiary);
+  padding: 4px;
+  border-radius: var(--ah-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--ah-transition-fast);
+}
+
+.ah-modal-close-btn:hover {
+  background-color: var(--ah-bg-hover);
+  color: var(--ah-text-primary);
+}
+
+.ah-modal-body {
+  padding: var(--ah-space-6);
+  overflow-y: auto;
+  flex: 1;
+}
+
+.ah-modal-footer {
+  padding: var(--ah-space-4) var(--ah-space-6);
+  border-top: 1px solid var(--ah-border-subtle);
+  background-color: var(--ah-bg-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ah-space-3);
+}
+
+@keyframes ah-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes ah-slide-up {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}

@@ -1,0 +1,139 @@
+/* --- Filter Pills matching Workspaces screenshot --- */
+.ah-filter-pills {
+  display: flex;
+  align-items: center;
+  gap: var(--ah-space-2);
+  width: 100%;
+}
+
+.ah-filter-pill {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 var(--ah-space-3);
+  border-radius: var(--ah-radius-md);
+  border: none;
+  font-family: inherit;
+  font-size: var(--ah-font-xs);
+  font-weight: var(--ah-weight-bold);
+  cursor: pointer;
+  background-color: var(--ah-bg-surface);
+  color: var(--ah-text-secondary);
+  box-shadow: var(--ah-shadow-xs);
+  transition: all var(--ah-transition-fast);
+}
+
+.ah-filter-pill:hover {
+  background-color: var(--ah-bg-hover);
+  color: var(--ah-text-primary);
+}
+
+.ah-filter-pill--active {
+  background-color: var(--ah-primary-500) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(0, 102, 255, 0.35);
+}
+
+.ah-filter-pill__count {
+  font-weight: var(--ah-weight-medium);
+  opacity: 0.9;
+}
+
+/* --- Underline & Responsive Tabs: NO HORIZONTAL SCROLLBAR --- */
+.ah-tabs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap; /* Wraps naturally without horizontal scrollbar! */
+  gap: 8px;
+  width: 100%;
+}
+
+.ah-tabs--underline {
+  border-bottom: 1px solid var(--ah-border-base);
+  padding-bottom: 4px;
+}
+
+.ah-tabs--underline .ah-tab-btn {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 8px 12px;
+  border-radius: var(--ah-radius-sm);
+  font-family: inherit;
+  font-size: var(--ah-font-xs);
+  font-weight: var(--ah-weight-semibold);
+  color: var(--ah-text-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--ah-transition-fast);
+  white-space: nowrap;
+}
+
+.ah-tabs--underline .ah-tab-btn:hover {
+  color: var(--ah-text-primary);
+  background-color: var(--ah-bg-hover);
+}
+
+.ah-tabs--underline .ah-tab-btn--active {
+  color: var(--ah-primary-500);
+  background-color: var(--ah-primary-50);
+  border-bottom-color: var(--ah-primary-500);
+  font-weight: var(--ah-weight-bold);
+}
+
+:root[data-theme="dark"] .ah-tabs--underline .ah-tab-btn--active {
+  background-color: rgba(0, 102, 255, 0.16);
+}
+
+/* Segmented Tabs (Grid matrix on mobile, inline on desktop) */
+.ah-tabs--segmented {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  background-color: var(--ah-bg-subtle);
+  padding: 4px;
+  border-radius: var(--ah-radius-md);
+  gap: 4px;
+  width: 100%;
+}
+
+.ah-tabs--segmented .ah-tab-btn {
+  background: transparent;
+  border: none;
+  padding: 8px 10px;
+  border-radius: var(--ah-radius-sm);
+  font-family: inherit;
+  font-size: var(--ah-font-xs);
+  font-weight: var(--ah-weight-semibold);
+  color: var(--ah-text-secondary);
+  cursor: pointer;
+  transition: all var(--ah-transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.ah-tabs--segmented .ah-tab-btn--active {
+  background-color: var(--ah-bg-surface);
+  color: var(--ah-primary-600);
+  font-weight: var(--ah-weight-bold);
+  box-shadow: var(--ah-shadow-xs);
+}
+
+.ah-tab-btn__count {
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: var(--ah-radius-full);
+  background-color: var(--ah-bg-subtle);
+  color: var(--ah-text-secondary);
+}
+
+.ah-tab-btn--active .ah-tab-btn__count {
+  background-color: var(--ah-primary-100);
+  color: var(--ah-primary-700);
+}
