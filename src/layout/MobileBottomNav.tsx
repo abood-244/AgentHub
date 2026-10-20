@@ -1,25 +1,27 @@
 import React from 'react';
 import './MobileBottomNav.css';
-import { Home, MessageSquare, Landmark, BarChart2, Menu } from 'lucide-react';
+import { Home, MessageSquare, Landmark, BarChart2, Settings } from 'lucide-react';
 import { useTranslation } from '../i18n/LanguageContext';
 
 export interface MobileBottomNavProps {
   currentScreen: string;
   onNavigate: (screen: string) => void;
+  onOpenDrawer?: () => void;
 }
 
 export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
   currentScreen,
   onNavigate,
 }) => {
-  const { t } = useTranslation();
+  const { language, t } = useTranslation();
+  const isEn = language === 'en';
 
   const navItems = [
-    { id: 'dashboard', label: t('navDashboard'), icon: <Home size={22} /> },
-    { id: 'inbox', label: t('navInbox'), icon: <MessageSquare size={22} /> },
-    { id: 'workspaces', label: t('navWorkspaces'), icon: <Landmark size={22} /> },
-    { id: 'reports', label: t('navReports'), icon: <BarChart2 size={22} /> },
-    { id: 'more', label: t('navMore'), icon: <Menu size={22} /> },
+    { id: 'dashboard', label: isEn ? 'Home' : 'الرئيسية', icon: <Home size={22} /> },
+    { id: 'inbox', label: isEn ? 'Conversations' : 'المحادثات', icon: <MessageSquare size={22} /> },
+    { id: 'workspaces', label: isEn ? 'Workspaces' : 'مساحات العمل', icon: <Landmark size={22} /> },
+    { id: 'reports', label: isEn ? 'Reports' : 'التقارير', icon: <BarChart2 size={22} /> },
+    { id: 'settings', label: isEn ? 'Settings' : 'الإعدادات', icon: <Settings size={22} /> },
   ];
 
   return (

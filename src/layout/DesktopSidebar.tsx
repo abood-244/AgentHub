@@ -13,10 +13,15 @@ import {
   Settings,
   ChevronRight,
   ChevronLeft,
-  Sparkles
+  Sparkles,
+  CreditCard,
+  Activity,
+  Layers,
+  Bell,
+  Sliders,
 } from 'lucide-react';
 import { useTranslation } from '../i18n/LanguageContext';
-import { mockOrganization } from '../services/mockData';
+import { useAgentHubAuth } from '../context/AuthContext';
 
 export interface DesktopSidebarProps {
   currentScreen: string;
@@ -30,20 +35,64 @@ export const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
   selectedWorkspaceId,
 }) => {
   const { language, t, isRTL } = useTranslation();
+  const { internalUser, role } = useAgentHubAuth();
   const isEn = language === 'en';
 
-  const navItems = [
-    { id: 'dashboard', label: t('navDashboard'), icon: <Home size={20} /> },
-    { id: 'workspaces', label: t('navWorkspaces'), icon: <Landmark size={20} />, badge: '6' },
-    { id: 'llm-models', label: t('navLLMModels'), icon: <Cpu size={20} />, isAiBadge: true },
-    { id: 'inbox', label: t('navInbox'), icon: <MessageSquare size={20} />, badge: '12' },
-    { id: 'support-cases', label: t('navSupportCases'), icon: <LifeBuoy size={20} />, badge: '4' },
-    { id: 'channels', label: t('navChannels'), icon: <Radio size={20} /> },
-    { id: 'knowledge', label: t('navKnowledge'), icon: <Database size={20} /> },
-    { id: 'staff', label: t('navStaffUsers'), icon: <Users size={20} /> },
-    { id: 'reports', label: t('navReports'), icon: <BarChart3 size={20} /> },
-    { id: 'settings', label: t('navSettings'), icon: <Settings size={20} /> },
-  ];
+  const isStaff = role === 'Staff' || role === 'staff';
+  const isPlatformAdmin =
+    role === 'Platform Administrator' ||
+    role === 'platform_admin' ||
+    role === 'platform_administrator';
+
+  const universityName = internalUser?.university?.name || (isEn ? 'AgentHub University' : 'جامعة العلوم والتكنولوجيا');
+  const roleTitle = isStaff
+    ? (isEn ? 'Staff Member' : 'عضو هيئة تدريس / موظف')
+    : isPlatformAdmin
+      ? (isEn ? 'Platform Administrator' : 'مدير المنصة')
+      : (isEn ? 'System Administrator' : 'مدير النظام الجامعي');
+
+  let navItems: Array<{
+    id: string;
+    label: string;
+    icon: React.ReactNode;
+    badge?: string;
+    isAiBadge?: boolean;
+  }> = [];
+
+  if (isPlatformAdmin) {
+    navItems = [
+      { id: 'dashboard', label: isEn ? 'Platform Overview' : 'لوحة المنصة', icon: <Home size={20} /> },
+      { id: 'universities', label: isEn ? 'Universities' : 'إدارة الجامعات', icon: <Landmark size={20} />, },
+      { id: 'billing', label: isEn ? 'Subscriptions & Billing' : 'الاشتراكات والفوترة', icon: <CreditCard size={20} />, },
+      { id: 'system-health', label: isEn ? 'System Health' : 'صحة النظام', icon: <Activity size={20} />, },
+      { id: 'platform-settings', label: isEn ? 'Platform Settings' : 'إعدادات المنصة', icon: <Sliders size={20} />, },
+      { id: 'notifications', label: isEn ? 'Notifications' : 'الإشعارات', icon: <Bell size={20} />, },
+      { id: 'integrations', label: isEn ? 'Integrations' : 'التكاملات والربط', icon: <Layers size={20} />, },
+      { id: 'settings', label: t('navSettings'), icon: <Settings size={20} /> },
+    ];
+  } else if (isStaff) {
+    navItems = [
+      { id: 'dashboard', label: t('navDashboard'), icon: <Home size={20} /> },
+      { id: 'workspaces', label: t('navWorkspaces'), icon: <Landmark size={20} />, badge: String(internalUser?.workspaces?.length || 0) },
+      { id: 'inbox', label: t('navInbox'), icon: <MessageSquare size={20} />, },
+      { id: 'support-cases', label: t('navSupportCases'), icon: <LifeBuoy size={20} />, },
+      { id: 'settings', label: t('navSettings'), icon: <Settings size={20} /> },
+    ];
+  } else {
+    // System Administrator
+    navItems = [
+      { id: 'dashboard', label: t('navDashboard'), icon: <Home size={20} /> },
+      { id: 'workspaces', label: t('navWorkspaces'), icon: <Landmark size={20} /> },
+      { id: 'llm-models', label: t('navLLMModels'), icon: <Cpu size={20} />, isAiBadge: true },
+      { id: 'inbox', label: t('navInbox'), icon: <MessageSquare size={20} />, },
+      { id: 'support-cases', label: t('navSupportCases'), icon: <LifeBuoy size={20} />, },
+      { id: 'channels', label: t('navChannels'), icon: <Radio size={20} />, },
+      { id: 'knowledge', label: t('navKnowledge'), icon: <Database size={20} />, },
+      { id: 'staff', label: t('navStaffUsers'), icon: <Users size={20} />, },
+      { id: 'reports', label: t('navReports'), icon: <BarChart3 size={20} />, },
+      { id: 'settings', label: t('navSettings'), icon: <Settings size={20} /> },
+    ];
+  }
 
   return (
     <aside className="ah-desktop-sidebar">
@@ -68,10 +117,10 @@ export const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
         </div>
         <div className="ah-sidebar__org-info">
           <span className="ah-sidebar__org-title">
-            {isEn ? mockOrganization.nameEn : mockOrganization.nameAr}
+            {isPlatformAdmin ? (isEn ? 'Core Platform Operations' : 'إشراف المنصة المركزية') : universityName}
           </span>
           <span className="ah-sidebar__org-sub">
-            {isEn ? mockOrganization.roleTitleEn : mockOrganization.roleTitleAr}
+            {roleTitle}
           </span>
         </div>
       </div>

@@ -1,0 +1,422 @@
+/* AgentHub Approved SignIn Screen CSS */
+.ah-signin-wrapper {
+  background-color: #F8FAFC;
+  color: #0F172A;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  direction: rtl;
+  padding: 0;
+  margin: 0;
+}
+
+.ah-signin-container {
+  position: relative;
+  width: 100%;
+  max-width: 390px;
+  min-height: 100vh;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+}
+
+@media (min-width: 640px) {
+  .ah-signin-container {
+    min-height: 844px;
+    height: auto;
+    border-radius: 36px;
+    margin: 24px 0;
+    box-shadow: 0 25px 60px rgba(8, 39, 68, 0.18), 0 0 0 1px rgba(226, 232, 240, 0.8);
+  }
+}
+
+.ah-signin-header-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20rem;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ah-signin-bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  opacity: 0.85;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 40%, rgba(0,0,0,0.85) 65%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 40%, rgba(0,0,0,0.85) 65%, rgba(0,0,0,0) 100%);
+}
+
+.ah-signin-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.5) 60%, #ffffff 100%);
+}
+
+.ah-signin-statusbar {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 28px 8px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e293b;
+  letter-spacing: -0.01em;
+}
+
+.ah-signin-statusbar__time {
+  direction: ltr;
+  text-align: left;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.ah-signin-statusbar__icons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  direction: ltr;
+  color: #0f172a;
+}
+
+.ah-signin-main {
+  position: relative;
+  z-index: 10;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 24px 20px 24px;
+}
+
+.ah-signin-brand-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 4px;
+  margin-bottom: 20px;
+}
+
+.ah-signin-temple-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 14px rgba(8, 120, 249, 0.12);
+  border: 1px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  color: #0878F9;
+}
+
+.ah-signin-brand-title {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  margin: 0;
+  line-height: 1;
+}
+
+.ah-signin-brand-main {
+  color: #071B45;
+}
+
+.ah-signin-brand-accent {
+  color: #0878F9;
+}
+
+.ah-signin-titles {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.ah-signin-heading {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 6px 0;
+}
+
+.ah-signin-subheading {
+  font-size: 13.5px;
+  color: #64748b;
+  margin: 0;
+}
+
+.ah-signin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ah-signin-field {
+  position: relative;
+}
+
+.ah-signin-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid #DCE7F6;
+  border-radius: 14px;
+  transition: all 0.2s ease;
+}
+
+.ah-signin-input-wrapper:focus-within {
+  border-color: #0878F9;
+  box-shadow: 0 0 0 3px rgba(8, 120, 249, 0.15);
+}
+
+.ah-signin-input {
+  width: 100%;
+  height: 48px;
+  padding-right: 44px;
+  padding-left: 16px;
+  font-size: 14px;
+  text-align: right;
+  color: #1e293b;
+  background: transparent;
+  border: 0;
+  outline: none;
+  font-family: inherit;
+}
+
+.ah-signin-input--password {
+  padding-left: 44px;
+}
+
+.ah-signin-input::placeholder {
+  color: #94A3B8;
+}
+
+.ah-signin-field-icon {
+  position: absolute;
+  right: 14px;
+  color: #94A3B8;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ah-signin-eye-btn {
+  position: absolute;
+  left: 14px;
+  background: transparent;
+  border: 0;
+  color: #94A3B8;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  transition: color 0.15s ease;
+}
+
+.ah-signin-eye-btn:hover {
+  color: #475569;
+}
+
+.ah-signin-aux-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 2px;
+  font-size: 13px;
+}
+
+.ah-signin-remember-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  color: #475569;
+  font-weight: 500;
+}
+
+.ah-signin-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: #0878F9;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ah-signin-forgot-btn {
+  background: transparent;
+  border: 0;
+  color: #0878F9;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+  transition: color 0.15s ease;
+}
+
+.ah-signin-forgot-btn:hover {
+  color: #0062d6;
+  text-decoration: underline;
+}
+
+.ah-signin-submit-btn {
+  width: 100%;
+  height: 48px;
+  background-color: #0878F9;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 15px;
+  border-radius: 14px;
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(8, 120, 249, 0.28);
+  transition: all 0.15s ease-in-out;
+  margin-top: 6px;
+  font-family: inherit;
+}
+
+.ah-signin-submit-btn:hover:not(:disabled) {
+  background-color: #0062d6;
+}
+
+.ah-signin-submit-btn:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+.ah-signin-submit-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.ah-signin-divider {
+  position: relative;
+  margin: 18px 0;
+  text-align: center;
+}
+
+.ah-signin-divider__line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  border-top: 1px solid #E2E8F0;
+}
+
+.ah-signin-divider__text {
+  position: relative;
+  display: inline-block;
+  padding: 0 12px;
+  background-color: #ffffff;
+  color: #94A3B8;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.ah-signin-google-btn {
+  width: 100%;
+  height: 48px;
+  background-color: #ffffff;
+  border: 1px solid #DCE7F6;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  color: #334155;
+  font-weight: 600;
+  font-size: 13.5px;
+  gap: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.ah-signin-google-btn:hover:not(:disabled) {
+  background-color: #F8FAFC;
+  border-color: #CBD5E1;
+}
+
+.ah-signin-google-btn:active:not(:disabled) {
+  background-color: #F1F5F9;
+  transform: scale(0.99);
+}
+
+.ah-signin-error-alert {
+  background-color: #FEF2F2;
+  border: 1px solid #FCA5A5;
+  color: #991B1B;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ah-signin-success-alert {
+  background-color: #F0FDF4;
+  border: 1px solid #86EFAC;
+  color: #166534;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.ah-signin-footer {
+  margin-top: 20px;
+  padding: 8px 0;
+  text-align: center;
+}
+
+.ah-signin-footer__text {
+  font-size: 13px;
+  color: #64748B;
+  margin: 0;
+}
+
+.ah-signin-footer__link {
+  color: #0878F9;
+  font-weight: 600;
+  text-decoration: none;
+  margin-right: 4px;
+  transition: color 0.15s ease;
+}
+
+.ah-signin-footer__link:hover {
+  color: #0062d6;
+  text-decoration: underline;
+}
+
+.ah-signin-home-indicator {
+  margin: 14px auto 0 auto;
+  width: 128px;
+  height: 4px;
+  background-color: rgba(15, 23, 42, 0.8);
+  border-radius: 9999px;
+}

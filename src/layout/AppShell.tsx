@@ -6,6 +6,8 @@ import { DesktopSidebar } from './DesktopSidebar';
 import { DesktopTopBar } from './DesktopTopBar';
 import { useTranslation } from '../i18n/LanguageContext';
 
+import { MobileDrawer } from './MobileDrawer';
+
 export interface AppShellProps {
   currentScreen: string;
   subScreenTitle?: string;
@@ -29,6 +31,7 @@ export const AppShell: React.FC<AppShellProps> = ({
   const [isMobile, setIsMobile] = useState<boolean>(() => {
     return typeof window !== 'undefined' ? window.innerWidth < 1024 : false;
   });
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -50,6 +53,12 @@ export const AppShell: React.FC<AppShellProps> = ({
     staff: t('navStaffUsers'),
     reports: t('navReports'),
     settings: t('navSettings'),
+    universities: 'إدارة الجامعات',
+    billing: 'الاشتراكات والفوترة',
+    'system-health': 'صحة النظام',
+    'platform-settings': 'إعدادات المنصة',
+    notifications: 'الإشعارات',
+    integrations: 'التكاملات والربط',
   };
 
   return (
@@ -62,6 +71,7 @@ export const AppShell: React.FC<AppShellProps> = ({
             subScreenTitle={subScreenTitle}
             onBack={onBack}
             onCreateWorkspace={onOpenCreateWorkspace}
+            onOpenDrawer={() => setIsDrawerOpen(true)}
           />
 
           <main className="ah-mobile-main-content">
@@ -70,6 +80,15 @@ export const AppShell: React.FC<AppShellProps> = ({
 
           {/* Show bottom nav on main tabs, hide if inside deep test-chat or back screen */}
           <MobileBottomNav
+            currentScreen={currentScreen}
+            onNavigate={onNavigate}
+            onOpenDrawer={() => setIsDrawerOpen(true)}
+          />
+
+          {/* Side Drawer Overlay for Mobile */}
+          <MobileDrawer
+            isOpen={isDrawerOpen}
+            onClose={() => setIsDrawerOpen(false)}
             currentScreen={currentScreen}
             onNavigate={onNavigate}
           />

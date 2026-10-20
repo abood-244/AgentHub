@@ -65,15 +65,16 @@ export const WorkspaceCard: React.FC<WorkspaceCardProps> = ({
   };
 
   return (
-    <div
+    <article
       className="ah-workspace-card"
       onClick={onClick}
       role="button"
       tabIndex={0}
       onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && onClick?.()}
+      dir="rtl"
     >
-      {/* Top Details Row */}
-      <div className="ah-ws-card__top">
+      <div className="ah-ws-card__body">
+        {/* Category Icon Box (Right side in RTL) */}
         <div
           className="ah-ws-card__icon-box"
           style={{ backgroundColor: getCategoryBgColor() }}
@@ -81,67 +82,59 @@ export const WorkspaceCard: React.FC<WorkspaceCardProps> = ({
           {renderCategoryIcon()}
         </div>
 
-        <div className="ah-ws-card__info">
-          <div className="ah-ws-card__headline">
+        {/* Content Area */}
+        <div className="ah-ws-card__content">
+          {/* Top Row: Status pill on left, Name on right in RTL */}
+          <div className="ah-ws-card__header-row">
+            <span
+              className={`ah-ws-card__status-pill ${
+                workspace.status === 'active'
+                  ? 'ah-ws-card__status-pill--active'
+                  : 'ah-ws-card__status-pill--paused'
+              }`}
+            >
+              {isEn
+                ? workspace.status === 'active'
+                  ? 'Active'
+                  : 'Paused'
+                : workspace.status === 'active'
+                ? 'نشط'
+                : 'متوقف'}
+            </span>
+
             <h3 className="ah-ws-card__title">{name}</h3>
-            <div className="ah-ws-card__badges-group">
-              <WorkspaceStatusBadge
-                status={workspace.status}
-                label={isEn ? (workspace.status === 'active' ? 'Active' : 'Paused') : undefined}
-              />
-              <button
-                type="button"
-                className="ah-ws-card__menu-btn"
-                aria-label="Workspace Options"
-                onClick={e => {
-                  e.stopPropagation();
-                  onOpenMenu?.(e);
-                }}
-              >
-                <MoreVertical size={18} />
-              </button>
+          </div>
+
+          {/* Subtitle & Chevron Row */}
+          <div className="ah-ws-card__desc-row">
+            <svg
+              className="ah-ws-card__chevron"
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              viewBox="0 0 24 24"
+            >
+              <path d="M15 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <p className="ah-ws-card__desc">{description}</p>
+          </div>
+
+          {/* Bottom Row: User & Agent Counts */}
+          <div className="ah-ws-card__counts-row">
+            <div className="ah-ws-card__count-item">
+              <span>{workspace.agentsCount || 0} {isEn ? 'Agents' : 'وكلاء'}</span>
+              <Bot size={15} className="ah-ws-card__count-icon" />
+            </div>
+
+            <div className="ah-ws-card__count-item">
+              <span>{workspace.staffCount || 0} {isEn ? 'Users' : 'مستخدم'}</span>
+              <Users size={15} className="ah-ws-card__count-icon" />
             </div>
           </div>
-          <p className="ah-ws-card__desc">{description}</p>
         </div>
       </div>
-
-      {/* Bottom 3-Column Metrics Row matching screenshot */}
-      <div className="ah-ws-card__stats">
-        <div className="ah-ws-card__stat-col">
-          <span className="ah-ws-card__stat-icon">
-            <Database size={17} color="#0066FF" />
-          </span>
-          <div className="ah-ws-card__stat-data">
-            <span className="ah-ws-card__stat-num">{workspace.knowledgeSourcesCount}</span>
-            <span className="ah-ws-card__stat-label">{t('statKnowledgeSources')}</span>
-          </div>
-        </div>
-
-        <div className="ah-ws-card__stat-divider" />
-
-        <div className="ah-ws-card__stat-col">
-          <span className="ah-ws-card__stat-icon">
-            <Bot size={17} color="#0066FF" />
-          </span>
-          <div className="ah-ws-card__stat-data">
-            <span className="ah-ws-card__stat-num">{workspace.agentsCount}</span>
-            <span className="ah-ws-card__stat-label">{t('statAgent')}</span>
-          </div>
-        </div>
-
-        <div className="ah-ws-card__stat-divider" />
-
-        <div className="ah-ws-card__stat-col">
-          <span className="ah-ws-card__stat-icon">
-            <Users size={17} color="#0066FF" />
-          </span>
-          <div className="ah-ws-card__stat-data">
-            <span className="ah-ws-card__stat-num">{workspace.staffCount}</span>
-            <span className="ah-ws-card__stat-label">{t('statStaff')}</span>
-          </div>
-        </div>
-      </div>
-    </div>
+    </article>
   );
 };

@@ -1,0 +1,508 @@
+/* ==========================================================================
+   AgentHub Onboarding Screens — CSS Replica
+   Faithfully reproduces agenthub_1, agenthub_2, and agenthub_3 designs
+   ========================================================================== */
+
+.ah-onboarding-wrapper {
+  background-color: #F8FAFC;
+  color: #071B45;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'IBM Plex Sans Arabic', 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  direction: rtl;
+  padding: 0;
+  margin: 0;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ah-onboarding-container {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  min-height: 100vh;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+  padding: 12px 24px 32px 24px;
+  box-sizing: border-box;
+  transition: background-color 0.25s ease;
+}
+
+/* Screen 3 has light blue background tint (#F8FAFF) */
+.ah-onboarding-container--step3 {
+  background-color: #F8FAFF;
+}
+
+@media (min-width: 640px) {
+  .ah-onboarding-container {
+    min-height: 844px;
+    height: auto;
+    border-radius: 36px;
+    margin: 24px 0;
+    box-shadow: 0 25px 60px rgba(8, 39, 68, 0.18), 0 0 0 1px rgba(226, 232, 240, 0.8);
+  }
+}
+
+/* Header & Status Bar */
+.ah-onboarding-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.ah-onboarding-statusbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 4px 10px 4px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0F172A;
+  letter-spacing: -0.01em;
+  user-select: none;
+}
+
+.ah-onboarding-statusbar__time {
+  direction: ltr;
+  text-align: left;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.ah-onboarding-statusbar__icons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  direction: ltr;
+  color: #0F172A;
+}
+
+/* Navigation Bar */
+.ah-onboarding-nav {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 8px 0 4px 0;
+}
+
+/* Step 1 Nav: Centered logo, skip on left */
+.ah-onboarding-nav--step1 {
+  justify-content: center;
+}
+
+/* Step 2 Nav: Spacer right, Centered logo, skip on left */
+.ah-onboarding-nav--step2 {
+  justify-content: space-between;
+}
+
+/* Step 3 Nav: Skip on right in RTL, Centered logo, ghost spacer on left */
+.ah-onboarding-nav--step3 {
+  justify-content: space-between;
+}
+
+.ah-onboarding-nav-spacer {
+  width: 40px;
+  flex-shrink: 0;
+}
+
+.ah-onboarding-nav-spacer--step3 {
+  width: 32px;
+  flex-shrink: 0;
+}
+
+.ah-onboarding-logo {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  user-select: none;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  direction: ltr;
+}
+
+.ah-onboarding-logo-navy {
+  color: #071B45;
+  font-weight: 800;
+}
+
+.ah-onboarding-logo-blue {
+  color: #0878F9;
+  font-weight: 800;
+}
+
+.ah-onboarding-skip-btn {
+  background: transparent;
+  border: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #63779A;
+  cursor: pointer;
+  padding: 6px 8px;
+  font-family: inherit;
+  transition: color 0.15s ease, opacity 0.15s ease;
+}
+
+.ah-onboarding-skip-btn:hover {
+  color: #071B45;
+}
+
+.ah-onboarding-skip-btn:active {
+  opacity: 0.6;
+}
+
+.ah-onboarding-skip-btn--step1 {
+  position: absolute;
+  left: 4px;
+}
+
+/* Main Content Area */
+.ah-onboarding-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 8px;
+  text-align: center;
+}
+
+/* Hero Illustration Container */
+.ah-onboarding-hero {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+/* Ambient glow circles */
+.ah-onboarding-glow {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(40px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.ah-onboarding-glow--step1 {
+  width: 256px;
+  height: 256px;
+  background-color: rgba(219, 234, 254, 0.45);
+}
+
+.ah-onboarding-glow--step3 {
+  width: 288px;
+  height: 288px;
+  background-color: rgba(219, 234, 254, 0.6);
+  transform: scale(0.9);
+}
+
+.ah-onboarding-img {
+  position: relative;
+  z-index: 1;
+  width: 256px;
+  height: 256px;
+  object-fit: contain;
+  user-select: none;
+  filter: drop-shadow(0 2px 8px rgba(7, 27, 69, 0.06));
+}
+
+@media (min-width: 400px) {
+  .ah-onboarding-img {
+    width: 280px;
+    height: 280px;
+  }
+}
+
+/* Fallback SVG container when image fails to load */
+.ah-onboarding-fallback {
+  position: relative;
+  z-index: 1;
+  width: 256px;
+  height: 256px;
+  background: linear-gradient(135deg, #F1F7FF 0%, #EAF3FF 100%);
+  border-radius: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(8, 120, 249, 0.08);
+  border: 1px solid #DCE7F6;
+  color: #0878F9;
+}
+
+.ah-onboarding-fallback svg {
+  width: 72px;
+  height: 72px;
+  margin-bottom: 8px;
+}
+
+.ah-onboarding-fallback span {
+  font-size: 13px;
+  font-weight: 600;
+  color: #071B45;
+}
+
+/* Typography */
+.ah-onboarding-text {
+  padding: 0 8px;
+}
+
+.ah-onboarding-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #071B45;
+  line-height: 1.35;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.015em;
+}
+
+@media (min-width: 400px) {
+  .ah-onboarding-title {
+    font-size: 26px;
+  }
+}
+
+.ah-onboarding-title--step2 {
+  font-weight: 800;
+}
+
+.ah-onboarding-subtitle {
+  font-size: 15px;
+  color: #63779A;
+  line-height: 1.6;
+  max-width: 330px;
+  margin: 0 auto;
+  font-weight: 400;
+}
+
+/* Footer & Controls */
+.ah-onboarding-footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 8px;
+  box-sizing: border-box;
+}
+
+.ah-onboarding-footer--step1 {
+  gap: 24px;
+}
+
+.ah-onboarding-footer--step2 {
+  gap: 24px;
+}
+
+.ah-onboarding-footer--step3 {
+  gap: 16px;
+}
+
+/* Pagination Dots */
+.ah-onboarding-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.ah-onboarding-dot {
+  display: inline-block;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+}
+
+/* Dot sizes: Step 1 */
+.ah-onboarding-dot--active-step1 {
+  width: 10px;
+  height: 10px;
+  background-color: #0878F9;
+}
+
+/* Inactive dots for Step 1 & 2 */
+.ah-onboarding-dot--inactive {
+  width: 10px;
+  height: 10px;
+  background-color: #DCE7F6;
+}
+
+/* Dot sizes: Step 2 */
+.ah-onboarding-dot--active-step2 {
+  width: 8px;
+  height: 8px;
+  background-color: #0878F9;
+}
+
+.ah-onboarding-footer--step2 .ah-onboarding-dot--inactive {
+  width: 8px;
+  height: 8px;
+  background-color: #CBD5E1;
+}
+
+/* Dot sizes: Step 3 (inactive is round 8px, active is 24px pill) */
+.ah-onboarding-dot--inactive-step3 {
+  width: 8px;
+  height: 8px;
+  background-color: #E2E8F0;
+}
+
+.ah-onboarding-dot--pill-step3 {
+  width: 24px;
+  height: 8px;
+  background-color: #0878F9;
+  box-shadow: 0 1px 3px rgba(8, 120, 249, 0.3);
+}
+
+/* Button Layouts */
+.ah-onboarding-btn-wrap {
+  width: 100%;
+}
+
+.ah-onboarding-btn {
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  transition: all 0.15s ease-in-out;
+  box-sizing: border-box;
+}
+
+.ah-onboarding-arrow-svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Step 1 Full-width Next Button */
+.ah-onboarding-btn--next-full {
+  width: 100%;
+  height: 56px;
+  background-color: #0878F9;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 18px;
+  border-radius: 16px;
+  gap: 12px;
+  box-shadow: 0 10px 25px -5px rgba(8, 120, 249, 0.3);
+}
+
+.ah-onboarding-btn--next-full:hover {
+  background-color: #0062D6;
+}
+
+.ah-onboarding-btn--next-full:active {
+  transform: scale(0.99);
+}
+
+/* Step 2 Row of 2 Buttons */
+.ah-onboarding-btn-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.ah-onboarding-btn--prev-step2 {
+  width: 100%;
+  padding: 14px 16px;
+  background-color: #F1F5F9;
+  color: #071B45;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 16px;
+}
+
+.ah-onboarding-btn--prev-step2:hover {
+  background-color: #E2E8F0;
+}
+
+.ah-onboarding-btn--prev-step2:active {
+  transform: scale(0.98);
+}
+
+.ah-onboarding-btn--next-step2 {
+  width: 100%;
+  padding: 14px 16px;
+  background-color: #0878F9;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 16px;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(8, 120, 249, 0.25);
+}
+
+.ah-onboarding-btn--next-step2:hover {
+  background-color: #0062D6;
+}
+
+.ah-onboarding-btn--next-step2:active {
+  transform: scale(0.98);
+}
+
+/* Step 3 Stack of 2 Buttons */
+.ah-onboarding-btn-stack {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ah-onboarding-btn--get-started {
+  width: 100%;
+  height: 52px;
+  padding: 14px 24px;
+  background-color: #0878F9;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 16px;
+  gap: 10px;
+  box-shadow: 0 10px 25px -5px rgba(8, 120, 249, 0.35);
+}
+
+.ah-onboarding-btn--get-started:hover {
+  background-color: #076BE0;
+}
+
+.ah-onboarding-btn--get-started:active {
+  transform: scale(0.98);
+}
+
+.ah-onboarding-btn--prev-step3 {
+  width: 100%;
+  height: 48px;
+  padding: 12px 24px;
+  background-color: #F1F7FF;
+  color: #071B45;
+  font-weight: 500;
+  font-size: 16px;
+  border-radius: 16px;
+}
+
+.ah-onboarding-btn--prev-step3:hover {
+  background-color: #E5F0FF;
+}
+
+.ah-onboarding-btn--prev-step3:active {
+  transform: scale(0.98);
+}
+
+/* iOS Home Indicator */
+.ah-onboarding-home-indicator {
+  margin: 14px auto 0 auto;
+  width: 128px;
+  height: 4px;
+  background-color: rgba(148, 163, 184, 0.8);
+  border-radius: 9999px;
+}

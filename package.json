@@ -5,13 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "backend:dev": "cd backend && php artisan serve",
+    "backend:dev": "cd backend && php artisan serve --port=8001",
     "backend:migrate": "cd backend && php artisan migrate",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@clerk/react": "^6.17.8",
     "lucide-react": "^1.52.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"

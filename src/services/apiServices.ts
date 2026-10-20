@@ -11,6 +11,8 @@ import {
   WorkspaceChannelConfig,
   WorkspaceSetupProgress,
   TestChatMessage,
+  UniversityDetails,
+  ApiWorkspace,
 } from '../types';
 
 import {
@@ -23,8 +25,61 @@ import {
   mockGlobalStaff,
 } from './mockData';
 
-// In-memory reactive stores simulating database records
-let workspacesState: Workspace[] = [...mockWorkspaces];
+import { apiClient, ApiError } from './apiClient';
+
+export function mapApiWorkspaceToWorkspace(apiWs: any): Workspace {
+  const wsId = String(apiWs.id);
+  const name = apiWs.name || '';
+  return {
+    id: wsId,
+    name: name,
+    nameEn: name,
+    slug: name.toLowerCase().replace(/\s+/g, '-'),
+    description: apiWs.description || '',
+    descriptionEn: apiWs.description || '',
+    category: 'admissions',
+    status: (apiWs.status as WorkspaceStatus) || 'active',
+    iconName: 'Building',
+    themeColor: '#0066FF',
+    knowledgeSourcesCount: 0,
+    agentsCount: 1,
+    staffCount: 0,
+    selectedLLMModelId: 'model-gpt4o',
+    defaultLanguage: 'ar',
+    assignedStaffIds: [],
+    university_id: apiWs.university_id,
+    access_level: apiWs.access_level,
+    channelConfig: {
+      webWidget: {
+        enabled: false,
+        title: `مساعد ${name}`,
+        primaryColor: '#0066FF',
+        position: 'bottom-right',
+        greeting: `مرحباً بك في قسم ${name}، كيف يمكنني مساعدتك؟`,
+      },
+      whatsapp: {
+        enabled: false,
+        phoneNumber: '',
+        status: 'disconnected',
+      },
+    },
+    setupProgress: {
+      workspaceSettings: 'configured',
+      knowledge: 'not_configured',
+      agentProfile: 'in_progress',
+      llmModel: 'configured',
+      staff: 'not_configured',
+      channels: 'not_configured',
+      testAgent: 'not_configured',
+      isReadyForTesting: false,
+      isLiveReady: false,
+    },
+    createdAt: apiWs.created_at || new Date().toISOString(),
+    updatedAt: apiWs.updated_at || new Date().toISOString(),
+  };
+}
+
+// In-memory reactive stores simulating database records for deferred features
 const agentProfilesState: Record<string, AgentProfile> = { ...mockAgentProfiles };
 let knowledgeSourcesState: KnowledgeSource[] = [...mockKnowledgeSources];
 let supportCasesState: SupportCase[] = [...mockSupportCases];
@@ -32,16 +87,33 @@ let globalStaffState: User[] = [...mockGlobalStaff];
 
 const delay = (ms = 100) => new Promise(resolve => setTimeout(resolve, ms));
 
+export const universityService = {
+  async get(): Promise<UniversityDetails> {
+    const res = await apiClient.getUniversity();
+    return res.university;
+  },
+
+  async update(data: {
+    name?: string;
+    code?: string | null;
+    contact_email?: string | null;
+    contact_phone?: string | null;
+    website?: string | null;
+  }): Promise<UniversityDetails> {
+    const res = await apiClient.updateUniversity(data);
+    return res.university;
+  },
+};
+
 export const workspaceService = {
   async getAll(): Promise<Workspace[]> {
-    await delay();
-    return [...workspacesState];
+    const res = await apiClient.getWorkspaces();
+    return (res.workspaces || []).map(mapApiWorkspaceToWorkspace);
   },
 
   async getById(id: string): Promise<Workspace | null> {
-    await delay();
-    const item = workspacesState.find(w => w.id === id);
-    return item ? { ...item } : null;
+    const res = await apiClient.getWorkspace(id);
+    return res.workspace ? mapApiWorkspaceToWorkspace(res.workspace) : null;
   },
 
   async create(data: {
@@ -52,88 +124,22 @@ export const workspaceService = {
     category?: Workspace['category'];
     selectedLLMModelId?: string;
   }): Promise<Workspace> {
-    await delay();
-    const id = `ws-${Date.now().toString(36)}`;
-    const newWorkspace: Workspace = {
-      id,
+    const res = await apiClient.createWorkspace({
       name: data.name,
-      nameEn: data.nameEn || data.name,
-      slug: (data.nameEn || data.name).toLowerCase().replace(/\s+/g, '-'),
-      description: data.description,
-      descriptionEn: data.descriptionEn || data.description,
-      category: data.category || 'admissions',
-      status: 'paused', // Initially paused until setup & tested
-      iconName: 'Building',
-      themeColor: '#0066FF',
-      knowledgeSourcesCount: 0,
-      agentsCount: 1,
-      staffCount: 0,
-      selectedLLMModelId: data.selectedLLMModelId || 'model-gpt4o',
-      defaultLanguage: 'ar',
-      assignedStaffIds: [],
-      channelConfig: {
-        webWidget: {
-          enabled: false,
-          title: `مساعد ${data.name}`,
-          primaryColor: '#0066FF',
-          position: 'bottom-right',
-          greeting: `مرحباً بك في قسم ${data.name}، كيف يمكنني مساعدتك؟`
-        },
-        whatsapp: {
-          enabled: false,
-          phoneNumber: '',
-          status: 'disconnected'
-        }
-      },
-      setupProgress: {
-        workspaceSettings: 'configured',
-        knowledge: 'not_configured',
-        agentProfile: 'in_progress',
-        llmModel: 'configured',
-        staff: 'not_configured',
-        channels: 'not_configured',
-        testAgent: 'not_configured',
-        isReadyForTesting: false,
-        isLiveReady: false,
-      },
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
-
-    workspacesState = [newWorkspace, ...workspacesState];
-
-    // Seed initial agent profile
-    agentProfilesState[id] = {
-      id: `agent-prof-${id}`,
-      workspaceId: id,
-      name: `مساعد ${data.name} الذكي`,
-      description: `وكيل مخصص للرد على استفسارات الطلاب في ${data.name}.`,
-      selectedLLMModelId: newWorkspace.selectedLLMModelId,
-      systemInstructions: `أنت المساعد الرسمي المعتمد لقسم ${data.name} في جامعة العلوم والتكنولوجيا.
-استخدم المعرفة الجامعية المتاحة للإجابة بدقة ووضوح.
-إذا لم تكن المعلومة متوفرة في الوثائق المرفقة، قم بتحويل الاستفسار فوراً إلى موظفي القسم ولا تقدم معلومات غير مؤكدة.`,
-      temperature: 0.25,
-      maxTokens: 1200,
-      status: 'training',
-      escalationRules: {
-        enabled: true,
-        confidenceThreshold: 0.75,
-        fallbackStaffGroupId: 'staff-general',
-        autoCreateSupportCase: true,
-      },
-      linkedKnowledgeSourceIds: [],
-    };
-
-    return newWorkspace;
+      description: data.description || null,
+      status: 'active',
+    });
+    return mapApiWorkspaceToWorkspace(res.workspace);
   },
 
   async update(id: string, data: Partial<Workspace>): Promise<Workspace> {
-    await delay();
-    const index = workspacesState.findIndex(w => w.id === id);
-    if (index === -1) throw new Error('Workspace not found');
-    const updated = { ...workspacesState[index], ...data, updatedAt: new Date().toISOString() };
-    workspacesState[index] = updated;
-    return updated;
+    const payload: { name?: string; description?: string | null; status?: string } = {};
+    if (data.name !== undefined) payload.name = data.name;
+    if (data.description !== undefined) payload.description = data.description;
+    if (data.status !== undefined) payload.status = data.status;
+
+    const res = await apiClient.updateWorkspace(id, payload);
+    return mapApiWorkspaceToWorkspace(res.workspace);
   },
 
   async updateSetupProgress(id: string, progressUpdates: Partial<WorkspaceSetupProgress>): Promise<Workspace> {

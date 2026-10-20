@@ -1,58 +1,155 @@
 .ah-workspaces-screen {
   display: flex;
   flex-direction: column;
-  gap: var(--ah-space-4);
+  gap: 14px;
   width: 100%;
 }
 
-.ah-ws-controls {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+/* Primary Action: Create Workspace */
+.ah-ws-primary-action {
+  width: 100%;
 }
 
-.ah-ws-controls__search-row {
+.ah-ws-create-btn {
+  width: 100%;
+  background-color: #0066fe;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 14px 16px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
-  gap: var(--ah-space-3);
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(0, 102, 254, 0.2);
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+.ah-ws-create-btn:hover {
+  background-color: #0057db;
+}
+
+.ah-ws-create-btn:active {
+  background-color: #004dc4;
+  transform: scale(0.99);
+}
+
+/* Search Field */
+.ah-ws-search-container {
+  position: relative;
   width: 100%;
 }
 
-.ah-ws-controls__desktop-btn {
-  display: none;
+.ah-ws-search-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  color: #94a3b8;
 }
 
-@media (min-width: 1024px) {
-  .ah-ws-controls__desktop-btn {
-    display: block;
-    flex-shrink: 0;
-  }
+.ah-ws-search-input {
+  width: 100%;
+  background-color: #edf4fc;
+  color: #1e293b;
+  font-size: 14px;
+  border-radius: 14px;
+  padding: 11px 42px 11px 16px;
+  border: 1px solid transparent;
+  outline: none;
+  transition: all 0.15s ease-in-out;
+  box-sizing: border-box;
 }
 
+.ah-ws-search-input::placeholder {
+  color: #94a3b8;
+}
+
+.ah-ws-search-input:focus {
+  background-color: #ffffff;
+  border-color: #0066fe;
+  box-shadow: 0 0 0 3px rgba(0, 102, 254, 0.15);
+}
+
+/* Filter Tabs */
+.ah-ws-filter-tabs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ah-ws-filter-tab {
+  flex: 1;
+  background-color: #edf4fd;
+  color: #6985a6;
+  font-weight: 600;
+  font-size: 13.5px;
+  padding: 9px 8px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.15s ease-in-out;
+}
+
+.ah-ws-filter-tab:hover {
+  background-color: #e2edf9;
+}
+
+.ah-ws-filter-tab--active {
+  background-color: #0066fe;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 102, 254, 0.25);
+}
+
+.ah-ws-filter-tab--active:hover {
+  background-color: #0057db;
+}
+
+.ah-ws-filter-tab__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background-color: #10b981;
+}
+
+/* Workspaces Cards List */
 .ah-ws-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  margin-top: 2px;
 }
 
 @media (min-width: 1024px) {
   .ah-ws-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--ah-space-4);
+    gap: 16px;
   }
 }
 
 .ah-ws-empty {
-  padding: var(--ah-space-8);
+  padding: 32px 16px;
   text-align: center;
-  background-color: var(--ah-bg-surface);
-  border-radius: var(--ah-radius-lg);
-  border: 1px dashed var(--ah-border-strong);
+  background-color: #ffffff;
+  border-radius: 16px;
+  border: 1px dashed #cbd5e1;
 }
 
 .ah-ws-empty__text {
   margin: 0;
-  font-size: var(--ah-font-sm);
-  color: var(--ah-text-secondary);
+  font-size: 14px;
+  color: #64748b;
 }

@@ -27,36 +27,61 @@ export const CreateWorkspaceModal: React.FC<CreateWorkspaceModalProps> = ({
   const [category, setCategory] = useState<Workspace['category']>('admissions');
   const [selectedModelId, setSelectedModelId] = useState(mockLLMModels[0].id);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [validationErrors, setValidationErrors] = useState<Record<string, string[]>>({});
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!nameAr) return;
+    setError(null);
+    setValidationErrors({});
 
-    setIsSubmitting(true);
-    const newWs = await workspaceService.create({
-      name: nameAr,
-      nameEn: nameEn || nameAr,
-      description: descriptionAr,
-      descriptionEn: descriptionAr,
-      category,
-      selectedLLMModelId: selectedModelId,
-    });
+    if (!nameAr.trim()) {
+      setError(isEn ? 'Workspace name is required.' : 'اسم مساحة العمل مطلوب.');
+      return;
+    }
 
-    setIsSubmitting(false);
-    onCreated(newWs);
+    try {
+      setIsSubmitting(true);
+      const newWs = await workspaceService.create({
+        name: nameAr.trim(),
+        nameEn: (nameEn || nameAr).trim(),
+        description: descriptionAr.trim(),
+        descriptionEn: descriptionAr.trim(),
+        category,
+        selectedLLMModelId: selectedModelId,
+      });
+
+      setIsSubmitting(false);
+      setNameAr('');
+      setNameEn('');
+      setDescriptionAr('');
+      onCreated(newWs);
+      onClose();
+    } catch (err: any) {
+      setIsSubmitting(false);
+      if (err.data?.errors) {
+        setValidationErrors(err.data.errors);
+      }
+      setError(err.data?.message || err.message || (isEn ? 'Failed to create workspace.' : 'فشل في إنشاء مساحة العمل.'));
+    }
+  };
+
+  const handleClose = () => {
+    setError(null);
+    setValidationErrors({});
     onClose();
   };
 
   return (
     <Modal
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={handleClose}
       title={t('createWorkspace')}
       subtitle={isEn ? 'Add a new university department or faculty service domain' : 'إضافة قسم جامعي أو عمادة مساندة جديدة للمنصة'}
       size="md"
       footer={
         <>
-          <Button variant="ghost" onClick={onClose} type="button">
+          <Button variant="ghost" onClick={handleClose} type="button">
             {isEn ? 'Cancel' : 'إلغاء'}
           </Button>
           <Button
@@ -71,13 +96,33 @@ export const CreateWorkspaceModal: React.FC<CreateWorkspaceModalProps> = ({
       }
     >
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-        <Input
-          label={isEn ? 'Workspace Name (Arabic)' : 'اسم مساحة العمل (بالعربية)'}
-          placeholder="مثال: عمادة الدراسات العليا"
-          value={nameAr}
-          onChange={e => setNameAr(e.target.value)}
-          required
-        />
+        {error && (
+          <div style={{
+            backgroundColor: '#FEE2E2',
+            border: '1px solid #FCA5A5',
+            borderRadius: 8,
+            padding: '10px 14px',
+            color: '#991B1B',
+            fontSize: '13px',
+          }}>
+            {error}
+          </div>
+        )}
+
+        <div>
+          <Input
+            label={isEn ? 'Workspace Name (Arabic)' : 'اسم مساحة العمل (بالعربية)'}
+            placeholder="مثال: عمادة الدراسات العليا"
+            value={nameAr}
+            onChange={e => setNameAr(e.target.value)}
+            required
+          />
+          {validationErrors.name && (
+            <span style={{ color: '#EF4444', fontSize: '12px', marginTop: 4, display: 'block' }}>
+              {validationErrors.name.join(', ')}
+            </span>
+          )}
+        </div>
 
         <Input
           label={isEn ? 'Workspace Name (English)' : 'اسم مساحة العمل (بالإنجليزية)'}
@@ -95,6 +140,11 @@ export const CreateWorkspaceModal: React.FC<CreateWorkspaceModalProps> = ({
             value={descriptionAr}
             onChange={e => setDescriptionAr(e.target.value)}
           />
+          {validationErrors.description && (
+            <span style={{ color: '#EF4444', fontSize: '12px', marginTop: 4, display: 'block' }}>
+              {validationErrors.description.join(', ')}
+            </span>
+          )}
         </div>
 
         <div className="ah-input-group">

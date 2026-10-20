@@ -69,11 +69,11 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
         />
 
         <StatWidget
-          label={t('metricChannels')}
+          label={isEn ? 'Agents' : 'الوكلاء'}
           value="24"
-          icon={<Radio size={22} />}
+          icon={<Bot size={22} />}
           iconBgColor="#EBF3FE"
-          onClick={() => onNavigate('channels')}
+          onClick={() => onNavigate('agents')}
         />
       </section>
 

@@ -1,9 +1,10 @@
 import React from 'react';
 import './DesktopTopBar.css';
-import { Search, Globe, Moon, Sun, Bell, User as UserIcon } from 'lucide-react';
+import { Search, Globe, Moon, Sun, Bell, LogOut, User as UserIcon } from 'lucide-react';
 import { useTranslation } from '../i18n/LanguageContext';
 import { useTheme } from '../theme/ThemeContext';
-import { mockCurrentUser, mockOrganization } from '../services/mockData';
+import { useAgentHubAuth } from '../context/AuthContext';
+import { mockOrganization } from '../services/mockData';
 
 export interface DesktopTopBarProps {
   breadcrumbTitle?: string;
@@ -12,10 +13,11 @@ export interface DesktopTopBarProps {
 export const DesktopTopBar: React.FC<DesktopTopBarProps> = ({ breadcrumbTitle }) => {
   const { language, toggleLanguage, t } = useTranslation();
   const { theme, toggleTheme } = useTheme();
+  const { internalUser, signOut } = useAgentHubAuth();
 
   const isEn = language === 'en';
-  const userName = isEn ? mockCurrentUser.nameEn : mockCurrentUser.name;
-  const userRole = isEn ? mockCurrentUser.roleLabelEn : mockCurrentUser.roleLabel;
+  const userName = internalUser?.name || (isEn ? 'Authenticated User' : 'مستخدم موثق');
+  const userRole = internalUser?.role || (isEn ? 'Staff Member' : 'موظف النظام');
 
   return (
     <header className="ah-desktop-topbar">
@@ -78,16 +80,38 @@ export const DesktopTopBar: React.FC<DesktopTopBarProps> = ({ breadcrumbTitle })
 
         {/* User Profile */}
         <div className="ah-topbar__profile">
-          <img
-            src={mockCurrentUser.avatarUrl}
-            alt={userName}
-            className="ah-topbar__avatar"
-          />
+          <div
+            style={{
+              width: 36,
+              height: 36,
+              borderRadius: '50%',
+              backgroundColor: '#EFF6FF',
+              color: '#0878F9',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontWeight: 700,
+              fontSize: 14,
+            }}
+          >
+            {userName.charAt(0)}
+          </div>
           <div className="ah-topbar__profile-info">
             <span className="ah-topbar__profile-name">{userName}</span>
             <span className="ah-topbar__profile-role">{userRole}</span>
           </div>
         </div>
+
+        {/* Sign Out Button */}
+        <button
+          type="button"
+          className="ah-topbar__action-btn"
+          onClick={() => signOut()}
+          title={isEn ? 'Sign Out' : 'تسجيل الخروج'}
+          style={{ color: '#EF4444' }}
+        >
+          <LogOut size={18} />
+        </button>
       </div>
     </header>
   );

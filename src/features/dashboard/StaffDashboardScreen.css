@@ -1,0 +1,414 @@
+/* Staff Dashboard Screen Styling matching agenthub_staff_dashboard/code.html */
+
+.ah-staff-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+/* User Greeting */
+.ah-staff-greeting {
+  text-align: center;
+  padding: 4px 4px 2px 4px;
+}
+
+.ah-staff-greeting-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0c2b4c;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.ah-staff-greeting-sub {
+  font-size: 12px;
+  color: #6e84a3;
+  margin: 4px 0 0 0;
+  font-weight: 400;
+}
+
+/* 2x2 Metric Cards Grid */
+.ah-staff-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.ah-staff-metric-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 3px 12px rgba(10, 37, 64, 0.05);
+  border: 1px solid rgba(219, 234, 254, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 96px;
+}
+
+.ah-staff-metric-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.ah-staff-metric-info {
+  text-align: right;
+}
+
+.ah-staff-metric-label {
+  font-size: 12px;
+  color: #68819f;
+  font-weight: 500;
+  display: block;
+}
+
+.ah-staff-metric-val {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0c2b4c;
+  margin-top: 4px;
+  display: block;
+  line-height: 1;
+}
+
+.ah-staff-metric-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ah-staff-metric-icon--blue {
+  background-color: #EAF3FF;
+  color: #0075FF;
+}
+
+.ah-staff-metric-icon--red {
+  background-color: #FFEFEF;
+  color: #F87171;
+}
+
+.ah-staff-metric-badge {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #10B981;
+  margin-top: 6px;
+  gap: 3px;
+}
+
+/* Services Section */
+.ah-staff-services-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ah-staff-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px;
+}
+
+.ah-staff-section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0c2b4c;
+  margin: 0;
+}
+
+.ah-staff-section-link {
+  font-size: 12px;
+  font-weight: 600;
+  color: #0075FF;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.ah-staff-section-link:hover {
+  text-decoration: underline;
+}
+
+/* 3-Column Services Grid */
+.ah-staff-services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.ah-staff-service-tile {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 12px 6px;
+  text-align: center;
+  box-shadow: 0 3px 12px rgba(10, 37, 64, 0.05);
+  border: 1px solid rgba(219, 234, 254, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+.ah-staff-service-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(10, 37, 64, 0.08);
+}
+
+.ah-staff-service-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  flex-shrink: 0;
+}
+
+.ah-staff-service-icon--green {
+  background-color: #E8F8F1;
+  color: #10B981;
+}
+
+.ah-staff-service-icon--teal {
+  background-color: #E1F7F2;
+  color: #059669;
+}
+
+.ah-staff-service-icon--blue {
+  background-color: #EAF3FF;
+  color: #0075FF;
+}
+
+.ah-staff-service-icon--purple {
+  background-color: #F3ECFB;
+  color: #7C3AED;
+}
+
+.ah-staff-service-icon--indigo {
+  background-color: #EEF2FF;
+  color: #4F46E5;
+}
+
+.ah-staff-service-icon--violet {
+  background-color: #F6EEFD;
+  color: #8B5CF6;
+}
+
+.ah-staff-service-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0c2b4c;
+}
+
+/* Support Cases Section */
+.ah-staff-cases-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ah-staff-cases-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ah-staff-case-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 12px 14px;
+  box-shadow: 0 3px 12px rgba(10, 37, 64, 0.05);
+  border: 1px solid rgba(219, 234, 254, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ah-staff-case-info-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.ah-staff-case-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  background-color: #EAF3FF;
+  color: #0075FF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ah-staff-case-details {
+  min-width: 0;
+}
+
+.ah-staff-case-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0c2b4c;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ah-staff-case-meta {
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  color: #7187a5;
+  margin-top: 3px;
+  gap: 6px;
+}
+
+.ah-staff-case-channel {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ah-staff-case-channel--whatsapp {
+  color: #25D366;
+}
+
+.ah-staff-case-status-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+  gap: 4px;
+}
+
+.ah-staff-case-pill {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 9999px;
+}
+
+.ah-staff-case-pill--open {
+  background-color: #FEECEC;
+  color: #EF4444;
+}
+
+.ah-staff-case-pill--pending {
+  background-color: #FFF4E5;
+  color: #F59E0B;
+}
+
+.ah-staff-case-time {
+  font-size: 9px;
+  color: #93A5BE;
+}
+
+/* Authorized Workspaces Section */
+.ah-staff-ws-section {
+  background-color: #ffffff;
+  border-radius: 18px;
+  padding: 16px;
+  border: 1px solid #ebf2fe;
+  box-shadow: 0 3px 12px rgba(10, 37, 64, 0.04);
+}
+
+.ah-staff-ws-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ah-staff-ws-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0c2b4c;
+  margin: 0;
+}
+
+.ah-staff-ws-sub {
+  font-size: 12px;
+  color: #64748b;
+  margin: 2px 0 0 0;
+}
+
+.ah-staff-ws-badge {
+  font-size: 11px;
+  color: #0878F9;
+  font-weight: 700;
+  background-color: #EFF6FF;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.ah-staff-ws-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ah-staff-ws-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.ah-staff-ws-item:hover {
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.ah-staff-ws-item-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ah-staff-ws-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background-color: #EFF6FF;
+  color: #0878F9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ah-staff-ws-item-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1E293B;
+  margin: 0;
+}
+
+.ah-staff-ws-item-desc {
+  font-size: 11px;
+  color: #64748B;
+  margin: 2px 0 0 0;
+}
