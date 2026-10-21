@@ -53,7 +53,7 @@ export const StaffDashboardScreen: React.FC<StaffDashboardScreenProps> = ({
   }, [internalUser]);
 
   return (
-    <div className="ah-staff-dashboard" dir="rtl">
+    <div className="ah-staff-dashboard" dir={isEn ? 'ltr' : 'rtl'}>
       {/* BEGIN: User Greeting */}
       <section className="ah-staff-greeting" data-purpose="greeting-section">
         <h1 className="ah-staff-greeting-title">

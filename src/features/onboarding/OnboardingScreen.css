@@ -42,47 +42,51 @@
 
 @media (min-width: 640px) {
   .ah-onboarding-container {
-    min-height: 844px;
+    min-height: auto;
     height: auto;
-    border-radius: 36px;
-    margin: 24px 0;
-    box-shadow: 0 25px 60px rgba(8, 39, 68, 0.18), 0 0 0 1px rgba(226, 232, 240, 0.8);
+    border-radius: 24px;
+    margin: 32px 0;
+    box-shadow: 0 20px 50px -10px rgba(8, 39, 68, 0.14), 0 0 0 1px rgba(226, 232, 240, 0.9);
   }
 }
 
-/* Header & Status Bar */
-.ah-onboarding-header {
+/* Top Utilities: Language & Theme Switchers */
+.ah-onboarding-top-bar {
   width: 100%;
   display: flex;
-  flex-direction: column;
-}
-
-.ah-onboarding-statusbar {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 4px 4px 10px 4px;
-  font-size: 15px;
-  font-weight: 600;
-  color: #0F172A;
-  letter-spacing: -0.01em;
-  user-select: none;
+  justify-content: flex-end;
+  padding: 4px 0 8px 0;
 }
 
-.ah-onboarding-statusbar__time {
-  direction: ltr;
-  text-align: left;
-  font-weight: 600;
-  font-size: 15px;
-}
-
-.ah-onboarding-statusbar__icons {
+.ah-auth-tools {
   display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ah-auth-tool-btn {
+  display: inline-flex;
   align-items: center;
   gap: 6px;
-  direction: ltr;
-  color: #0F172A;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  color: #1E293B;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ah-auth-tool-btn:hover {
+  background-color: #FFFFFF;
+  border-color: rgba(0, 0, 0, 0.18);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
 /* Navigation Bar */
@@ -498,11 +502,55 @@
   transform: scale(0.98);
 }
 
-/* iOS Home Indicator */
-.ah-onboarding-home-indicator {
-  margin: 14px auto 0 auto;
-  width: 128px;
-  height: 4px;
-  background-color: rgba(148, 163, 184, 0.8);
-  border-radius: 9999px;
+/* Dark Mode Enhancements */
+:root[data-theme="dark"] .ah-onboarding-wrapper {
+  background-color: var(--ah-bg-app);
+  color: var(--ah-text-primary);
+}
+
+:root[data-theme="dark"] .ah-onboarding-container {
+  background-color: var(--ah-bg-surface);
+  color: var(--ah-text-primary);
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+:root[data-theme="dark"] .ah-onboarding-container--step3 {
+  background-color: #0B192C;
+}
+
+:root[data-theme="dark"] .ah-onboarding-title {
+  color: #F8FAFC;
+}
+
+:root[data-theme="dark"] .ah-onboarding-subtitle {
+  color: #94A3B8;
+}
+
+:root[data-theme="dark"] .ah-auth-tool-btn {
+  background-color: rgba(14, 27, 44, 0.85);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #F0F4FA;
+}
+
+:root[data-theme="dark"] .ah-auth-tool-btn:hover {
+  background-color: #172B45;
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+:root[data-theme="dark"] .ah-onboarding-logo-navy {
+  color: #FFFFFF;
+}
+
+:root[data-theme="dark"] .ah-onboarding-skip-btn {
+  color: #94A3B8;
+}
+
+:root[data-theme="dark"] .ah-onboarding-btn--prev-step2 {
+  background-color: #172B45;
+  color: #F0F4FA;
+}
+
+:root[data-theme="dark"] .ah-onboarding-btn--prev-step3 {
+  background-color: #172B45;
+  color: #F0F4FA;
 }

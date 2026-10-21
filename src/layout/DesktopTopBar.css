@@ -9,60 +9,140 @@
   position: sticky;
   top: 0;
   z-index: 40;
-  box-shadow: var(--ah-shadow-xs);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  transition: background-color var(--ah-transition-fast), border-color var(--ah-transition-fast);
 }
 
 .ah-topbar__start {
   display: flex;
   align-items: center;
-  gap: var(--ah-space-6);
+  gap: var(--ah-space-4);
   flex: 1;
+  min-width: 0;
 }
 
-.ah-topbar__breadcrumb {
+/* Sidebar Toggle Button (Matching Reference Screenshots 1-3) */
+.ah-topbar__toggle-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--ah-radius-md);
+  border: 1px solid var(--ah-border-subtle);
+  background-color: var(--ah-bg-surface);
+  color: var(--ah-text-secondary);
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: var(--ah-font-xs);
-  color: var(--ah-text-tertiary);
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--ah-transition-fast);
+  flex-shrink: 0;
 }
 
-.ah-topbar__breadcrumb-root {
+.ah-topbar__toggle-btn:hover {
+  background-color: var(--ah-bg-hover);
+  color: var(--ah-text-primary);
+  border-color: var(--ah-border-strong);
+}
+
+/* Page Title in Header */
+.ah-topbar__title {
+  font-size: 1.25rem;
   font-weight: var(--ah-weight-bold);
+  color: var(--ah-text-primary);
+  margin: 0;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+}
+
+/* Organization / Workspace Badge Pill (Matching "Testing A" in reference screenshots) */
+.ah-topbar__badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 28px;
+  padding: 0 10px;
+  background-color: var(--ah-bg-subtle);
+  border: 1px solid var(--ah-border-subtle);
+  border-radius: var(--ah-radius-full);
+  font-size: 12px;
+  font-weight: var(--ah-weight-medium);
+  color: var(--ah-text-secondary);
+  transition: all var(--ah-transition-fast);
+}
+
+.ah-topbar__badge-pill-icon {
+  display: flex;
+  align-items: center;
   color: var(--ah-primary-500);
 }
 
-.ah-topbar__breadcrumb-sep {
-  opacity: 0.5;
+.ah-topbar__badge-pill-text {
+  white-space: nowrap;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.ah-topbar__breadcrumb-current {
-  font-weight: var(--ah-weight-semibold);
-  color: var(--ah-text-primary);
+.ah-topbar__badge-pill-tag {
+  background-color: #FEF0C7;
+  color: #B54708;
+  font-size: 10px;
+  font-weight: var(--ah-weight-extrabold);
+  padding: 1px 6px;
+  border-radius: var(--ah-radius-xs);
+  letter-spacing: 0.02em;
+}
+
+.ah-topbar__badge-pill--platform .ah-topbar__badge-pill-tag {
+  background-color: #EDE9FE;
+  color: #6D28D9;
+}
+
+:root[data-theme="dark"] .ah-topbar__badge-pill-tag {
+  background-color: rgba(245, 158, 11, 0.2);
+  color: #FBBF24;
+}
+
+:root[data-theme="dark"] .ah-topbar__badge-pill--platform .ah-topbar__badge-pill-tag {
+  background-color: rgba(139, 92, 246, 0.2);
+  color: #C4B5FD;
+}
+
+/* Topbar Actions (End Section) */
+.ah-topbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--ah-space-3);
+  flex-shrink: 0;
 }
 
 .ah-topbar__search {
   position: relative;
   display: flex;
   align-items: center;
-  width: 320px;
+  width: 220px;
+}
+
+@media (max-width: 1200px) {
+  .ah-topbar__search {
+    display: none;
+  }
 }
 
 .ah-topbar__search-icon {
   position: absolute;
-  inset-inline-start: 12px;
+  inset-inline-start: 10px;
   color: var(--ah-text-tertiary);
   pointer-events: none;
 }
 
 .ah-topbar__search-input {
   width: 100%;
-  height: 38px;
+  height: 36px;
   background-color: var(--ah-bg-subtle);
   border: 1px solid var(--ah-border-subtle);
   border-radius: var(--ah-radius-md);
-  padding: 0 14px;
-  padding-inline-start: 38px;
+  padding: 0 12px;
+  padding-inline-start: 34px;
   font-family: inherit;
   font-size: var(--ah-font-xs);
   color: var(--ah-text-primary);
@@ -76,18 +156,12 @@
   box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
 }
 
-.ah-topbar__actions {
-  display: flex;
-  align-items: center;
-  gap: var(--ah-space-3);
-}
-
 .ah-topbar__action-btn {
   display: flex;
   align-items: center;
   gap: 6px;
-  height: 38px;
-  padding: 0 12px;
+  height: 36px;
+  padding: 0 10px;
   border-radius: var(--ah-radius-md);
   border: 1px solid var(--ah-border-subtle);
   background-color: var(--ah-bg-surface);
@@ -127,48 +201,3 @@
   border: 2px solid var(--ah-bg-surface);
 }
 
-.ah-topbar__divider {
-  width: 1px;
-  height: 24px;
-  background-color: var(--ah-border-base);
-  margin: 0 var(--ah-space-2);
-}
-
-.ah-topbar__profile {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  padding: 4px 8px;
-  border-radius: var(--ah-radius-md);
-  transition: background-color var(--ah-transition-fast);
-}
-
-.ah-topbar__profile:hover {
-  background-color: var(--ah-bg-hover);
-}
-
-.ah-topbar__avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: var(--ah-radius-full);
-  object-fit: cover;
-  border: 2px solid var(--ah-primary-200);
-}
-
-.ah-topbar__profile-info {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.ah-topbar__profile-name {
-  font-size: var(--ah-font-xs);
-  font-weight: var(--ah-weight-bold);
-  color: var(--ah-text-primary);
-}
-
-.ah-topbar__profile-role {
-  font-size: 10.5px;
-  color: var(--ah-text-secondary);
-}

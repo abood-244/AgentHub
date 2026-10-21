@@ -32,6 +32,25 @@ export const AppShell: React.FC<AppShellProps> = ({
     return typeof window !== 'undefined' ? window.innerWidth < 1024 : false;
   });
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('agenthub_sidebar_collapsed') === 'true';
+    } catch {
+      return false;
+    }
+  });
+
+  const handleToggleSidebar = () => {
+    setIsSidebarCollapsed((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem('agenthub_sidebar_collapsed', String(next));
+      } catch {
+        // ignore
+      }
+      return next;
+    });
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -95,15 +114,24 @@ export const AppShell: React.FC<AppShellProps> = ({
         </div>
       ) : (
         /* Desktop Enterprise Shell */
-        <div className="ah-desktop-shell">
+        <div className={`ah-desktop-shell ${isSidebarCollapsed ? 'ah-desktop-shell--collapsed' : ''}`}>
           <DesktopSidebar
             currentScreen={currentScreen}
             onNavigate={onNavigate}
             selectedWorkspaceId={selectedWorkspaceId}
+            isCollapsed={isSidebarCollapsed}
+            onToggleCollapse={handleToggleSidebar}
           />
 
           <div className="ah-desktop-main-wrapper">
-            <DesktopTopBar breadcrumbTitle={screenTitles[currentScreen] || t('appTitle')} />
+            <DesktopTopBar
+              breadcrumbTitle={screenTitles[currentScreen] || t('appTitle')}
+              currentScreen={currentScreen}
+              subScreenTitle={subScreenTitle}
+              isSidebarCollapsed={isSidebarCollapsed}
+              onToggleSidebar={handleToggleSidebar}
+              onNavigate={onNavigate}
+            />
             <main className="ah-desktop-main-content">
               {children}
             </main>

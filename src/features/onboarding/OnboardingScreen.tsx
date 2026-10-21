@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { Globe, Moon, Sun } from 'lucide-react';
+import { useTranslation } from '../../i18n/LanguageContext';
+import { useTheme } from '../../theme/ThemeContext';
 import './OnboardingScreen.css';
 
 export interface OnboardingScreenProps {
@@ -8,6 +11,10 @@ export interface OnboardingScreenProps {
 export const ONBOARDING_COMPLETED_KEY = 'agenthub_onboarding_completed';
 
 export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }) => {
+  const { language, toggleLanguage, isRTL, t } = useTranslation();
+  const { theme, toggleTheme } = useTheme();
+  const isEn = language === 'en';
+
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3>(1);
   const [imageErrors, setImageErrors] = useState<{ [key: number]: boolean }>({});
 
@@ -25,52 +32,36 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }
   };
 
   return (
-    <div className="ah-onboarding-wrapper" dir="rtl">
+    <div className="ah-onboarding-wrapper" dir={isRTL ? 'rtl' : 'ltr'}>
       <div
         className={`ah-onboarding-container ${
           currentStep === 3 ? 'ah-onboarding-container--step3' : ''
         }`}
       >
-        {/* Header: Simulated iOS Status Bar */}
-        <header className="ah-onboarding-header" aria-hidden="true">
-          <div className="ah-onboarding-statusbar">
-            <span className="ah-onboarding-statusbar__time">9:41</span>
-            <div className="ah-onboarding-statusbar__icons">
-              {/* Cellular Signal Icon */}
-              <svg className="w-4 h-3.5 fill-current" viewBox="0 0 17 12" width="16" height="12">
-                <rect height="3.5" rx="0.7" width="2.8" x="0" y="8.5" />
-                <rect height="6" rx="0.7" width="2.8" x="4.2" y="6" />
-                <rect height="9" rx="0.7" width="2.8" x="8.5" y="3" />
-                <rect height="12" rx="0.7" width="2.8" x="12.8" y="0" />
-              </svg>
-              {/* WiFi Icon */}
-              <svg className="w-4 h-3.5 fill-current" viewBox="0 0 16 12" width="16" height="12">
-                <path d="M8 11.2a1.3 1.3 0 110-2.6 1.3 1.3 0 010 2.6zm-3.6-3.8a5.1 5.1 0 017.2 0 .8.8 0 001.1-1.1 6.7 6.7 0 00-9.4 0 .8.8 0 101.1 1.1zm-2.7-2.7a8.9 8.9 0 0112.6 0 .8.8 0 101.1-1.1 10.5 10.5 0 00-14.8 0 .8.8 0 101.1 1.1z" />
-              </svg>
-              {/* Battery Icon */}
-              <div
-                style={{
-                  width: 22,
-                  height: 11,
-                  border: '1px solid currentColor',
-                  borderRadius: 3.5,
-                  padding: 1,
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                <div
-                  style={{
-                    height: '100%',
-                    width: 14,
-                    backgroundColor: 'currentColor',
-                    borderRadius: 1.5,
-                  }}
-                />
-              </div>
-            </div>
+        {/* Top Web Utilities: Language & Theme Switchers */}
+        <div className="ah-onboarding-top-bar">
+          <div className="ah-auth-tools">
+            <button
+              type="button"
+              className="ah-auth-tool-btn"
+              onClick={toggleLanguage}
+              aria-label={isEn ? 'التحويل إلى العربية' : 'Switch to English'}
+              title={isEn ? 'التحويل إلى العربية' : 'Switch to English'}
+            >
+              <Globe size={15} />
+              <span>{isEn ? 'العربية' : 'English'}</span>
+            </button>
+            <button
+              type="button"
+              className="ah-auth-tool-btn"
+              onClick={toggleTheme}
+              aria-label={theme === 'dark' ? t('themeLight') : t('themeDark')}
+              title={theme === 'dark' ? t('themeLight') : t('themeDark')}
+            >
+              {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
+            </button>
           </div>
-        </header>
+        </div>
 
         {/* Step-Specific Top Navigation Bar */}
         {currentStep === 1 && (
@@ -86,7 +77,7 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }
               data-purpose="skip-action"
               onClick={handleComplete}
             >
-              تخطي
+              {isEn ? 'Skip' : 'تخطي'}
             </button>
           </nav>
         )}
@@ -106,21 +97,21 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }
               data-purpose="skip-action"
               onClick={handleComplete}
             >
-              تخطي
+              {isEn ? 'Skip' : 'تخطي'}
             </button>
           </nav>
         )}
 
         {currentStep === 3 && (
           <nav className="ah-onboarding-nav ah-onboarding-nav--step3" aria-label="شريط التنقل العلوي">
-            {/* Step 3: Skip button placed first in flex row (Right side in RTL) matching agenthub_3/code.html */}
+            {/* Step 3: Skip button */}
             <button
               type="button"
               className="ah-onboarding-skip-btn"
               data-purpose="skip-button"
               onClick={handleComplete}
             >
-              تخطي
+              {isEn ? 'Skip' : 'تخطي'}
             </button>
             <div className="ah-onboarding-logo" dir="ltr" data-purpose="brand-logo">
               <span className="ah-onboarding-logo-navy">Agent</span>
@@ -253,7 +244,7 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }
               <span className="ah-onboarding-dot ah-onboarding-dot--inactive" />
             </div>
 
-            {/* Bottom Full-width Next Button with RTL Left Arrow */}
+            {/* Bottom Full-width Next Button with RTL/LTR Arrow */}
             <div className="ah-onboarding-btn-wrap">
               <button
                 type="button"
@@ -261,7 +252,7 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }
                 data-purpose="next-button"
                 onClick={() => setCurrentStep(2)}
               >
-                <span>التالي</span>
+                <span>{isEn ? 'Next' : 'التالي'}</span>
                 <svg
                   className="ah-onboarding-arrow-svg"
                   fill="none"
@@ -270,15 +261,13 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   viewBox="0 0 24 24"
+                  style={{ transform: !isRTL ? 'rotate(180deg)' : undefined }}
                 >
                   <line x1="19" x2="5" y1="12" y2="12" />
                   <polyline points="12 19 5 12 12 5" />
                 </svg>
               </button>
             </div>
-
-            {/* iOS Home Indicator */}
-            <div className="ah-onboarding-home-indicator" aria-hidden="true" />
           </footer>
         )}
 
@@ -294,21 +283,21 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }
               <span className="ah-onboarding-dot ah-onboarding-dot--inactive" />
             </div>
 
-            {/* Action buttons row (In RTL grid: Right = السابق, Left = التالي) */}
+            {/* Action buttons row */}
             <div className="ah-onboarding-btn-grid" data-purpose="action-buttons">
               <button
                 type="button"
                 className="ah-onboarding-btn ah-onboarding-btn--prev-step2"
                 onClick={() => setCurrentStep(1)}
               >
-                السابق
+                {isEn ? 'Previous' : 'السابق'}
               </button>
               <button
                 type="button"
                 className="ah-onboarding-btn ah-onboarding-btn--next-step2"
                 onClick={() => setCurrentStep(3)}
               >
-                <span>التالي</span>
+                <span>{isEn ? 'Next' : 'التالي'}</span>
                 <svg
                   className="ah-onboarding-arrow-svg"
                   fill="none"
@@ -317,15 +306,13 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   viewBox="0 0 24 24"
+                  style={{ transform: !isRTL ? 'rotate(180deg)' : undefined }}
                 >
                   <line x1="19" x2="5" y1="12" y2="12" />
                   <polyline points="12 19 5 12 12 5" />
                 </svg>
               </button>
             </div>
-
-            {/* iOS Home Indicator */}
-            <div className="ah-onboarding-home-indicator" aria-hidden="true" />
           </footer>
         )}
 
@@ -350,8 +337,13 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }
                 data-purpose="primary-cta"
                 onClick={handleComplete}
               >
-                <span>ابدأ الآن</span>
-                <svg className="ah-onboarding-arrow-svg" viewBox="0 0 20 20" fill="currentColor">
+                <span>{isEn ? 'Get Started' : 'ابدأ الآن'}</span>
+                <svg
+                  className="ah-onboarding-arrow-svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  style={{ transform: !isRTL ? 'rotate(180deg)' : undefined }}
+                >
                   <path
                     fillRule="evenodd"
                     clipRule="evenodd"
@@ -367,12 +359,9 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }
                 data-purpose="secondary-cta"
                 onClick={() => setCurrentStep(2)}
               >
-                السابق
+                {isEn ? 'Previous' : 'السابق'}
               </button>
             </div>
-
-            {/* iOS Home Indicator */}
-            <div className="ah-onboarding-home-indicator" aria-hidden="true" />
           </footer>
         )}
       </div>

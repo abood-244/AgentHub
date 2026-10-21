@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import { useClerk } from '@clerk/react';
+import { Globe, Moon, Sun } from 'lucide-react';
+import { useTranslation } from '../../i18n/LanguageContext';
+import { useTheme } from '../../theme/ThemeContext';
 import './SignInScreen.css';
 
 export const SignInScreen: React.FC = () => {
   const clerk = useClerk();
   const isLoaded = clerk.loaded;
+  const { language, toggleLanguage, isRTL, t } = useTranslation();
+  const { theme, toggleTheme } = useTheme();
+  const isEn = language === 'en';
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -147,7 +153,7 @@ export const SignInScreen: React.FC = () => {
   };
 
   return (
-    <div className="ah-signin-wrapper" dir="rtl">
+    <div className="ah-signin-wrapper" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="ah-signin-container">
         {/* Campus Building Background Image with Gradient Mask */}
         <div className="ah-signin-header-bg" aria-hidden="true">
@@ -159,27 +165,30 @@ export const SignInScreen: React.FC = () => {
           <div className="ah-signin-bg-overlay" />
         </div>
 
-        {/* iOS Status Bar */}
-        <header className="ah-signin-statusbar" aria-hidden="true">
-          <div className="ah-signin-statusbar__time">9:41</div>
-          <div className="ah-signin-statusbar__icons">
-            {/* Cellular signal */}
-            <svg className="w-4 h-3.5 fill-current" viewBox="0 0 17 12" width="16" height="12">
-              <rect height="3.5" rx="0.7" width="2.8" x="0" y="8.5" />
-              <rect height="6" rx="0.7" width="2.8" x="4.2" y="6" />
-              <rect height="9" rx="0.7" width="2.8" x="8.5" y="3" />
-              <rect height="12" rx="0.7" width="2.8" x="12.8" y="0" />
-            </svg>
-            {/* WiFi */}
-            <svg className="w-4 h-3.5 fill-current" viewBox="0 0 16 12" width="16" height="12">
-              <path d="M8 11.2a1.3 1.3 0 110-2.6 1.3 1.3 0 010 2.6zm-3.6-3.8a5.1 5.1 0 017.2 0 .8.8 0 001.1-1.1 6.7 6.7 0 00-9.4 0 .8.8 0 101.1 1.1zm-2.7-2.7a8.9 8.9 0 0112.6 0 .8.8 0 101.1-1.1 10.5 10.5 0 00-14.8 0 .8.8 0 101.1 1.1z" />
-            </svg>
-            {/* Battery */}
-            <div style={{ width: 22, height: 11, border: '1px solid currentColor', borderRadius: 3.5, padding: 1, display: 'flex', alignItems: 'center' }}>
-              <div style={{ height: '100%', width: 14, backgroundColor: 'currentColor', borderRadius: 1.5 }} />
-            </div>
+        {/* Top Web Utilities: Language & Theme Switchers */}
+        <div className="ah-signin-top-bar">
+          <div className="ah-auth-tools">
+            <button
+              type="button"
+              className="ah-auth-tool-btn"
+              onClick={toggleLanguage}
+              aria-label={isEn ? 'التحويل إلى العربية' : 'Switch to English'}
+              title={isEn ? 'التحويل إلى العربية' : 'Switch to English'}
+            >
+              <Globe size={15} />
+              <span>{isEn ? 'العربية' : 'English'}</span>
+            </button>
+            <button
+              type="button"
+              className="ah-auth-tool-btn"
+              onClick={toggleTheme}
+              aria-label={theme === 'dark' ? t('themeLight') : t('themeDark')}
+              title={theme === 'dark' ? t('themeLight') : t('themeDark')}
+            >
+              {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
+            </button>
           </div>
-        </header>
+        </div>
 
         {/* Main Content */}
         <main className="ah-signin-main">
@@ -207,8 +216,10 @@ export const SignInScreen: React.FC = () => {
 
             {/* Welcome Headings */}
             <div className="ah-signin-titles">
-              <h2 className="ah-signin-heading">مرحباً بعودتك</h2>
-              <p className="ah-signin-subheading">سجل الدخول إلى حسابك في AgentHub</p>
+              <h2 className="ah-signin-heading">{isEn ? 'Welcome Back' : 'مرحباً بعودتك'}</h2>
+              <p className="ah-signin-subheading">
+                {isEn ? 'Sign in to your AgentHub account' : 'سجل الدخول إلى حسابك في AgentHub'}
+              </p>
             </div>
 
             {/* Error and Info Alerts */}
@@ -255,7 +266,7 @@ export const SignInScreen: React.FC = () => {
                   className="ah-signin-submit-btn"
                   disabled={isLoading}
                 >
-                  <span>{isLoading ? 'جاري التحقق...' : 'تأكيد الرمز والدخول'}</span>
+                  <span>{isLoading ? (isEn ? 'Verifying...' : 'جاري التحقق...') : (isEn ? 'Confirm Code & Enter' : 'تأكيد الرمز والدخول')}</span>
                 </button>
 
                 <div style={{ textAlign: 'center', marginTop: 12 }}>
@@ -268,7 +279,7 @@ export const SignInScreen: React.FC = () => {
                     }}
                     style={{ background: 'none', border: 'none', color: '#0878F9', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}
                   >
-                    الرجوع لتسجيل الدخول بكلمة المرور
+                    {isEn ? 'Back to password sign-in' : 'الرجوع لتسجيل الدخول بكلمة المرور'}
                   </button>
                 </div>
               </form>
@@ -284,7 +295,7 @@ export const SignInScreen: React.FC = () => {
                     required
                     dir="ltr"
                     className="ah-signin-input"
-                    placeholder="البريد الإلكتروني"
+                    placeholder={isEn ? 'Email address' : 'البريد الإلكتروني'}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     disabled={isLoading}
@@ -308,7 +319,7 @@ export const SignInScreen: React.FC = () => {
                     required
                     dir="ltr"
                     className="ah-signin-input ah-signin-input--password"
-                    placeholder="كلمة المرور"
+                    placeholder={isEn ? 'Password' : 'كلمة المرور'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     disabled={isLoading}
@@ -325,7 +336,7 @@ export const SignInScreen: React.FC = () => {
                     type="button"
                     className="ah-signin-eye-btn"
                     onClick={() => setShowPassword(!showPassword)}
-                    aria-label={showPassword ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'}
+                    aria-label={showPassword ? (isEn ? 'Hide password' : 'إخفاء كلمة المرور') : (isEn ? 'Show password' : 'إظهار كلمة المرور')}
                     tabIndex={-1}
                   >
                     {showPassword ? (
@@ -352,7 +363,7 @@ export const SignInScreen: React.FC = () => {
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
                   />
-                  <span>تذكرني</span>
+                  <span>{isEn ? 'Remember me' : 'تذكرني'}</span>
                 </label>
 
                 <button
@@ -360,7 +371,7 @@ export const SignInScreen: React.FC = () => {
                   className="ah-signin-forgot-btn"
                   onClick={handleForgotPassword}
                 >
-                  نسيت كلمة المرور؟
+                  {isEn ? 'Forgot password?' : 'نسيت كلمة المرور؟'}
                 </button>
               </div>
 
@@ -370,9 +381,16 @@ export const SignInScreen: React.FC = () => {
                 className="ah-signin-submit-btn"
                 disabled={isLoading}
               >
-                <span>{isLoading ? 'جاري التحقق...' : 'تسجيل الدخول'}</span>
-                {/* Arrow icon facing left for RTL */}
-                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ transform: 'rotate(180deg)' }}>
+                <span>{isLoading ? (isEn ? 'Verifying...' : 'جاري التحقق...') : (isEn ? 'Sign In' : 'تسجيل الدخول')}</span>
+                {/* Arrow icon facing proper direction */}
+                <svg
+                  width="18"
+                  height="18"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  style={{ transform: !isRTL ? 'none' : 'rotate(180deg)' }}
+                >
                   <path d="M14 5l7 7m0 0l-7 7m7-7H3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" />
                 </svg>
               </button>
@@ -382,10 +400,10 @@ export const SignInScreen: React.FC = () => {
             {/* Divider: أو */}
             <div className="ah-signin-divider" aria-hidden="true">
               <div className="ah-signin-divider__line" />
-              <span className="ah-signin-divider__text">أو</span>
+              <span className="ah-signin-divider__text">{isEn ? 'or' : 'أو'}</span>
             </div>
 
-            {/* Social Authentication: Google OAuth (Replacing Microsoft while preserving layout) */}
+            {/* Social Authentication: Google OAuth */}
             <button
               type="button"
               className="ah-signin-google-btn"
@@ -411,20 +429,18 @@ export const SignInScreen: React.FC = () => {
                   d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
                 />
               </svg>
-              <span>تسجيل الدخول باستخدام Google</span>
+              <span>{isEn ? 'Sign in with Google' : 'تسجيل الدخول باستخدام Google'}</span>
             </button>
           </div>
 
           {/* Bottom Footer */}
           <footer className="ah-signin-footer">
             <p className="ah-signin-footer__text">
-              ليس لديك حساب؟{' '}
+              {isEn ? "Don't have an account? " : 'ليس لديك حساب؟ '}
               <a href="mailto:admin@agenthub.dev" className="ah-signin-footer__link">
-                تواصل مع مسؤول الجامعة
+                {isEn ? 'Contact University Admin' : 'تواصل مع مسؤول الجامعة'}
               </a>
             </p>
-            {/* iOS Home Indicator */}
-            <div className="ah-signin-home-indicator" aria-hidden="true" />
           </footer>
         </main>
       </div>

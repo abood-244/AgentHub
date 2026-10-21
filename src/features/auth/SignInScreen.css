@@ -15,7 +15,7 @@
 .ah-signin-container {
   position: relative;
   width: 100%;
-  max-width: 390px;
+  max-width: 460px;
   min-height: 100vh;
   background-color: #ffffff;
   display: flex;
@@ -27,11 +27,11 @@
 
 @media (min-width: 640px) {
   .ah-signin-container {
-    min-height: 844px;
+    min-height: auto;
     height: auto;
-    border-radius: 36px;
-    margin: 24px 0;
-    box-shadow: 0 25px 60px rgba(8, 39, 68, 0.18), 0 0 0 1px rgba(226, 232, 240, 0.8);
+    border-radius: 24px;
+    margin: 32px 0;
+    box-shadow: 0 20px 50px -10px rgba(8, 39, 68, 0.14), 0 0 0 1px rgba(226, 232, 240, 0.9);
   }
 }
 
@@ -62,32 +62,13 @@
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.5) 60%, #ffffff 100%);
 }
 
-.ah-signin-statusbar {
+.ah-signin-top-bar {
   position: relative;
   z-index: 20;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  padding: 14px 28px 8px 28px;
-  font-size: 15px;
-  font-weight: 600;
-  color: #1e293b;
-  letter-spacing: -0.01em;
-}
-
-.ah-signin-statusbar__time {
-  direction: ltr;
-  text-align: left;
-  font-weight: 600;
-  font-size: 15px;
-}
-
-.ah-signin-statusbar__icons {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  direction: ltr;
-  color: #0f172a;
+  padding: 16px 24px 0 24px;
 }
 
 .ah-signin-main {
@@ -413,10 +394,81 @@
   text-decoration: underline;
 }
 
-.ah-signin-home-indicator {
-  margin: 14px auto 0 auto;
-  width: 128px;
-  height: 4px;
-  background-color: rgba(15, 23, 42, 0.8);
-  border-radius: 9999px;
+/* Dark Theme Styles for SignInScreen */
+:root[data-theme="dark"] .ah-signin-wrapper {
+  background-color: var(--ah-bg-app);
+  color: var(--ah-text-primary);
+}
+
+:root[data-theme="dark"] .ah-signin-container {
+  background-color: var(--ah-bg-surface);
+  color: var(--ah-text-primary);
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+:root[data-theme="dark"] .ah-signin-bg-overlay {
+  background: linear-gradient(to bottom, rgba(7, 17, 29, 0.4), rgba(7, 17, 29, 0.85) 60%, var(--ah-bg-surface) 100%);
+}
+
+:root[data-theme="dark"] .ah-signin-brand-main {
+  color: #FFFFFF;
+}
+
+:root[data-theme="dark"] .ah-signin-heading {
+  color: #F8FAFC;
+}
+
+:root[data-theme="dark"] .ah-signin-subheading {
+  color: #94A3B8;
+}
+
+:root[data-theme="dark"] .ah-signin-input {
+  background-color: var(--ah-bg-subtle);
+  border-color: var(--ah-border-base);
+  color: #FFFFFF;
+}
+
+:root[data-theme="dark"] .ah-signin-input:focus {
+  background-color: var(--ah-bg-surface);
+  border-color: var(--ah-primary-500);
+}
+
+:root[data-theme="dark"] .ah-signin-field-icon {
+  color: #94A3B8;
+}
+
+:root[data-theme="dark"] .ah-signin-eye-btn {
+  color: #94A3B8;
+}
+
+:root[data-theme="dark"] .ah-signin-eye-btn:hover {
+  color: #FFFFFF;
+}
+
+:root[data-theme="dark"] .ah-signin-remember-label {
+  color: #94A3B8;
+}
+
+:root[data-theme="dark"] .ah-signin-divider__line {
+  background-color: var(--ah-border-subtle);
+}
+
+:root[data-theme="dark"] .ah-signin-divider__text {
+  background-color: var(--ah-bg-surface);
+  color: #94A3B8;
+}
+
+:root[data-theme="dark"] .ah-signin-google-btn {
+  background-color: var(--ah-bg-subtle);
+  border-color: var(--ah-border-base);
+  color: #F8FAFC;
+}
+
+:root[data-theme="dark"] .ah-signin-google-btn:hover {
+  background-color: var(--ah-bg-hover);
+  border-color: var(--ah-border-strong);
+}
+
+:root[data-theme="dark"] .ah-signin-footer__text {
+  color: #94A3B8;
 }
