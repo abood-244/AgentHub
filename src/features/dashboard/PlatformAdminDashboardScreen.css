@@ -1,0 +1,214 @@
+/* Platform Admin Dashboard Screen - Light & Dark Theme Support */
+
+.ah-platform-admin-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+/* Banner */
+.ah-platform-admin-banner {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  color: #FFFFFF;
+  border-radius: 20px;
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ah-platform-admin-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ah-platform-admin-banner-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background-color: #334155;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #38BDF8;
+  flex-shrink: 0;
+}
+
+.ah-platform-admin-banner-title {
+  font-size: 17px;
+  font-weight: 800;
+  margin: 0;
+  color: #FFFFFF;
+}
+
+.ah-platform-admin-banner-sub {
+  font-size: 12px;
+  color: #94A3B8;
+  margin: 4px 0 0 0;
+}
+
+.ah-platform-admin-banner-sub strong {
+  color: #38BDF8;
+}
+
+.ah-platform-admin-banner-pill {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  background-color: rgba(56, 189, 248, 0.15);
+  color: #38BDF8;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+/* Greeting */
+.ah-platform-admin-greeting {
+  text-align: center;
+  padding: 4px 0;
+}
+
+.ah-platform-admin-greeting-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--ah-text-primary);
+  margin: 0;
+  transition: color var(--ah-transition-fast);
+}
+
+.ah-platform-admin-greeting-sub {
+  font-size: 13px;
+  color: var(--ah-text-secondary);
+  margin: 5px 0 0 0;
+  transition: color var(--ah-transition-fast);
+}
+
+/* Cards */
+.ah-platform-admin-card {
+  background-color: var(--ah-bg-surface);
+  border-radius: 20px;
+  padding: 20px;
+  border: 1px solid var(--ah-border-subtle);
+  box-shadow: var(--ah-shadow-card);
+  transition: all var(--ah-transition-base);
+}
+
+.ah-platform-admin-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.ah-platform-admin-card-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ah-platform-admin-card-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--ah-text-primary);
+  margin: 0;
+  transition: color var(--ah-transition-fast);
+}
+
+.ah-platform-admin-badge-operational {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #10B981;
+}
+
+[data-theme="dark"] .ah-platform-admin-badge-operational {
+  color: #34D399;
+}
+
+/* System Health Metrics Grid */
+.ah-platform-admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.ah-platform-admin-stat-item {
+  background-color: var(--ah-bg-subtle);
+  border-radius: 14px;
+  padding: 12px 14px;
+  border: 1px solid var(--ah-border-subtle);
+  transition: all var(--ah-transition-fast);
+}
+
+.ah-platform-admin-stat-label {
+  font-size: 11px;
+  color: var(--ah-text-secondary);
+  display: block;
+  font-weight: 500;
+  margin-bottom: 4px;
+  transition: color var(--ah-transition-fast);
+}
+
+.ah-platform-admin-stat-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ah-text-primary);
+  display: block;
+  transition: color var(--ah-transition-fast);
+}
+
+/* Module Items List */
+.ah-platform-admin-modules-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ah-platform-admin-module-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background-color: var(--ah-bg-subtle);
+  border: 1px solid var(--ah-border-subtle);
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+.ah-platform-admin-module-row:hover {
+  background-color: var(--ah-bg-hover);
+  border-color: var(--ah-border-base);
+  transform: translateY(-1px);
+}
+
+.ah-platform-admin-module-lead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ah-platform-admin-module-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ah-text-primary);
+  transition: color var(--ah-transition-fast);
+}
+
+.ah-platform-admin-tag-soon {
+  font-size: 11px;
+  color: var(--ah-text-tertiary);
+  font-weight: 600;
+  padding: 3px 8px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+}
+
+[data-theme="dark"] .ah-platform-admin-tag-soon {
+  background-color: rgba(255, 255, 255, 0.06);
+}

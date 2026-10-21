@@ -4,8 +4,9 @@ import { workspaceService } from '../../../services/apiServices';
 import { Card, CardHeader, CardContent, CardFooter } from '../../../design-system/components/Card';
 import { Button } from '../../../design-system/components/Button';
 import { Input } from '../../../design-system/components/Input';
-import { Save, CheckCircle, Sliders, Globe, Shield } from 'lucide-react';
+import { Save, CheckCircle, Sliders, Globe, Shield, AlertCircle } from 'lucide-react';
 import { useTranslation } from '../../../i18n/LanguageContext';
+import { useAgentHubAuth } from '../../../context/AuthContext';
 
 export interface WorkspaceSettingsTabProps {
   workspace: Workspace;
@@ -17,7 +18,10 @@ export const WorkspaceSettingsTab: React.FC<WorkspaceSettingsTabProps> = ({
   onUpdated,
 }) => {
   const { language, t } = useTranslation();
+  const { role } = useAgentHubAuth();
   const isEn = language === 'en';
+
+  const isSystemAdmin = role === 'System Administrator' || role === 'system_administrator' || role === 'system_admin';
 
   const [name, setName] = useState(workspace.name);
   const [nameEn, setNameEn] = useState(workspace.nameEn);
@@ -26,20 +30,28 @@ export const WorkspaceSettingsTab: React.FC<WorkspaceSettingsTabProps> = ({
   const [status, setStatus] = useState(workspace.status);
   const [isSaving, setIsSaving] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSave = async () => {
-    setIsSaving(true);
-    const updated = await workspaceService.update(workspace.id, {
-      name,
-      nameEn,
-      description,
-      defaultLanguage: defaultLang,
-      status,
-    });
-    setIsSaving(false);
-    onUpdated(updated);
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000);
+    if (!isSystemAdmin) return;
+    try {
+      setIsSaving(true);
+      setErrorMessage(null);
+      const updated = await workspaceService.update(workspace.id, {
+        name,
+        nameEn,
+        description,
+        defaultLanguage: defaultLang,
+        status,
+      });
+      setIsSaving(false);
+      onUpdated(updated);
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+    } catch (err: any) {
+      setIsSaving(false);
+      setErrorMessage(err?.data?.message || err.message || (isEn ? 'Failed to update workspace.' : 'فشل في تحديث إعدادات مساحة العمل.'));
+    }
   };
 
   return (
@@ -48,6 +60,44 @@ export const WorkspaceSettingsTab: React.FC<WorkspaceSettingsTabProps> = ({
         <div className="ah-alert-success">
           <CheckCircle size={18} />
           <span>{isEn ? 'Workspace settings updated successfully!' : 'تم تحديث إعدادات مساحة العمل بنجاح!'}</span>
+        </div>
+      )}
+
+      {errorMessage && (
+        <div style={{
+          backgroundColor: '#FEE2E2',
+          border: '1px solid #FCA5A5',
+          borderRadius: 8,
+          padding: '10px 14px',
+          color: '#991B1B',
+          fontSize: '13px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 8,
+        }}>
+          <AlertCircle size={16} />
+          <span>{errorMessage}</span>
+        </div>
+      )}
+
+      {!isSystemAdmin && (
+        <div style={{
+          backgroundColor: '#F8FAFC',
+          border: '1px solid #E2E8F0',
+          borderRadius: 8,
+          padding: '10px 14px',
+          color: '#475569',
+          fontSize: '13px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 8,
+        }}>
+          <Shield size={16} color="#64748B" />
+          <span>
+            {isEn
+              ? 'Read-Only Mode: Workspace settings can only be modified by the System Administrator.'
+              : 'وضع القراءة فقط: تعديل إعدادات مساحة العمل متاح حصرياً لمدير النظام الجامعي.'}
+          </span>
         </div>
       )}
 
@@ -79,12 +129,14 @@ export const WorkspaceSettingsTab: React.FC<WorkspaceSettingsTabProps> = ({
                 label={isEn ? 'Workspace Name (Arabic)' : 'اسم القسم (بالعربية)'}
                 value={name}
                 onChange={e => setName(e.target.value)}
+                disabled={!isSystemAdmin}
               />
 
               <Input
                 label={isEn ? 'Workspace Name (English)' : 'اسم القسم (بالإنجليزية)'}
                 value={nameEn}
                 onChange={e => setNameEn(e.target.value)}
+                disabled={!isSystemAdmin}
               />
 
               <div className="ah-input-group">
@@ -94,6 +146,8 @@ export const WorkspaceSettingsTab: React.FC<WorkspaceSettingsTabProps> = ({
                   rows={3}
                   value={description}
                   onChange={e => setDescription(e.target.value)}
+                  disabled={!isSystemAdmin}
+                  style={!isSystemAdmin ? { backgroundColor: '#F1F5F9', cursor: 'not-allowed' } : {}}
                 />
               </div>
             </div>
@@ -118,6 +172,7 @@ export const WorkspaceSettingsTab: React.FC<WorkspaceSettingsTabProps> = ({
                   className="ah-input"
                   value={defaultLang}
                   onChange={e => setDefaultLang(e.target.value as any)}
+                  disabled={!isSystemAdmin}
                 >
                   <option value="ar">العربية (Arabic - Default)</option>
                   <option value="en">English (الإنجليزية)</option>
@@ -130,6 +185,7 @@ export const WorkspaceSettingsTab: React.FC<WorkspaceSettingsTabProps> = ({
                   className="ah-input"
                   value={status}
                   onChange={e => setStatus(e.target.value as any)}
+                  disabled={!isSystemAdmin}
                 >
                   <option value="active">نشط (Active - Ready for students)</option>
                   <option value="paused">متوقف مؤقتاً (Paused / Under Setup)</option>
@@ -140,16 +196,18 @@ export const WorkspaceSettingsTab: React.FC<WorkspaceSettingsTabProps> = ({
         </Card>
       </div>
 
-      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 8 }}>
-        <Button
-          variant="primary"
-          icon={<Save size={16} />}
-          isLoading={isSaving}
-          onClick={handleSave}
-        >
-          {isEn ? 'Save Workspace Settings' : 'حفظ إعدادات القسم'}
-        </Button>
-      </div>
+      {isSystemAdmin && (
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 8 }}>
+          <Button
+            variant="primary"
+            icon={<Save size={16} />}
+            isLoading={isSaving}
+            onClick={handleSave}
+          >
+            {isEn ? 'Save Workspace Settings' : 'حفظ إعدادات القسم'}
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

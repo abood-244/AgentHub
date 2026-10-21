@@ -22,7 +22,7 @@ import { useTranslation } from '../../../i18n/LanguageContext';
 export interface WorkspaceSetupCardProps {
   workspace: Workspace;
   onNavigateTab: (tabId: string) => void;
-  onOpenTestChat: () => void;
+  onOpenTestChat?: () => void;
 }
 
 export const WorkspaceSetupCard: React.FC<WorkspaceSetupCardProps> = ({
@@ -148,15 +148,17 @@ export const WorkspaceSetupCard: React.FC<WorkspaceSetupCardProps> = ({
           </p>
         </div>
 
-        <div className="ah-setup-card__action-col">
-          <Button
-            variant="primary"
-            icon={<Play size={16} />}
-            onClick={onOpenTestChat}
-          >
-            {isEn ? 'Open Test Chat' : 'فتح بيئة الاختبار التجريبي'}
-          </Button>
-        </div>
+        {onOpenTestChat && (
+          <div className="ah-setup-card__action-col">
+            <Button
+              variant="primary"
+              icon={<Play size={16} />}
+              onClick={onOpenTestChat}
+            >
+              {isEn ? 'Open Test Chat' : 'فتح بيئة الاختبار التجريبي'}
+            </Button>
+          </div>
+        )}
       </div>
 
       {/* Progress Bar */}
@@ -175,7 +177,7 @@ export const WorkspaceSetupCard: React.FC<WorkspaceSetupCardProps> = ({
             className="ah-setup-step-item"
             onClick={() => {
               if (step.isTestAction) {
-                onOpenTestChat();
+                onOpenTestChat?.();
               } else if (step.tab) {
                 onNavigateTab(step.tab);
               }

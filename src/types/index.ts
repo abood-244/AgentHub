@@ -47,6 +47,8 @@ export interface Workspace {
   assignedStaffIds: string[];
   channelConfig: WorkspaceChannelConfig;
   setupProgress: WorkspaceSetupProgress;
+  university_id?: number;
+  access_level?: 'admin' | 'member' | 'viewer';
   createdAt: string;
   updatedAt: string;
 }
@@ -185,3 +187,66 @@ export interface UniversityOrganization {
   roleTitleEn: string;
   unreadNotificationsCount: number;
 }
+
+export type ApprovedRole =
+  | 'System Administrator'
+  | 'Staff'
+  | 'Platform Administrator'
+  | 'system_admin'
+  | 'staff'
+  | 'platform_admin'
+  | 'platform_administrator'
+  | 'system_administrator';
+export type ApprovedRoleKey = 'system_administrator' | 'staff' | 'platform_administrator';
+
+export interface InternalUniversity {
+  id: number;
+  name: string;
+  slug: string;
+  code: string | null;
+}
+
+export interface AuthorizedWorkspace {
+  id: number | string;
+  name: string;
+  slug?: string;
+  description?: string | null;
+  status: string;
+  access_level?: 'admin' | 'member' | 'viewer';
+}
+
+export interface InternalUser {
+  id: number;
+  clerk_user_id: string;
+  name: string;
+  email: string;
+  role: ApprovedRole;
+  role_key: ApprovedRoleKey;
+  university: InternalUniversity | null;
+  workspaces: AuthorizedWorkspace[];
+  created_at?: string;
+}
+
+export interface UniversityDetails {
+  id: number;
+  name: string;
+  slug: string;
+  code: string | null;
+  contact_email: string | null;
+  contact_phone: string | null;
+  website: string | null;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface ApiWorkspace {
+  id: number;
+  university_id: number;
+  name: string;
+  description: string | null;
+  status: 'active' | 'paused' | 'archived';
+  access_level: 'admin' | 'member' | 'viewer';
+  created_at?: string;
+  updated_at?: string;
+}
+

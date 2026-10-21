@@ -209,3 +209,13 @@
   color: var(--ah-text-primary);
   line-height: 1.2;
 }
+
+/* Dark Theme Overrides for StatWidget & ServiceTile */
+[data-theme="dark"] .ah-stat-widget__icon-box {
+  background-color: rgba(0, 102, 255, 0.18) !important;
+  color: #38BDF8 !important;
+}
+
+[data-theme="dark"] .ah-service-tile__icon-box {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}

@@ -40,14 +40,29 @@
   color: #0066FF;
 }
 
+[data-theme="dark"] .ah-case-item__avatar--student {
+  background-color: rgba(0, 102, 255, 0.2);
+  color: #60A5FA;
+}
+
 .ah-case-item__avatar--ai {
   background-color: #EFF6FF;
   color: #0284C7;
 }
 
+[data-theme="dark"] .ah-case-item__avatar--ai {
+  background-color: rgba(2, 132, 199, 0.2);
+  color: #38BDF8;
+}
+
 .ah-case-item__avatar--staff {
   background-color: #F1F5F9;
   color: #334155;
+}
+
+[data-theme="dark"] .ah-case-item__avatar--staff {
+  background-color: rgba(148, 163, 184, 0.16);
+  color: #E2E8F0;
 }
 
 .ah-case-item__actor-label {
