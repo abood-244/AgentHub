@@ -48,11 +48,12 @@ async function getAuthToken(): Promise<string | null> {
 
 async function request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const token = await getAuthToken();
+  const isFormData = options.body instanceof FormData;
 
   const headers: HeadersInit = {
-    'Content-Type': 'application/json',
     'Accept': 'application/json',
     ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+    ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
     ...(options.headers || {}),
   };
 
@@ -91,28 +92,31 @@ export const apiClient = {
     request<T>(endpoint, {
       ...options,
       method: 'POST',
-      body: data ? JSON.stringify(data) : undefined,
+      body: data instanceof FormData ? data : data ? JSON.stringify(data) : undefined,
     }),
 
   put: <T>(endpoint: string, data?: any, options?: RequestInit) =>
     request<T>(endpoint, {
       ...options,
       method: 'PUT',
-      body: data ? JSON.stringify(data) : undefined,
+      body: data instanceof FormData ? data : data ? JSON.stringify(data) : undefined,
     }),
 
   patch: <T>(endpoint: string, data?: any, options?: RequestInit) =>
     request<T>(endpoint, {
       ...options,
       method: 'PATCH',
-      body: data ? JSON.stringify(data) : undefined,
+      body: data instanceof FormData ? data : data ? JSON.stringify(data) : undefined,
     }),
 
   delete: <T>(endpoint: string, options?: RequestInit) =>
     request<T>(endpoint, { ...options, method: 'DELETE' }),
 
   // Get current internal authenticated user profile & permissions
-  getMe: () => request<{ user: InternalUser }>('/me'),
+  getMe: (userEmail?: string) =>
+    request<{ user: InternalUser }>('/me', {
+      headers: userEmail ? { 'X-User-Email': userEmail } : undefined,
+    }),
 
   // Health check helper to verify connection with Laravel backend
   checkHealth: () => request<{ status: string; app: string; timestamp: string }>('/health'),

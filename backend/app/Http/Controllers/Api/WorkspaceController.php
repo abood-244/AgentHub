@@ -178,6 +178,9 @@ class WorkspaceController extends Controller
                 'description' => $workspace->description,
                 'status' => $workspace->status,
                 'access_level' => $accessLevel,
+                'category' => $workspace->category,
+                'default_language' => $workspace->default_language,
+                'selected_embedding_model_id' => $workspace->selected_embedding_model_id,
                 'created_at' => $workspace->created_at?->toISOString(),
                 'updated_at' => $workspace->updated_at?->toISOString(),
             ],
@@ -224,8 +227,13 @@ class WorkspaceController extends Controller
 
         $validated = $request->validate([
             'name' => ['sometimes', 'required', 'string', 'max:255'],
+            'name_en' => ['sometimes', 'nullable', 'string', 'max:255'],
             'description' => ['sometimes', 'nullable', 'string', 'max:1000'],
+            'description_en' => ['sometimes', 'nullable', 'string', 'max:1000'],
             'status' => ['sometimes', 'string', 'in:active,paused,archived'],
+            'category' => ['sometimes', 'nullable', 'string', 'max:50'],
+            'default_language' => ['sometimes', 'string', 'in:ar,en'],
+            'selected_embedding_model_id' => ['sometimes', 'nullable', 'exists:embedding_models,id'],
         ]);
 
         $workspace->update($validated);
@@ -239,9 +247,77 @@ class WorkspaceController extends Controller
                 'description' => $workspace->description,
                 'status' => $workspace->status,
                 'access_level' => 'admin',
+                'category' => $workspace->category,
+                'default_language' => $workspace->default_language,
+                'selected_embedding_model_id' => $workspace->selected_embedding_model_id,
                 'created_at' => $workspace->created_at?->toISOString(),
                 'updated_at' => $workspace->updated_at?->toISOString(),
             ],
         ]);
+    }
+
+    /**
+     * Remove the specified workspace if authorized.
+     */
+    public function destroy(Request $request, int|string $id): JsonResponse
+    {
+        /** @var \App\Models\User $user */
+        $user = $request->user();
+
+        $workspace = Workspace::find($id);
+
+        if (! $workspace) {
+            return response()->json([
+                'message' => 'Workspace not found.',
+            ], 404);
+        }
+
+        if ($user->role !== UserRole::SYSTEM_ADMINISTRATOR) {
+            return response()->json([
+                'message' => 'Forbidden: Only System Administrators can delete workspaces.',
+            ], 403);
+        }
+
+        if ((int) $workspace->university_id !== (int) $user->university_id) {
+            return response()->json([
+                'message' => 'Forbidden: You cannot delete a workspace belonging to another university.',
+            ], 403);
+        }
+
+        $workspace->delete();
+
+        return response()->json([
+            'message' => 'Workspace deleted successfully.',
+        ]);
+    }
+
+    /**
+     * Get staff members for a workspace.
+     */
+    public function members(Request $request, int|string $id): JsonResponse
+    {
+        $workspace = Workspace::findOrFail($id);
+        $users = $workspace->users()
+            ->select('users.id', 'users.name', 'users.email', 'users.role')
+            ->get();
+
+        if ($users->isEmpty() && $workspace->university_id) {
+            $users = \App\Models\User::where('university_id', $workspace->university_id)
+                ->whereIn('role', [UserRole::STAFF, UserRole::SYSTEM_ADMINISTRATOR])
+                ->select('id', 'name', 'email', 'role')
+                ->get();
+        }
+
+        $formatted = $users->map(fn($u) => [
+            'user' => [
+                'id' => $u->id,
+                'name' => $u->name,
+                'email' => $u->email,
+                'role' => $u->role?->value ?? $u->role,
+            ],
+            'access_level' => $u->pivot->access_level ?? 'member',
+        ]);
+
+        return response()->json(['members' => $formatted, 'data' => $formatted]);
     }
 }

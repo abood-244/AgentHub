@@ -80,6 +80,14 @@ export const AppShell: React.FC<AppShellProps> = ({
     integrations: 'التكاملات والربط',
   };
 
+  if (currentScreen === 'workspace-detail') {
+    return (
+      <div className="ah-app-root ah-app-root--workspace-detail" dir="rtl">
+        {children}
+      </div>
+    );
+  }
+
   return (
     <div className={`ah-app-root ${isMobile ? 'ah-app-root--mobile' : 'ah-app-root--desktop'}`}>
       {isMobile ? (

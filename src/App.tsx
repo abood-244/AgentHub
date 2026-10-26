@@ -11,7 +11,7 @@ import { DashboardScreen } from './features/dashboard/DashboardScreen';
 import { StaffDashboardScreen } from './features/dashboard/StaffDashboardScreen';
 import { PlatformAdminDashboardScreen } from './features/dashboard/PlatformAdminDashboardScreen';
 import { WorkspacesListScreen } from './features/workspaces/WorkspacesListScreen';
-import { WorkspaceDetailScreen } from './features/workspaces/WorkspaceDetailScreen';
+import { WorkspaceLayout } from './features/workspaces/WorkspaceLayout';
 import { LLMModelsScreen } from './features/llm-models/LLMModelsScreen';
 import { SettingsScreen } from './features/settings/SettingsScreen';
 import { ComingSoonScreen } from './features/common/ComingSoonScreen';
@@ -222,11 +222,12 @@ const AgentHubMain: React.FC = () => {
         />
       )}
 
-      {/* Workspace Detail View */}
+      {/* Workspace Internal View (Sprint 2 Hybrid Layout) */}
       {currentScreen === 'workspace-detail' && selectedWorkspaceId && (
-        <WorkspaceDetailScreen
+        <WorkspaceLayout
           workspaceId={selectedWorkspaceId}
           onBack={handleBack}
+          onSelectWorkspace={handleSelectWorkspace}
           onNavigateToGlobalModels={() => handleNavigate('llm-models')}
         />
       )}

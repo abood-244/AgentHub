@@ -1,0 +1,150 @@
+/* ── AgentHub Workspace Design System Tokens ───────────────────────── */
+:root {
+  /* Palette matching visual identity */
+  --ws-navy-header: #0A192F;
+  --ws-navy-dark: #07152B;
+  --ws-bg-page: #F4F7FC;
+  --ws-bg-card: #FFFFFF;
+  --ws-bg-sidebar: #FFFFFF;
+  
+  --ws-text-primary: #0F172A;
+  --ws-text-secondary: #64748B;
+  --ws-text-muted: #94A3B8;
+  
+  --ws-primary-blue: #0878F9;
+  --ws-primary-blue-hover: #0667D6;
+  --ws-primary-blue-light: #EBF5FF;
+  --ws-primary-blue-border: #BAE6FD;
+  
+  --ws-border: #E2E8F0;
+  --ws-border-subtle: #F1F5F9;
+  
+  /* Pastel Icon Tokens */
+  --ws-pastel-blue-bg: #E0F2FE;
+  --ws-pastel-blue-fg: #0284C7;
+  
+  --ws-pastel-green-bg: #D1FAE5;
+  --ws-pastel-green-fg: #059669;
+  
+  --ws-pastel-amber-bg: #FEF3C7;
+  --ws-pastel-amber-fg: #D97706;
+  
+  --ws-pastel-pink-bg: #FCE7F3;
+  --ws-pastel-pink-fg: #DB2777;
+  
+  --ws-pastel-purple-bg: #F3E8FF;
+  --ws-pastel-purple-fg: #7C3AED;
+  
+  --ws-pastel-indigo-bg: #E0E7FF;
+  --ws-pastel-indigo-fg: #4F46E5;
+  
+  --ws-pastel-slate-bg: #F1F5F9;
+  --ws-pastel-slate-fg: #475569;
+  
+  /* Shadows & Radius */
+  --ws-radius-sm: 8px;
+  --ws-radius-md: 12px;
+  --ws-radius-lg: 16px;
+  --ws-radius-xl: 20px;
+  
+  --ws-shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
+  --ws-shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06);
+  --ws-shadow-lg: 0 10px 25px rgba(15, 23, 42, 0.08);
+}
+
+/* Base Utility Classes for Workspace Views */
+.ws-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 8px 4px 32px;
+  animation: wsFadeIn 0.25s ease-out;
+}
+
+@keyframes wsFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ws-page-header {
+  margin-bottom: 24px;
+}
+
+.ws-page-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--ws-text-primary);
+  margin: 0 0 6px 0;
+  letter-spacing: -0.3px;
+}
+
+.ws-page-subtitle {
+  font-size: 14px;
+  color: var(--ws-text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Shared Card */
+.ws-card-light {
+  background: var(--ws-bg-card);
+  border: 1px solid var(--ws-border);
+  border-radius: var(--ws-radius-lg);
+  padding: 24px;
+  box-shadow: var(--ws-shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.ws-card-light:hover {
+  box-shadow: var(--ws-shadow-md);
+}
+
+/* Shared Buttons */
+.ws-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: var(--ws-primary-blue);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--ws-radius-md);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(8, 120, 249, 0.25);
+}
+
+.ws-btn-primary:hover:not(:disabled) {
+  background: var(--ws-primary-blue-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(8, 120, 249, 0.35);
+}
+
+.ws-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: #FFFFFF;
+  color: var(--ws-text-primary);
+  border: 1px solid var(--ws-border);
+  border-radius: var(--ws-radius-md);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ws-btn-secondary:hover:not(:disabled) {
+  background: var(--ws-bg-page);
+  border-color: #CBD5E1;
+}

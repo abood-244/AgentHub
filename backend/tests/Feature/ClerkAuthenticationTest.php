@@ -253,4 +253,40 @@ class ClerkAuthenticationTest extends TestCase
             ->assertJsonPath('user.role', 'Staff')
             ->assertJsonPath('user.clerk_user_id', 'clerk_staff_victim');
     }
+
+    /**
+     * 11. Pre-registered user without clerk_user_id is automatically linked on first login.
+     */
+    public function test_pre_registered_user_is_automatically_linked_on_first_login(): void
+    {
+        $this->mockVerifierWithSubject('new_clerk_id_999');
+
+        $uni = University::create([
+            'name' => 'Auto Link University',
+            'slug' => 'auto-link-uni',
+            'code' => 'ALU',
+        ]);
+
+        $user = User::create([
+            'clerk_user_id' => null,
+            'name' => 'Mazen Admin',
+            'email' => 'mazen250social@gmail.com',
+            'password' => 'secret',
+            'role' => UserRole::SYSTEM_ADMINISTRATOR,
+            'university_id' => $uni->id,
+        ]);
+
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer token',
+            'X-User-Email' => 'mazen250social@gmail.com',
+        ])->getJson('/api/me');
+
+        $response->assertStatus(200)
+            ->assertJsonPath('user.email', 'mazen250social@gmail.com')
+            ->assertJsonPath('user.role', 'System Administrator')
+            ->assertJsonPath('user.clerk_user_id', 'new_clerk_id_999');
+
+        $user->refresh();
+        $this->assertEquals('new_clerk_id_999', $user->clerk_user_id);
+    }
 }

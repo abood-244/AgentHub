@@ -1,0 +1,819 @@
+/* ── Support Cases View (AgentHub Light Design System) ───────────────── */
+
+.ws-cases-container {
+  max-width: 1250px;
+  margin: 0 auto;
+}
+
+.ws-cases-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.ws-cases-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0A192F;
+  margin: 0 0 6px;
+}
+
+.ws-cases-subtitle {
+  font-size: 14px;
+  color: #64748B;
+  margin: 0;
+}
+
+.ws-cases-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ws-cases-view-toggle {
+  display: flex;
+  background: #F1F5F9;
+  border-radius: 12px;
+  padding: 3px;
+  border: 1px solid #E2E8F0;
+}
+
+.ws-cases-view-btn {
+  padding: 7px 14px;
+  border-radius: 9px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 700;
+  color: #64748B;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.ws-cases-view-btn.active {
+  background: #FFFFFF;
+  color: #0A192F;
+  box-shadow: 0 1px 3px rgba(10, 25, 47, 0.08);
+}
+
+.ws-cases-alert {
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.ws-cases-alert--success {
+  background: #DCFCE7;
+  color: #15803D;
+  border: 1px solid #BBF7D0;
+}
+
+.ws-cases-alert--error {
+  background: #FEE2E2;
+  color: #B91C1C;
+  border: 1px solid #FECACA;
+}
+
+/* ── KPI Grid ────────────────────────────────────────────────────────── */
+.ws-cases-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 1024px) {
+  .ws-cases-kpi-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .ws-cases-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 420px) {
+  .ws-cases-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ws-cases-kpi-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 18px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 2px 6px rgba(10, 25, 47, 0.03);
+}
+
+.ws-cases-kpi-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.ws-cases-kpi-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.ws-cases-kpi-label {
+  font-size: 12px;
+  color: #64748B;
+  font-weight: 600;
+}
+
+.ws-cases-kpi-val {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0A192F;
+}
+
+/* ── Filters Bar ─────────────────────────────────────────────────────── */
+.ws-cases-filters-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.ws-cases-search-box {
+  flex: 1;
+  min-width: 240px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 12px;
+  padding: 8px 14px;
+}
+
+.ws-cases-search-icon {
+  font-size: 14px;
+  color: #64748B;
+}
+
+.ws-cases-search-input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-size: 13.5px;
+  outline: none;
+  color: #0A192F;
+}
+
+.ws-cases-filter-selects {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ws-cases-select {
+  padding: 10px 14px;
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 12px;
+  font-size: 13.5px;
+  color: #334155;
+  outline: none;
+  cursor: pointer;
+}
+
+/* ── Kanban Board ────────────────────────────────────────────────────── */
+.ws-cases-kanban-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  align-items: flex-start;
+}
+
+@media (max-width: 900px) {
+  .ws-cases-kanban-board {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ws-cases-kanban-col {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 18px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 480px;
+}
+
+.ws-cases-kanban-col-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #E2E8F0;
+  border-top: 3px solid transparent;
+  padding-top: 4px;
+}
+
+.ws-cases-col-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ws-cases-col-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.ws-cases-col-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #0A192F;
+}
+
+.ws-cases-col-count {
+  font-size: 12px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  color: #475569;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 9999px;
+}
+
+.ws-cases-kanban-cards-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ws-cases-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(10, 25, 47, 0.04);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ws-cases-card:hover {
+  border-color: #CBD5E1;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(10, 25, 47, 0.08);
+}
+
+.ws-cases-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ws-cases-number {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #0878F9;
+  letter-spacing: 0.5px;
+}
+
+.ws-cases-priority-pill {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.ws-cases-card-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #0A192F;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.ws-cases-card-summary {
+  font-size: 12.5px;
+  color: #64748B;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ws-cases-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #64748B;
+  padding-top: 8px;
+  border-top: 1px solid #F1F5F9;
+}
+
+.ws-cases-card-staff {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ws-cases-source-badge {
+  font-size: 10.5px;
+  background: #F1F5F9;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.ws-cases-card-quick-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 6px;
+}
+
+.ws-cases-stage-btn {
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid #CBD5E1;
+  background: #F8FAFC;
+  color: #0A192F;
+  transition: all 0.15s ease;
+}
+
+.ws-cases-stage-btn:hover:not(:disabled) {
+  background: #EFF6FF;
+  border-color: #93C5FD;
+}
+
+.ws-cases-stage-btn.active {
+  background: #0878F9;
+  color: #FFFFFF;
+  border-color: #0878F9;
+}
+
+.ws-cases-stage-btn--success {
+  color: #15803D;
+  border-color: #BBF7D0;
+  background: #F0FDF4;
+}
+
+.ws-cases-stage-btn--success:hover:not(:disabled) {
+  background: #DCFCE7;
+}
+
+.ws-cases-stage-btn--success.active {
+  background: #16A34A;
+  color: #FFFFFF;
+}
+
+.ws-cases-stage-btn--reopen {
+  color: #475569;
+}
+
+/* ── Table View ──────────────────────────────────────────────────────── */
+.ws-cases-table-wrap {
+  overflow-x: auto;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 18px;
+  box-shadow: 0 2px 8px rgba(10, 25, 47, 0.03);
+}
+
+.ws-cases-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.ws-cases-table th {
+  background: #F8FAFC;
+  color: #0A192F;
+  padding: 14px 18px;
+  font-weight: 700;
+  text-align: right;
+  border-bottom: 1px solid #E2E8F0;
+  white-space: nowrap;
+}
+
+[dir="ltr"] .ws-cases-table th {
+  text-align: left;
+}
+
+.ws-cases-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid #F1F5F9;
+  color: #334155;
+  white-space: nowrap;
+}
+
+.ws-cases-table tr:hover {
+  background: #F8FAFC;
+}
+
+.ws-cases-tbl-cat {
+  display: block;
+  font-size: 11.5px;
+  color: #64748B;
+  font-weight: normal;
+  margin-top: 2px;
+}
+
+.ws-cases-status-badge {
+  font-size: 11.5px;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-weight: 700;
+}
+
+.ws-cases-status-badge.new {
+  background: #EFF6FF;
+  color: #1D4ED8;
+}
+
+.ws-cases-status-badge.in_progress {
+  background: #FFFBEB;
+  color: #B45309;
+}
+
+.ws-cases-status-badge.closed {
+  background: #DCFCE7;
+  color: #15803D;
+}
+
+/* ── Modals ─────────────────────────────────────────────────────────── */
+.ws-cases-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 25, 47, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.ws-cases-modal {
+  background: #FFFFFF;
+  border-radius: 20px;
+  max-width: 580px;
+  width: 100%;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 40px rgba(10, 25, 47, 0.2);
+  overflow: hidden;
+}
+
+.ws-cases-modal--lg {
+  max-width: 720px;
+}
+
+.ws-cases-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px 24px;
+  border-bottom: 1px solid #E2E8F0;
+  background: #F8FAFC;
+}
+
+.ws-cases-modal-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0A192F;
+  margin: 0;
+}
+
+.ws-cases-modal-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #94A3B8;
+  cursor: pointer;
+}
+
+.ws-cases-modal-close:hover {
+  color: #0A192F;
+}
+
+.ws-cases-modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ── Detail Modal Specifics ─────────────────────────────────────────── */
+.ws-cases-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  background: #F8FAFC;
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: 1px solid #E2E8F0;
+}
+
+.ws-cases-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 13px;
+}
+
+.ws-cases-detail-item span {
+  font-size: 11.5px;
+  color: #64748B;
+}
+
+.ws-cases-detail-item strong {
+  color: #0A192F;
+}
+
+.ws-cases-section-block {
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+}
+
+.ws-cases-section-block h4 {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #0A192F;
+  margin: 0 0 6px;
+}
+
+.ws-cases-section-block p {
+  font-size: 13.5px;
+  color: #334155;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.ws-cases-conv-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  color: #1E40AF;
+  font-weight: 600;
+}
+
+.ws-cases-management-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding: 16px;
+  background: #F1F5F9;
+  border-radius: 14px;
+}
+
+@media (max-width: 600px) {
+  .ws-cases-management-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ws-cases-mgmt-box label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0A192F;
+  margin-bottom: 8px;
+}
+
+/* ── Follow-up Timeline ──────────────────────────────────────────────── */
+.ws-cases-logs-section h4 {
+  font-size: 15px;
+  font-weight: 800;
+  color: #0A192F;
+  margin: 0 0 14px;
+}
+
+.ws-cases-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  padding-inline-start: 16px;
+}
+
+.ws-cases-timeline::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  inset-inline-start: 4px;
+  width: 2px;
+  background: #E2E8F0;
+}
+
+.ws-cases-timeline-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  position: relative;
+}
+
+.ws-cases-timeline-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #0878F9;
+  margin-top: 5px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.ws-cases-timeline-content {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  width: 100%;
+}
+
+.ws-cases-timeline-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 13px;
+}
+
+.ws-cases-timeline-meta strong {
+  color: #0A192F;
+}
+
+.ws-cases-timeline-meta small {
+  color: #94A3B8;
+  font-size: 11px;
+}
+
+.ws-cases-log-user {
+  display: block;
+  font-size: 12px;
+  color: #64748B;
+  margin-top: 3px;
+}
+
+.ws-cases-log-details {
+  font-size: 11px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  padding: 6px;
+  border-radius: 6px;
+  margin: 6px 0 0;
+  color: #475569;
+}
+
+/* ── Form Inputs ─────────────────────────────────────────────────────── */
+.ws-cases-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ws-cases-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.ws-cases-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0A192F;
+}
+
+.ws-cases-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #CBD5E1;
+  border-radius: 10px;
+  font-size: 13.5px;
+  color: #0A192F;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.ws-cases-input:focus {
+  border-color: #0878F9;
+}
+
+.ws-cases-textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #CBD5E1;
+  border-radius: 10px;
+  font-size: 13.5px;
+  color: #0A192F;
+  outline: none;
+  font-family: inherit;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.ws-cases-textarea:focus {
+  border-color: #0878F9;
+}
+
+.ws-cases-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.ws-cases-btn {
+  padding: 9px 18px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s ease;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ws-cases-btn--primary {
+  background: #0878F9;
+  color: #FFFFFF;
+}
+
+.ws-cases-btn--primary:hover:not(:disabled) {
+  background: #0057db;
+}
+
+.ws-cases-btn--secondary {
+  background: #FFFFFF;
+  border-color: #CBD5E1;
+  color: #334155;
+}
+
+.ws-cases-btn--outline {
+  background: transparent;
+  border-color: #0878F9;
+  color: #0878F9;
+}
+
+.ws-cases-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #64748B;
+}
+
+.ws-cases-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid #E2E8F0;
+  border-top-color: #0878F9;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 10px;
+}
+
+.ws-cases-empty {
+  text-align: center;
+  padding: 60px 20px;
+  background: #FFFFFF;
+  border: 1.5px dashed #CBD5E1;
+  border-radius: 18px;
+  color: #64748B;
+}

@@ -61,4 +61,30 @@ class User extends Authenticatable
             ->withPivot('access_level')
             ->withTimestamps();
     }
+
+    // ─── Sprint 2 Relationships ────────────────────────────────
+
+    /**
+     * Get the notifications for this user.
+     */
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notification::class)->orderBy('created_at', 'desc');
+    }
+
+    /**
+     * Get support cases assigned to this user.
+     */
+    public function assignedSupportCases(): HasMany
+    {
+        return $this->hasMany(SupportCase::class, 'assigned_staff_id');
+    }
+
+    /**
+     * Get unread notifications count.
+     */
+    public function getUnreadNotificationsCountAttribute(): int
+    {
+        return $this->notifications()->where('is_read', false)->count();
+    }
 }

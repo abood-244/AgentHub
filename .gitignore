@@ -29,3 +29,7 @@ backend/.env
 backend/.env.backup
 backend/.env.production
 backend/database/database.sqlite
+# Environment variables
+.env
+.env.*
+!.env.example

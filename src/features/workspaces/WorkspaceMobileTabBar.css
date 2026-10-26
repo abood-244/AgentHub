@@ -1,0 +1,76 @@
+/* ==========================================================================
+   Workspace Mobile Bottom Tab Bar CSS
+   Exact match to Reference Image 2 (Bottom bar on mobile)
+   ========================================================================== */
+
+.ws-mobile-tabbar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background-color: #0A192F;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 100;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 8px;
+  box-sizing: border-box;
+}
+
+.ws-mobile-tabbar__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 6px 12px;
+  background: transparent;
+  border: none;
+  color: #8892B0;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 12px;
+  min-width: 58px;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.ws-mobile-tabbar__icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 24px;
+}
+
+.ws-mobile-tabbar__label {
+  white-space: nowrap;
+  letter-spacing: -0.2px;
+}
+
+/* Active State: matches Reference Image 2 (blue container pill or solid highlight) */
+.ws-mobile-tabbar__item--active {
+  color: #FFFFFF;
+  background-color: #0878F9;
+  border-radius: 12px;
+  padding: 6px 12px;
+}
+
+.ws-mobile-tabbar__item--active .ws-mobile-tabbar__icon-wrap {
+  color: #FFFFFF;
+}
+
+.ws-mobile-tabbar__item:hover:not(.ws-mobile-tabbar__item--active) {
+  color: #CCD6F6;
+}
+
+/* ── Media Query: Show only on mobile screens (<= 1024px) ── */
+@media (max-width: 1024px) {
+  .ws-mobile-tabbar {
+    display: flex;
+  }
+}

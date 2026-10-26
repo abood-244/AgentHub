@@ -60,6 +60,19 @@ class ClerkAuthenticate
         // Resolve internal user in PostgreSQL
         $user = User::where('clerk_user_id', $clerkUserId)->first();
 
+        // Fallback: If not yet bound by clerk_user_id, link via verified email
+        if (! $user) {
+            $email = $payload->email ?? $payload->email_address ?? $request->header('X-User-Email');
+
+            if ($email) {
+                $userByEmail = User::where('email', strtolower(trim((string) $email)))->first();
+                if ($userByEmail && (empty($userByEmail->clerk_user_id) || $userByEmail->clerk_user_id === $clerkUserId)) {
+                    $userByEmail->update(['clerk_user_id' => $clerkUserId]);
+                    $user = $userByEmail;
+                }
+            }
+        }
+
         if (! $user) {
             return response()->json([
                 'message' => 'Forbidden: Clerk identity not registered as an AgentHub user',

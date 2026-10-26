@@ -8,8 +8,14 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: process.env.VITE_API_TARGET || 'http://127.0.0.1:8001',
+        target: process.env.VITE_API_TARGET || 'http://127.0.0.1:8000',
         changeOrigin: true,
+      },
+      '/__clerk': {
+        target: 'https://amazing-sunbeam-6146.clerk.accounts.dev',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/__clerk/, ''),
+        secure: false,
       },
     },
   },

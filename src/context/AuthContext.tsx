@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { useAuth, useClerk } from '@clerk/react';
+import { useAuth, useClerk, useUser } from '@clerk/react';
 import { apiClient, setAuthTokenGetter } from '../services/apiClient';
 import { InternalUser, ApprovedRole } from '../types';
 
@@ -20,6 +20,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isLoaded: isClerkLoaded, isSignedIn, getToken } = useAuth();
   const { signOut: clerkSignOut } = useClerk();
+  const { user: clerkUser } = useUser();
 
   const [isLoadingInternal, setIsLoadingInternal] = useState<boolean>(false);
   const [internalUser, setInternalUser] = useState<InternalUser | null>(null);
@@ -48,7 +49,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setAuthError(null);
 
     try {
-      const response = await apiClient.getMe();
+      const userEmail = clerkUser?.primaryEmailAddress?.emailAddress;
+      const response = await apiClient.getMe(userEmail);
       if (response && response.user) {
         setInternalUser(response.user);
         setIsUnauthorized(false);
@@ -61,12 +63,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setInternalUser(null);
       setIsUnauthorized(true);
       setAuthError(
-        err?.data?.message || err?.message || 'عذراً، هذا الحساب غير مسجل كمستخدم مصرح به في AgentHub.'
+        err?.data?.message || err?.message || 'ط¹ط°ط±ط§ظ‹طŒ ظ‡ط°ط§ ط§ظ„ط­ط³ط§ط¨ ط؛ظٹط± ظ…ط³ط¬ظ„ ظƒظ…ط³طھط®ط¯ظ… ظ…طµط±ط­ ط¨ظ‡ ظپظٹ AgentHub.'
       );
     } finally {
       setIsLoadingInternal(false);
     }
-  }, [isSignedIn]);
+  }, [isSignedIn, clerkUser]);
 
   useEffect(() => {
     if (isClerkLoaded && isSignedIn) {

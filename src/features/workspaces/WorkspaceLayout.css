@@ -1,0 +1,233 @@
+/* ==========================================================================
+   Workspace Layout CSS
+   Level 2 Dedicated Workspace Environment
+   ========================================================================== */
+
+.ws-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #F4F7FC;
+  position: relative;
+  direction: rtl;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* ── Main Content Wrapper ── */
+.ws-layout__main-wrapper {
+  flex: 1;
+  min-width: 0;
+  margin-inline-start: 280px; /* Width of expanded WorkspaceSidebar */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  transition: margin-inline-start 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+}
+
+/* When desktop sidebar is collapsed (76px rail) */
+.ws-layout__main-wrapper--collapsed {
+  margin-inline-start: 76px;
+}
+
+/* ── Desktop Top Header Bar ── */
+.ws-desktop-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 32px;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #E2E8F0;
+  box-shadow: 0 1px 3px rgba(10, 25, 47, 0.02);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.ws-desktop-topbar__breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.ws-desktop-topbar__crumb-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: #64748B;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+}
+
+.ws-desktop-topbar__crumb-link:hover {
+  color: #0878F9;
+  background-color: #EFF6FF;
+}
+
+.ws-desktop-topbar__crumb-sep {
+  color: #94A3B8;
+}
+
+.ws-desktop-topbar__current-ws {
+  font-weight: 700;
+  color: #0A192F;
+}
+
+.ws-desktop-topbar__section-title {
+  color: #0878F9;
+  font-weight: 700;
+  background-color: #EFF6FF;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 12.5px;
+}
+
+.ws-desktop-topbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ws-desktop-topbar__status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ws-desktop-topbar__status-pill--active {
+  background-color: #DCFCE7;
+  color: #15803D;
+}
+
+.ws-desktop-topbar__status-pill--paused {
+  background-color: #F1F5F9;
+  color: #64748B;
+}
+
+.ws-desktop-topbar__status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.ws-desktop-topbar__exit-btn {
+  background: transparent;
+  border: 1px solid #E2E8F0;
+  color: #475569;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.ws-desktop-topbar__exit-btn:hover {
+  background-color: #F8FAFC;
+  color: #0A192F;
+  border-color: #CBD5E1;
+}
+
+/* ── Mobile Top Header (Reference Image 2) ── */
+.ws-mobile-topbar {
+  display: none; /* Shown on screens <= 1024px */
+  height: 56px;
+  background-color: #0A192F;
+  color: #FFFFFF;
+  padding: 0 16px;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.ws-mobile-topbar__menu-btn,
+.ws-mobile-topbar__back-btn {
+  background: transparent;
+  border: none;
+  color: #CCD6F6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.ws-mobile-topbar__menu-btn:hover,
+.ws-mobile-topbar__back-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+}
+
+.ws-mobile-topbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ws-mobile-topbar__brand-name {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  color: #FFFFFF;
+}
+
+.ws-mobile-topbar__brand-chevron {
+  color: #8892B0;
+}
+
+/* ── Main Content Area ── */
+.ws-layout__content {
+  flex: 1;
+  padding: 24px 32px 48px;
+  max-width: 1300px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ── Responsive Behavior ── */
+@media (max-width: 1024px) {
+  .ws-desktop-topbar {
+    display: none;
+  }
+
+  .ws-mobile-topbar {
+    display: flex;
+  }
+
+  .ws-layout__main-wrapper,
+  .ws-layout__main-wrapper--collapsed {
+    margin-inline-start: 0;
+    width: 100%;
+  }
+
+  .ws-layout__content {
+    padding: 16px 16px 84px; /* extra bottom padding for mobile tab bar */
+  }
+}
+
+@media (max-width: 480px) {
+  .ws-layout__content {
+    padding: 12px 12px 80px;
+  }
+}
