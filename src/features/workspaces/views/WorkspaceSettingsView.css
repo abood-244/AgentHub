@@ -1,114 +1,569 @@
-/* ── Workspace Settings Styles (Light Design System) ───────────────────────── */
-.ws-settings-container {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  max-width: 800px;
-  direction: rtl;
-}
+/* ==========================================================================
+   Workspace Settings View - Modern Enterprise Redesign
+   ========================================================================== */
 
-.ws-settings-form {
+.ws-settings-page {
+  max-width: 960px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.ws-card {
-  background: #FFFFFF;
+/* ── 1. Top Executive Hero Header ── */
+.ws-settings-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background-color: #FFFFFF;
+  border-radius: 18px;
   border: 1px solid #E2E8F0;
-  border-radius: 20px;
-  padding: 24px 28px;
-  box-shadow: 0 2px 10px rgba(10, 25, 47, 0.03);
+  padding: 22px 26px;
+  box-shadow: 0 1px 3px rgba(10, 25, 47, 0.03);
+  flex-wrap: wrap;
 }
 
-.ws-card__title {
-  font-size: 17px;
+.ws-settings-hero__info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 280px;
+}
+
+.ws-settings-hero__avatar {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #0A192F 0%, #1E3A8A 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(10, 25, 47, 0.15);
+}
+
+.ws-settings-hero__icon {
+  color: #60A5FA;
+}
+
+.ws-settings-hero__title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ws-settings-hero__title {
+  margin: 0;
+  font-size: 22px;
   font-weight: 800;
   color: #0A192F;
-  margin: 0 0 18px;
 }
 
-.ws-card--danger {
-  border-color: #FECACA;
-  background: #FFFBFB;
+.ws-settings-hero__status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 11.5px;
+  font-weight: 700;
 }
 
-.ws-form-group {
+.ws-settings-hero__status-pill--active {
+  background-color: #DCFCE7;
+  color: #15803D;
+}
+
+.ws-settings-hero__status-pill--paused {
+  background-color: #FEF3C7;
+  color: #B45309;
+}
+
+.ws-settings-hero__status-pill--archived {
+  background-color: #F1F5F9;
+  color: #64748B;
+}
+
+.ws-settings-hero__subtitle {
+  margin: 4px 0 0 0;
+  font-size: 13.5px;
+  color: #64748B;
+  line-height: 1.45;
+}
+
+.ws-settings-save-btn {
+  background: linear-gradient(135deg, #0878F9 0%, #0057DB 100%);
+  color: #FFFFFF;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 13.5px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(8, 120, 249, 0.25);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.ws-settings-save-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #0060E6 0%, #0047BA 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(8, 120, 249, 0.35);
+}
+
+.ws-settings-save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Alert Notification */
+.ws-settings-alert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  font-size: 13.5px;
+  font-weight: 600;
+  animation: wsFadeIn 0.2s ease-out;
+}
+
+.ws-settings-alert--success {
+  background-color: #DCFCE7;
+  color: #15803D;
+  border: 1px solid #BBF7D0;
+}
+
+.ws-settings-alert--error {
+  background-color: #FEF2F2;
+  color: #B91C1C;
+  border: 1px solid #FECACA;
+}
+
+/* ── 2. Form Layout & Cards ── */
+.ws-settings-form-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ws-settings-card {
+  background-color: #FFFFFF;
+  border-radius: 18px;
+  border: 1px solid #E2E8F0;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(10, 25, 47, 0.03);
+}
+
+.ws-card-header {
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.ws-card-title {
+  margin: 0 0 4px 0;
+  font-size: 16.5px;
+  font-weight: 800;
+  color: #0A192F;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ws-card-title-icon {
+  color: #0878F9;
+}
+
+.ws-card-subtitle {
+  margin: 0;
+  font-size: 13px;
+  color: #64748B;
+  line-height: 1.45;
+}
+
+.ws-settings-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.ws-settings-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.ws-settings-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1E293B;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ws-required {
+  color: #EF4444;
+}
+
+.ws-settings-input {
+  width: 100%;
+  background-color: #FFFFFF;
+  color: #0A192F;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 12px;
+  padding: 11px 14px;
+  border: 1px solid #CBD5E1;
+  outline: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.ws-settings-input:focus {
+  border-color: #0878F9;
+  box-shadow: 0 0 0 3px rgba(8, 120, 249, 0.12);
+}
+
+.ws-settings-textarea {
+  width: 100%;
+  background-color: #FFFFFF;
+  color: #0A192F;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 12px;
+  padding: 12px 14px;
+  border: 1px solid #CBD5E1;
+  outline: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  font-family: inherit;
+  line-height: 1.55;
+  resize: vertical;
+}
+
+.ws-settings-textarea:focus {
+  border-color: #0878F9;
+  box-shadow: 0 0 0 3px rgba(8, 120, 249, 0.12);
+}
+
+/* Operational Status Cards Grid */
+.ws-status-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.ws-status-card {
+  background-color: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 18px;
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 20px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.ws-form-label {
+.ws-status-card:hover {
+  border-color: #CBD5E1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(10, 25, 47, 0.05);
+}
+
+.ws-status-card--active {
+  border-color: #10B981;
+  background-color: #F0FDF4;
+  box-shadow: 0 0 0 1px #10B981, 0 6px 16px rgba(16, 185, 129, 0.08);
+}
+
+.ws-status-card--paused {
+  border-color: #F59E0B;
+  background-color: #FFFBEB;
+  box-shadow: 0 0 0 1px #F59E0B, 0 6px 16px rgba(245, 158, 11, 0.08);
+}
+
+.ws-status-card--archived {
+  border-color: #94A3B8;
+  background-color: #F8FAFC;
+  box-shadow: 0 0 0 1px #94A3B8, 0 6px 16px rgba(148, 163, 184, 0.08);
+}
+
+.ws-status-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ws-status-card__badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 9999px;
+}
+
+.ws-status-card__badge--green {
+  background-color: #DCFCE7;
+  color: #15803D;
+}
+
+.ws-status-card__badge--amber {
+  background-color: #FEF3C7;
+  color: #B45309;
+}
+
+.ws-status-card__badge--gray {
+  background-color: #E2E8F0;
+  color: #475569;
+}
+
+.ws-status-card__title {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #0A192F;
+}
+
+.ws-status-card__desc {
+  margin: 0;
+  font-size: 12px;
+  color: #64748B;
+  line-height: 1.45;
+}
+
+/* System Metadata Card */
+.ws-settings-card--meta {
+  background-color: #F8FAFC;
+  border-style: dashed;
+}
+
+.ws-meta-grid {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.ws-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ws-meta-icon {
+  color: #0878F9;
+}
+
+.ws-meta-label {
+  display: block;
+  font-size: 11.5px;
+  color: #64748B;
+  font-weight: 600;
+}
+
+.ws-meta-value {
   font-size: 13.5px;
   font-weight: 700;
   color: #0A192F;
 }
 
-/* Status Selector */
-.ws-status-selector {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+/* Danger Zone Card */
+.ws-settings-card--danger {
+  border-color: #FECACA;
+  background-color: #FFF5F5;
 }
 
-.ws-status-pill {
+.ws-danger-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.ws-danger-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background-color: #FEE2E2;
+  color: #DC2626;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  background: #F8FAFC;
-  border: 1px solid #E2E8F0;
-  border-radius: 12px;
-  cursor: pointer;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ws-danger-title {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  font-weight: 800;
+  color: #991B1B;
+}
+
+.ws-danger-subtitle {
+  margin: 0;
   font-size: 13px;
-  font-weight: 600;
-  color: #475569;
-  transition: all 0.2s;
+  color: #B91C1C;
+  line-height: 1.5;
 }
 
-.ws-status-pill input {
-  display: none;
+.ws-danger-action {
+  margin-top: 18px;
+  display: flex;
+  justify-content: flex-end;
 }
 
-.ws-status-pill:hover {
-  background: #F1F5F9;
-  border-color: #CBD5E1;
-}
-
-.ws-status-pill--active {
-  background: #EFF6FF;
-  border-color: #0878F9;
-  color: #0878F9;
-  font-weight: 700;
-}
-
-.ws-status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-}
-
-.ws-status-dot--green {
-  background: #16A34A;
-  box-shadow: 0 0 8px rgba(22, 163, 74, 0.4);
-}
-
-.ws-status-dot--yellow {
-  background: #D97706;
-  box-shadow: 0 0 8px rgba(217, 119, 6, 0.4);
-}
-
-.ws-status-dot--gray {
-  background: #64748B;
-}
-
-/* Delete Confirm Box */
-.ws-delete-confirm-box {
-  background: #FEF2F2;
+.ws-danger-trigger-btn {
+  background-color: #FFFFFF;
   border: 1px solid #FCA5A5;
-  border-radius: 14px;
-  padding: 16px;
-  margin-bottom: 16px;
+  color: #DC2626;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 9px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.ws-danger-trigger-btn:hover {
+  background-color: #DC2626;
+  color: #FFFFFF;
+  border-color: #DC2626;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+}
+
+/* ── 3. Delete Modal Specifics ── */
+.ws-modal-dialog--danger {
+  border: 1px solid #FCA5A5;
+}
+
+.ws-modal-header--danger {
+  background-color: #FEF2F2;
+  border-bottom-color: #FECACA;
+}
+
+.ws-danger-modal-icon {
+  color: #DC2626;
+}
+
+.ws-modal-header--danger h3 {
+  color: #991B1B;
+}
+
+.ws-danger-alert-box {
+  background-color: #FFF5F5;
+  border: 1px solid #FECACA;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 13px;
+  color: #991B1B;
+  line-height: 1.55;
+}
+
+.ws-settings-input--danger:focus {
+  border-color: #DC2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+.ws-danger-delete-btn {
+  background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
+  color: #FFFFFF;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+  transition: all 0.2s ease;
+}
+
+.ws-danger-delete-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Dark Mode Overrides ── */
+:root[data-theme="dark"] .ws-settings-hero,
+:root[data-theme="dark"] .ws-settings-card {
+  background-color: #112240;
+  border-color: #1E3450;
+}
+
+:root[data-theme="dark"] .ws-settings-hero__title,
+:root[data-theme="dark"] .ws-card-title,
+:root[data-theme="dark"] .ws-meta-value {
+  color: #F8FAFC;
+}
+
+:root[data-theme="dark"] .ws-settings-hero__subtitle,
+:root[data-theme="dark"] .ws-card-subtitle,
+:root[data-theme="dark"] .ws-meta-label,
+:root[data-theme="dark"] .ws-status-card__desc {
+  color: #94A3B8;
+}
+
+:root[data-theme="dark"] .ws-settings-label {
+  color: #CBD5E1;
+}
+
+:root[data-theme="dark"] .ws-settings-input,
+:root[data-theme="dark"] .ws-settings-textarea {
+  background-color: #0E1B2C;
+  border-color: #1E3450;
+  color: #F8FAFC;
+}
+
+:root[data-theme="dark"] .ws-status-card {
+  background-color: #0E1B2C;
+  border-color: #1E3450;
+}
+
+:root[data-theme="dark"] .ws-status-card__title {
+  color: #F8FAFC;
+}
+
+:root[data-theme="dark"] .ws-status-card--active {
+  background-color: rgba(16, 185, 129, 0.1);
+  border-color: #10B981;
+}
+
+:root[data-theme="dark"] .ws-status-card--paused {
+  background-color: rgba(245, 158, 11, 0.1);
+  border-color: #F59E0B;
+}
+
+:root[data-theme="dark"] .ws-status-card--archived {
+  background-color: rgba(148, 163, 184, 0.1);
+  border-color: #94A3B8;
+}
+
+:root[data-theme="dark"] .ws-settings-card--meta {
+  background-color: #0A192F;
+}
+
+:root[data-theme="dark"] .ws-settings-card--danger {
+  background-color: rgba(220, 38, 38, 0.08);
+  border-color: rgba(220, 38, 38, 0.25);
+}
+
+:root[data-theme="dark"] .ws-danger-trigger-btn {
+  background-color: #1E1B22;
+  border-color: #EF4444;
+  color: #F87171;
 }

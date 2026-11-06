@@ -18,7 +18,7 @@
 .ws-layout__main-wrapper {
   flex: 1;
   min-width: 0;
-  margin-inline-start: 280px; /* Width of expanded WorkspaceSidebar */
+  margin-inline-start: 270px; /* Width of expanded WorkspaceSidebar */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -32,17 +32,62 @@
 }
 
 /* ── Desktop Top Header Bar ── */
+/* ── Desktop Top Header Bar (Matching Unified App Header Image 5) ── */
 .ws-desktop-topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 32px;
-  background-color: #FFFFFF;
-  border-bottom: 1px solid #E2E8F0;
-  box-shadow: 0 1px 3px rgba(10, 25, 47, 0.02);
+  height: var(--ah-header-h-desktop, 64px);
+  padding: 0 24px;
+  background-color: var(--ah-bg-surface, #FFFFFF);
+  border-bottom: 1px solid var(--ah-border-subtle, #E2E8F0);
+  box-shadow: 0 1px 3px rgba(10, 25, 47, 0.03);
   position: sticky;
   top: 0;
   z-index: 40;
+  width: 100%;
+  box-sizing: border-box;
+  transition: background-color var(--ah-transition-fast), border-color var(--ah-transition-fast);
+}
+
+:root[data-theme="dark"] .ws-desktop-topbar {
+  background-color: #0E1B2C;
+  border-bottom-color: #1E3450;
+}
+
+.ws-desktop-topbar__start {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
+}
+
+.ws-topbar__toggle-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--ah-radius-md, 10px);
+  border: 1px solid var(--ah-border-subtle, #E2E8F0);
+  background-color: var(--ah-bg-surface, #FFFFFF);
+  color: var(--ah-text-secondary, #64748B);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--ah-transition-fast, 0.15s ease);
+  flex-shrink: 0;
+}
+
+.ws-topbar__toggle-btn:hover {
+  background-color: var(--ah-bg-hover, #F1F5F9);
+  color: var(--ah-text-primary, #0F172A);
+  border-color: var(--ah-border-strong, #CBD5E1);
+}
+
+:root[data-theme="dark"] .ws-topbar__toggle-btn {
+  background-color: #152438;
+  border-color: #1E3450;
+  color: #94A3B8;
 }
 
 .ws-desktop-topbar__breadcrumb {
@@ -73,6 +118,15 @@
   background-color: #EFF6FF;
 }
 
+:root[data-theme="dark"] .ws-desktop-topbar__crumb-link {
+  color: #94A3B8;
+}
+
+:root[data-theme="dark"] .ws-desktop-topbar__crumb-link:hover {
+  color: #38BDF8;
+  background-color: #172B45;
+}
+
 .ws-desktop-topbar__crumb-sep {
   color: #94A3B8;
 }
@@ -82,28 +136,31 @@
   color: #0A192F;
 }
 
-.ws-desktop-topbar__section-title {
+:root[data-theme="dark"] .ws-desktop-topbar__current-ws {
+  color: #F8FAFC;
+}
+
+.ws-desktop-topbar__section-badge {
   color: #0878F9;
   font-weight: 700;
   background-color: #EFF6FF;
   padding: 3px 10px;
   border-radius: 9999px;
-  font-size: 12.5px;
+  font-size: 12px;
 }
 
-.ws-desktop-topbar__actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+:root[data-theme="dark"] .ws-desktop-topbar__section-badge {
+  background-color: #172B45;
+  color: #60A5FA;
 }
 
 .ws-desktop-topbar__status-pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 12px;
+  padding: 3px 10px;
   border-radius: 9999px;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 600;
 }
 
@@ -112,9 +169,19 @@
   color: #15803D;
 }
 
+:root[data-theme="dark"] .ws-desktop-topbar__status-pill--active {
+  background-color: rgba(22, 163, 74, 0.2);
+  color: #4ADE80;
+}
+
 .ws-desktop-topbar__status-pill--paused {
   background-color: #F1F5F9;
   color: #64748B;
+}
+
+:root[data-theme="dark"] .ws-desktop-topbar__status-pill--paused {
+  background-color: #1E293B;
+  color: #94A3B8;
 }
 
 .ws-desktop-topbar__status-dot {
@@ -124,23 +191,45 @@
   background-color: currentColor;
 }
 
+.ws-desktop-topbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ws-topbar__search {
+  max-width: 200px;
+}
+
 .ws-desktop-topbar__exit-btn {
   background: transparent;
-  border: 1px solid #E2E8F0;
+  border: 1px solid #CBD5E1;
   color: #475569;
   font-family: inherit;
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 600;
   padding: 6px 14px;
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.15s ease;
+  white-space: nowrap;
 }
 
 .ws-desktop-topbar__exit-btn:hover {
-  background-color: #F8FAFC;
-  color: #0A192F;
-  border-color: #CBD5E1;
+  background-color: #FEF2F2;
+  color: #DC2626;
+  border-color: #FCA5A5;
+}
+
+:root[data-theme="dark"] .ws-desktop-topbar__exit-btn {
+  border-color: #334155;
+  color: #CBD5E1;
+}
+
+:root[data-theme="dark"] .ws-desktop-topbar__exit-btn:hover {
+  background-color: rgba(220, 38, 38, 0.15);
+  color: #F87171;
+  border-color: #EF4444;
 }
 
 /* ── Mobile Top Header (Reference Image 2) ── */

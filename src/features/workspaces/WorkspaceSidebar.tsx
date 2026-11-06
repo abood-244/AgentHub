@@ -17,8 +17,10 @@ import {
   X,
   LogOut,
   Check,
+  Landmark,
 } from 'lucide-react';
 import { useTranslation } from '../../i18n/LanguageContext';
+import { useAgentHubAuth } from '../../context/AuthContext';
 import { Workspace } from '../../types';
 import type { WorkspaceSection } from './WorkspaceLayout';
 import './WorkspaceSidebar.css';
@@ -146,6 +148,7 @@ interface WorkspaceSidebarProps {
   workspacesList?: Workspace[];
   onSelectWorkspace?: (wsId: string) => void;
   onBack: () => void;
+  onGlobalNavigate?: (screen: string) => void;
   isMobileOpen?: boolean;
   onCloseMobile?: () => void;
 }
@@ -162,14 +165,19 @@ export const WorkspaceSidebar: React.FC<WorkspaceSidebarProps> = ({
   workspacesList = [],
   onSelectWorkspace,
   onBack,
+  onGlobalNavigate,
   isMobileOpen = false,
   onCloseMobile,
 }) => {
   const { language } = useTranslation();
+  const { internalUser, role, signOut } = useAgentHubAuth();
   const isEn = language === 'en';
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
 
   // Close workspace selector dropdown on click outside
   useEffect(() => {
@@ -181,6 +189,27 @@ export const WorkspaceSidebar: React.FC<WorkspaceSidebarProps> = ({
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  // Close user profile popup on click outside
+  useEffect(() => {
+    const handleClickOutsideUser = (event: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutsideUser);
+    return () => document.removeEventListener('mousedown', handleClickOutsideUser);
+  }, []);
+
+  const userName = internalUser?.name || 'Alazki Azaki';
+  const userEmail = internalUser?.email || 'azakialazki@gmail.com';
+  const userInitial = userName.trim().charAt(0).toUpperCase() || 'U';
+  const roleTitle =
+    role === 'Platform Administrator'
+      ? (isEn ? 'Platform Administrator' : 'مسؤول المنصة المركزية')
+      : role === 'Staff'
+      ? (isEn ? 'Staff Member' : 'مرشد أكاديمي / كادر')
+      : (isEn ? 'System Administrator' : 'مسؤول النظام الجامعي');
 
   const mainGroup = WORKSPACE_NAV_ITEMS.filter((i) => i.group === 'main');
   const capabilitiesGroup = WORKSPACE_NAV_ITEMS.filter((i) => i.group === 'capabilities');
@@ -232,8 +261,8 @@ export const WorkspaceSidebar: React.FC<WorkspaceSidebarProps> = ({
             )}
           </div>
 
-          {/* Action button: Close on mobile, Toggle on desktop */}
-          {isMobileOpen ? (
+          {/* Action button: Close on mobile only */}
+          {isMobileOpen && (
             <button
               type="button"
               className="ws-sidebar__btn-toggle"
@@ -241,15 +270,6 @@ export const WorkspaceSidebar: React.FC<WorkspaceSidebarProps> = ({
               title={isEn ? 'Close' : 'إغلاق'}
             >
               <X size={18} />
-            </button>
-          ) : (
-            <button
-              type="button"
-              className="ws-sidebar__btn-toggle"
-              onClick={onToggleCollapse}
-              title={isCollapsed ? (isEn ? 'Expand' : 'توسيع') : (isEn ? 'Collapse' : 'طي')}
-            >
-              {isCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
             </button>
           )}
         </div>
@@ -432,21 +452,91 @@ export const WorkspaceSidebar: React.FC<WorkspaceSidebarProps> = ({
           </div>
         </div>
 
-        {/* ── 4. Bottom Exit / Return Action ── */}
+        {/* ── 4. Bottom User Profile Footer (Matching Reference Screenshots) ── */}
         <div className="ws-sidebar__footer">
-          <button
-            type="button"
-            className="ws-sidebar__btn-exit"
-            onClick={onBack}
-            title={isEn ? 'Return to Workspaces' : 'العودة إلى مساحات العمل'}
-          >
-            {!isCollapsed && (
-              <span className="ws-sidebar__btn-exit-text">
-                {isEn ? 'Back to Workspaces' : 'العودة إلى مساحات العمل'}
-              </span>
+          {/* User Profile Card & Floating Popover Menu */}
+          <div className="ws-sidebar__user-section" ref={userMenuRef}>
+            {isUserMenuOpen && (
+              <div className="ws-sidebar__user-popover" role="dialog" aria-label="قائمة المستخدم">
+                <div className="ws-sidebar__popover-header">
+                  <div className="ws-sidebar__popover-avatar">
+                    {userInitial}
+                  </div>
+                  <div className="ws-sidebar__popover-details">
+                    <span className="ws-sidebar__popover-name">{userName}</span>
+                    <span className="ws-sidebar__popover-email">{userEmail}</span>
+                  </div>
+                </div>
+
+                <div className="ws-sidebar__popover-divider" />
+
+                <div className="ws-sidebar__popover-actions">
+                  {/* 1. Workspace Settings */}
+                  <button
+                    type="button"
+                    className="ws-sidebar__popover-item"
+                    onClick={() => {
+                      setIsUserMenuOpen(false);
+                      onNavigate('settings');
+                    }}
+                  >
+                    <Settings size={16} />
+                    <span>{isEn ? 'Workspace Settings' : 'إعدادات مساحة العمل'}</span>
+                  </button>
+
+                  {/* 2. Return to Workspaces */}
+                  <button
+                    type="button"
+                    className="ws-sidebar__popover-item"
+                    onClick={() => {
+                      setIsUserMenuOpen(false);
+                      onBack();
+                    }}
+                  >
+                    <Landmark size={16} />
+                    <span>{isEn ? 'Back to Workspaces' : 'العودة إلى مساحات العمل'}</span>
+                  </button>
+
+                  {/* 3. Sign Out */}
+                  <button
+                    type="button"
+                    className="ws-sidebar__popover-item ws-sidebar__popover-item--danger"
+                    onClick={() => {
+                      setIsUserMenuOpen(false);
+                      signOut();
+                    }}
+                  >
+                    <LogOut size={16} />
+                    <span>{isEn ? 'Sign Out' : 'تسجيل الخروج'}</span>
+                  </button>
+                </div>
+              </div>
             )}
-            <LogOut size={18} className="ws-sidebar__btn-exit-icon" />
-          </button>
+
+            <button
+              type="button"
+              className={`ws-sidebar__user-card ${isUserMenuOpen ? 'ws-sidebar__user-card--active' : ''}`}
+              onClick={() => setIsUserMenuOpen((prev) => !prev)}
+              title={isCollapsed ? `${userName} (${roleTitle})` : undefined}
+              aria-expanded={isUserMenuOpen}
+            >
+              <div className="ws-sidebar__user-avatar">
+                {userInitial}
+              </div>
+              {!isCollapsed && (
+                <div className="ws-sidebar__user-meta">
+                  <span className="ws-sidebar__user-name">{userName}</span>
+                  <span className="ws-sidebar__user-role">{roleTitle}</span>
+                </div>
+              )}
+              {!isCollapsed && (
+                <ChevronDown
+                  size={14}
+                  className={`ws-sidebar__user-chevron ${isUserMenuOpen ? 'ws-sidebar__user-chevron--up' : ''}`}
+                />
+              )}
+            </button>
+          </div>
         </div>
       </aside>
     </>

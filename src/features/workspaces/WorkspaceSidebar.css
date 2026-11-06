@@ -14,16 +14,19 @@
 .ws-sidebar {
   width: 270px;
   background: #FFFFFF;
-  border-left: 1px solid #E2E8F0;
+  border-inline-end: 1px solid #E2E8F0;
   display: flex;
   flex-direction: column;
   height: 100vh;
-  position: sticky;
+  position: fixed;
   top: 0;
+  bottom: 0;
+  inset-inline-start: 0;
   z-index: 100;
   transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s ease;
   user-select: none;
   box-shadow: 2px 0 12px rgba(15, 23, 42, 0.03);
+  overflow: hidden;
 }
 
 /* Collapsed State on Desktop */
@@ -403,41 +406,253 @@
 
 /* ── 4. Bottom Exit / Return Action ── */
 .ws-sidebar__footer {
-  padding: 12px 14px;
+  padding: 10px 12px;
   border-top: 1px solid #F1F5F9;
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .ws-sidebar__btn-exit {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 10px 14px;
-  border-radius: 12px;
-  background: #FFFFFF;
+  justify-content: flex-start;
+  padding: 9px 12px;
+  border-radius: 10px;
+  background: #F8FAFC;
   border: 1px solid #E2E8F0;
-  color: #1E293B;
-  font-size: 13px;
-  font-weight: 700;
+  color: #475569;
+  font-size: 12.5px;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
+.ws-sidebar--collapsed .ws-sidebar__btn-exit {
+  justify-content: center;
+  padding: 8px 0;
+}
+
+.ws-sidebar__btn-exit-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .ws-sidebar__btn-exit:hover {
-  background: #F8FAFC;
-  border-color: #CBD5E1;
+  background: #EFF6FF;
+  border-color: #BFDBFE;
   color: #0878F9;
 }
 
 .ws-sidebar__btn-exit-icon {
   color: #64748B;
   transition: transform 0.2s ease;
+  flex-shrink: 0;
 }
 
 .ws-sidebar__btn-exit:hover .ws-sidebar__btn-exit-icon {
   color: #0878F9;
   transform: translateX(-2px);
+}
+
+/* ── User Section & Trigger Card ── */
+.ws-sidebar__user-section {
+  position: relative;
+  width: 100%;
+}
+
+.ws-sidebar__user-card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 8px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  text-align: start;
+  transition: all 0.15s ease;
+}
+
+.ws-sidebar--collapsed .ws-sidebar__user-card {
+  justify-content: center;
+  padding: 6px 0;
+}
+
+.ws-sidebar__user-card:hover,
+.ws-sidebar__user-card--active {
+  background: #F1F5F9;
+  border-color: #E2E8F0;
+}
+
+.ws-sidebar__user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0A192F 0%, #1E3A8A 100%);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13.5px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(10, 25, 47, 0.15);
+}
+
+.ws-sidebar__user-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+  line-height: 1.25;
+}
+
+.ws-sidebar__user-name {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0F172A;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ws-sidebar__user-role {
+  font-size: 11px;
+  color: #64748B;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ws-sidebar__user-chevron {
+  color: #94A3B8;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.ws-sidebar__user-chevron--up {
+  transform: rotate(180deg);
+}
+
+/* ── Floating Popover Menu (Matching Image 2) ── */
+.ws-sidebar__user-popover {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  inset-inline-start: 0;
+  width: 240px;
+  background-color: #FFFFFF;
+  color: #0F172A;
+  border-radius: 14px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 16px 36px -4px rgba(15, 23, 42, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  padding: 12px;
+  z-index: 120;
+  animation: wsFadeUp 0.15s ease-out;
+}
+
+@keyframes wsFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ws-sidebar__popover-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 8px;
+}
+
+.ws-sidebar__popover-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #EFF6FF;
+  color: #0878F9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.ws-sidebar__popover-details {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.ws-sidebar__popover-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0F172A;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ws-sidebar__popover-email {
+  font-size: 11.5px;
+  color: #64748B;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ws-sidebar__popover-divider {
+  height: 1px;
+  background-color: #F1F5F9;
+  margin: 6px 0 8px 0;
+}
+
+.ws-sidebar__popover-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ws-sidebar__popover-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: #334155;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: start;
+}
+
+.ws-sidebar__popover-item:hover {
+  background-color: #F8FAFC;
+  color: #0878F9;
+}
+
+.ws-sidebar__popover-item--danger {
+  color: #EF4444;
+}
+
+.ws-sidebar__popover-item--danger:hover {
+  background-color: #FEF2F2;
+  color: #DC2626;
 }
 
 /* ── Mobile Drawer (Middle of Reference Image 1) ── */

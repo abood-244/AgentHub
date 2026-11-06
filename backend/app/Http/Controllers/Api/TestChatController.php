@@ -198,17 +198,19 @@ class TestChatController extends Controller
         $apiKey = config('services.openai.api_key', env('OPENAI_API_KEY'));
         if (!$apiKey) throw new \Exception('OpenAI API key not configured.');
 
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $apiKey,
-        ])->post('https://api.openai.com/v1/chat/completions', [
-            'model' => $model,
-            'messages' => [
-                ['role' => 'system', 'content' => $system],
-                ['role' => 'user', 'content' => $user],
-            ],
-            'temperature' => $temp,
-            'max_tokens' => $maxTokens,
-        ]);
+        $response = Http::withoutVerifying()
+            ->timeout(25)
+            ->withHeaders([
+                'Authorization' => 'Bearer ' . $apiKey,
+            ])->post('https://api.openai.com/v1/chat/completions', [
+                'model' => $model,
+                'messages' => [
+                    ['role' => 'system', 'content' => $system],
+                    ['role' => 'user', 'content' => $user],
+                ],
+                'temperature' => $temp,
+                'max_tokens' => $maxTokens,
+            ]);
 
         if ($response->failed()) throw new \Exception('OpenAI API error: ' . $response->body());
         return $response->json('choices.0.message.content', '');
@@ -219,16 +221,18 @@ class TestChatController extends Controller
         $apiKey = config('services.anthropic.api_key', env('ANTHROPIC_API_KEY'));
         if (!$apiKey) throw new \Exception('Anthropic API key not configured.');
 
-        $response = Http::withHeaders([
-            'x-api-key' => $apiKey,
-            'anthropic-version' => '2023-06-01',
-        ])->post('https://api.anthropic.com/v1/messages', [
-            'model' => $model,
-            'system' => $system,
-            'messages' => [['role' => 'user', 'content' => $user]],
-            'temperature' => $temp,
-            'max_tokens' => $maxTokens,
-        ]);
+        $response = Http::withoutVerifying()
+            ->timeout(25)
+            ->withHeaders([
+                'x-api-key' => $apiKey,
+                'anthropic-version' => '2023-06-01',
+            ])->post('https://api.anthropic.com/v1/messages', [
+                'model' => $model,
+                'system' => $system,
+                'messages' => [['role' => 'user', 'content' => $user]],
+                'temperature' => $temp,
+                'max_tokens' => $maxTokens,
+            ]);
 
         if ($response->failed()) throw new \Exception('Anthropic API error: ' . $response->body());
         return $response->json('content.0.text', '');
@@ -236,20 +240,42 @@ class TestChatController extends Controller
 
     private function callGemini(string $model, string $system, string $user, float $temp, int $maxTokens): string
     {
-        $apiKey = config('services.google.api_key', env('GOOGLE_API_KEY'));
+        $apiKey = config('services.google.api_key') ?: env('GOOGLE_API_KEY') ?: env('GEMINI_API_KEY');
         if (!$apiKey) throw new \Exception('Google API key not configured.');
 
-        $response = Http::post("https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key={$apiKey}", [
-            'systemInstruction' => ['parts' => [['text' => $system]]],
+        // Automatically map older/deprecated identifiers to active, supported Gemini 3.5 Flash
+        $effectiveModel = match ($model) {
+            'gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-2.5-flash' => 'gemini-3.5-flash',
+            default => $model,
+        };
+
+        $payload = [
             'contents' => [['parts' => [['text' => $user]]]],
             'generationConfig' => [
                 'temperature' => $temp,
                 'maxOutputTokens' => $maxTokens,
             ],
-        ]);
+        ];
+
+        if (!empty($system)) {
+            $payload['systemInstruction'] = ['parts' => [['text' => $system]]];
+        }
+
+        $response = Http::withoutVerifying()
+            ->timeout(20)
+            ->post("https://generativelanguage.googleapis.com/v1beta/models/{$effectiveModel}:generateContent?key={$apiKey}", $payload);
 
         if ($response->failed()) throw new \Exception('Google API error: ' . $response->body());
-        return $response->json('candidates.0.content.parts.0.text', '');
+
+        $parts = $response->json('candidates.0.content.parts', []);
+        $text = '';
+        foreach ($parts as $part) {
+            if (!empty($part['text'])) {
+                $text .= $part['text'];
+            }
+        }
+
+        return $text ?: ($response->json('candidates.0.content.parts.0.text', '') ?? '');
     }
 
     /**

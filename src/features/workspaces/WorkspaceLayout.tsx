@@ -7,8 +7,15 @@ import {
   ArrowRight,
   MoreVertical,
   CheckCircle2,
+  Sidebar,
+  Globe,
+  Moon,
+  Sun,
+  Bell,
+  Search,
 } from 'lucide-react';
 import { useTranslation } from '../../i18n/LanguageContext';
+import { useTheme } from '../../theme/ThemeContext';
 import { Workspace } from '../../types';
 import { workspaceService } from '../../services/apiServices';
 import { WorkspaceSidebar } from './WorkspaceSidebar';
@@ -48,6 +55,7 @@ interface WorkspaceLayoutProps {
   workspacesList?: Workspace[];
   onSelectWorkspace?: (wsId: string) => void;
   onBack: () => void;
+  onNavigate?: (screen: string) => void;
   onNavigateToGlobalModels?: () => void;
 }
 
@@ -59,9 +67,11 @@ export const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
   workspacesList: initialWorkspacesList,
   onSelectWorkspace,
   onBack,
+  onNavigate,
   onNavigateToGlobalModels,
 }) => {
-  const { language } = useTranslation();
+  const { language, toggleLanguage, isRTL } = useTranslation();
+  const { theme, toggleTheme } = useTheme();
   const isEn = language === 'en';
 
   const [activeSection, setActiveSection] = useState<WorkspaceSection>('overview');
@@ -148,7 +158,7 @@ export const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
       case 'channels':
         return <ChannelsView workspaceId={workspaceId} />;
       case 'test':
-        return <TestView workspaceId={workspaceId} />;
+        return <TestView workspaceId={workspaceId} onNavigate={setActiveSection} />;
       case 'settings':
         return <WorkspaceSettingsView workspaceId={workspaceId} onBack={onBack} />;
       default:
@@ -219,59 +229,56 @@ export const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
 
         {/* Desktop Top Header */}
         <header className="ws-desktop-topbar">
-          <div className="ws-desktop-topbar__breadcrumb">
+          <div className="ws-desktop-topbar__start">
             <button
               type="button"
-              className="ws-desktop-topbar__crumb-link"
-              onClick={onBack}
-              title={isEn ? 'Back to workspaces list' : 'العودة لقائمة مساحات العمل'}
+              className="ws-topbar__toggle-btn"
+              onClick={() => setSidebarCollapsed(!isSidebarCollapsed)}
+              aria-label={
+                isSidebarCollapsed
+                  ? (isEn ? 'Expand sidebar' : 'توسيع القائمة الجانبية')
+                  : (isEn ? 'Collapse sidebar' : 'طي القائمة الجانبية')
+              }
+              title={
+                isSidebarCollapsed
+                  ? (isEn ? 'Expand sidebar' : 'توسيع القائمة الجانبية')
+                  : (isEn ? 'Collapse sidebar' : 'طي القائمة الجانبية')
+              }
             >
-              <Landmark size={16} />
-              <span>{isEn ? 'Workspaces' : 'مساحات العمل'}</span>
+              <Sidebar
+                size={18}
+                style={{ transform: isRTL ? 'scaleX(-1)' : undefined }}
+              />
             </button>
-            <ChevronLeft size={14} className="ws-desktop-topbar__crumb-sep" />
-            <button
-              type="button"
-              className={`ws-desktop-topbar__crumb-link ${activeSection === 'overview' ? 'ws-desktop-topbar__current-ws' : ''}`}
-              onClick={() => setActiveSection('overview')}
-              title={isEn ? 'Return to workspace overview' : 'العودة للنظرة العامة لمساحة العمل'}
-            >
-              {resolvedName}
-            </button>
-            {activeSection !== 'overview' && (
-              <>
-                <ChevronLeft size={14} className="ws-desktop-topbar__crumb-sep" />
-                <span className="ws-desktop-topbar__section-title">
-                  {isEn ? sectionTitles[activeSection].en : sectionTitles[activeSection].ar}
-                </span>
-              </>
-            )}
-          </div>
 
-          <div className="ws-desktop-topbar__actions">
-            {activeSection !== 'overview' && (
+            <div className="ws-desktop-topbar__breadcrumb">
               <button
                 type="button"
-                className="ws-desktop-topbar__back-overview-btn"
-                onClick={() => setActiveSection('overview')}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 6,
-                  padding: '6px 14px',
-                  borderRadius: 10,
-                  border: '1px solid #CBD5E1',
-                  background: '#FFFFFF',
-                  color: '#334155',
-                  fontSize: 13,
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  marginInlineEnd: 8,
-                }}
+                className="ws-desktop-topbar__crumb-link"
+                onClick={onBack}
+                title={isEn ? 'Back to workspaces list' : 'العودة لقائمة مساحات العمل'}
               >
-                <span>← {isEn ? 'Overview' : 'النظرة العامة'}</span>
+                <Landmark size={15} />
+                <span>{isEn ? 'Workspaces' : 'مساحات العمل'}</span>
               </button>
-            )}
+              <ChevronLeft size={14} className="ws-desktop-topbar__crumb-sep" />
+              <button
+                type="button"
+                className={`ws-desktop-topbar__crumb-link ${activeSection === 'overview' ? 'ws-desktop-topbar__current-ws' : ''}`}
+                onClick={() => setActiveSection('overview')}
+                title={isEn ? 'Return to workspace overview' : 'العودة للنظرة العامة لمساحة العمل'}
+              >
+                {resolvedName}
+              </button>
+              {activeSection !== 'overview' && (
+                <>
+                  <ChevronLeft size={14} className="ws-desktop-topbar__crumb-sep" />
+                  <span className="ws-desktop-topbar__section-title">
+                    {isEn ? sectionTitles[activeSection].en : sectionTitles[activeSection].ar}
+                  </span>
+                </>
+              )}
+            </div>
 
             <span
               className={`ws-desktop-topbar__status-pill ${
@@ -283,13 +290,50 @@ export const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
               <span className="ws-desktop-topbar__status-dot" />
               <span>{resolvedStatus === 'active' ? (isEn ? 'Active' : 'نشط') : (isEn ? 'Paused' : 'متوقف')}</span>
             </span>
+          </div>
 
+          <div className="ws-desktop-topbar__actions">
+            {/* Subtle Search input */}
+            <div className="ah-topbar__search ws-topbar__search">
+              <Search size={15} className="ah-topbar__search-icon" />
+              <input
+                type="text"
+                className="ah-topbar__search-input"
+                placeholder={isEn ? 'Quick search...' : 'بحث سريع...'}
+                aria-label={isEn ? 'Search' : 'بحث'}
+              />
+            </div>
+
+            {/* Language Switcher */}
             <button
               type="button"
-              className="ws-desktop-topbar__exit-btn"
-              onClick={onBack}
+              className="ah-topbar__action-btn"
+              onClick={toggleLanguage}
+              title={isEn ? 'Switch to English' : 'التحويل إلى الإنجليزية'}
             >
-              <span>{isEn ? 'Exit Workspace' : 'الخروج من مساحة العمل'}</span>
+              <Globe size={16} />
+              <span>{isEn ? 'العربية' : 'English'}</span>
+            </button>
+
+            {/* Theme Switcher */}
+            <button
+              type="button"
+              className="ah-topbar__action-btn"
+              onClick={toggleTheme}
+              title={isEn ? 'Toggle theme' : 'تغيير المظهر'}
+            >
+              {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
+
+            {/* Notifications Bell */}
+            <button
+              type="button"
+              className="ah-topbar__action-btn ah-topbar__bell-btn"
+              title={isEn ? 'Notifications' : 'الإشعارات'}
+              onClick={() => onNavigate?.('notifications')}
+            >
+              <Bell size={16} />
+              <span className="ah-topbar__badge">3</span>
             </button>
           </div>
         </header>
