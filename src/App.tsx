@@ -227,6 +227,7 @@ const AgentHubMain: React.FC = () => {
         <WorkspaceLayout
           workspaceId={selectedWorkspaceId}
           onBack={handleBack}
+          onNavigate={handleNavigate}
           onSelectWorkspace={handleSelectWorkspace}
           onNavigateToGlobalModels={() => handleNavigate('llm-models')}
         />

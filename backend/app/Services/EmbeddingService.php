@@ -102,14 +102,27 @@ class EmbeddingService
         return '[' . implode(',', $vector) . ']';
     }
 
+    protected function hasPgVector(): bool
+    {
+        static $hasVector = null;
+        if ($hasVector === null) {
+            try {
+                $hasVector = !empty(DB::select("SELECT 1 FROM pg_extension WHERE extname = 'vector'"));
+            } catch (\Throwable) {
+                $hasVector = false;
+            }
+        }
+        return (bool) $hasVector;
+    }
+
     /**
-     * Store embedding for a single document chunk in the embeddings table.
+     * Store embedding for a chunk in the database.
      */
-    public function storeChunkEmbedding(DocumentChunk $chunk, ?int $embeddingModelId = null): Embedding
+    public function storeChunkEmbedding(DocumentChunk $chunk, ?int $embeddingModelId = null): ?Embedding
     {
         if (!$embeddingModelId) {
             $workspace = Workspace::find($chunk->workspace_id);
-            $embeddingModelId = $workspace?->selected_embedding_model_id;
+            $embeddingModelId = $workspace?->embedding_model_id;
 
             if (!$embeddingModelId) {
                 $defaultModel = EmbeddingModel::where('is_enabled', true)->first();
@@ -123,18 +136,32 @@ class EmbeddingService
         // Delete any existing embedding for this chunk
         Embedding::where('chunk_id', $chunk->id)->delete();
 
-        // Insert new embedding with raw pgvector casting
-        DB::statement(
-            "INSERT INTO embeddings (chunk_id, workspace_id, document_id, embedding_model_id, embedding, created_at)
-             VALUES (?, ?, ?, ?, ?::vector, NOW())",
-            [
-                $chunk->id,
-                $chunk->workspace_id,
-                $chunk->document_id,
-                $embeddingModelId,
-                $vectorStr,
-            ]
-        );
+        if ($this->hasPgVector()) {
+            // Insert new embedding with raw pgvector casting
+            DB::statement(
+                "INSERT INTO embeddings (chunk_id, workspace_id, document_id, embedding_model_id, embedding, created_at)
+                 VALUES (?, ?, ?, ?, ?::vector, NOW())",
+                [
+                    $chunk->id,
+                    $chunk->workspace_id,
+                    $chunk->document_id,
+                    $embeddingModelId,
+                    $vectorStr,
+                ]
+            );
+        } else {
+            DB::statement(
+                "INSERT INTO embeddings (chunk_id, workspace_id, document_id, embedding_model_id, embedding, created_at)
+                 VALUES (?, ?, ?, ?, ?, NOW())",
+                [
+                    $chunk->id,
+                    $chunk->workspace_id,
+                    $chunk->document_id,
+                    $embeddingModelId,
+                    $vectorStr,
+                ]
+            );
+        }
 
         return Embedding::where('chunk_id', $chunk->id)->first();
     }
@@ -164,20 +191,37 @@ class EmbeddingService
         $queryVector = $this->generateEmbedding($queryText);
         $vectorStr = $this->formatForPgvector($queryVector);
 
-        $results = DB::select(
-            "SELECT c.id, c.document_id, c.workspace_id, c.chunk_index, c.content, c.token_count,
-                    d.title as document_title,
-                    d.source_type,
-                    d.storage_type,
-                    (e.embedding <=> ?::vector) as distance
-             FROM embeddings e
-             JOIN document_chunks c ON c.id = e.chunk_id
-             JOIN documents d ON d.id = e.document_id
-             WHERE e.workspace_id = ?
-             ORDER BY (e.embedding <=> ?::vector) ASC
-             LIMIT ?",
-            [$vectorStr, $workspaceId, $vectorStr, $limit]
-        );
+        if ($this->hasPgVector()) {
+            $results = DB::select(
+                "SELECT c.id, c.document_id, c.workspace_id, c.chunk_index, c.content, c.token_count,
+                        d.title as document_title,
+                        d.source_type,
+                        d.storage_type,
+                        (e.embedding <=> ?::vector) as distance
+                 FROM embeddings e
+                 JOIN document_chunks c ON c.id = e.chunk_id
+                 JOIN documents d ON d.id = e.document_id
+                 WHERE e.workspace_id = ?
+                 ORDER BY (e.embedding <=> ?::vector) ASC
+                 LIMIT ?",
+                [$vectorStr, $workspaceId, $vectorStr, $limit]
+            );
+        } else {
+            // Text matching fallback when pgvector extension is not installed
+            $results = DB::select(
+                "SELECT c.id, c.document_id, c.workspace_id, c.chunk_index, c.content, c.token_count,
+                        d.title as document_title,
+                        d.source_type,
+                        d.storage_type,
+                        0.1 as distance
+                 FROM document_chunks c
+                 JOIN documents d ON d.id = c.document_id
+                 WHERE c.workspace_id = ?
+                 ORDER BY c.id ASC
+                 LIMIT ?",
+                [$workspaceId, $limit]
+            );
+        }
 
         return array_map(function ($r) {
             $distance = (float) $r->distance;
